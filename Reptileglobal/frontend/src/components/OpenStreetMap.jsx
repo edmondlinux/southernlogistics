@@ -17,16 +17,15 @@ const OpenStreetMap = ({
   const [selectedCountry, setSelectedCountry] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Fetch countries with population data
+  // Fetch all countries
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await fetch('https://restcountries.com/v3.1/all?fields=name,population,latlng');
+        const response = await fetch('https://restcountries.com/v3.1/all?fields=name,latlng');
         const data = await response.json();
         const sortedCountries = data
           .filter(country => country.latlng && country.latlng.length === 2)
-          .sort((a, b) => b.population - a.population)
-          .slice(0, 50); // Top 50 most populated countries
+          .sort((a, b) => a.name.common.localeCompare(b.name.common)); // Sort alphabetically
         setCountries(sortedCountries);
       } catch (error) {
         console.error('Failed to fetch countries:', error);
@@ -207,7 +206,7 @@ const OpenStreetMap = ({
       {/* Country Selector */}
       <div className="mb-4 p-3 bg-gray-800 rounded-lg">
         <label className="block text-sm font-medium text-gray-300 mb-2">
-          Navigate to Country (by Population)
+          Navigate to Country
         </label>
         <select
           value={selectedCountry}
@@ -218,7 +217,7 @@ const OpenStreetMap = ({
           <option value="">Select a country...</option>
           {countries.map((country) => (
             <option key={country.name.common} value={country.name.common}>
-              {country.name.common} (Pop: {country.population.toLocaleString()})
+              {country.name.common}
             </option>
           ))}
         </select>
