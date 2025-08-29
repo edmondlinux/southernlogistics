@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useShipmentStore } from "../stores/useShipmentStore";
 import { Package, User, MapPin, Calendar, DollarSign, X } from "lucide-react";
-import OpenStreetMap from "./OpenStreetMap";
+import MapLibreMap from "./MapLibreMap";
 
 const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 	const { updateShipmentStatus, loading } = useShipmentStore();
@@ -467,7 +467,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 									Update Shipment Location
 								</h3>
 							</div>
-							<OpenStreetMap 
+							<MapLibreMap 
 								height="400px" 
 								defaultZoom={2} 
 								onCoordinatesChange={setCoordinates}
