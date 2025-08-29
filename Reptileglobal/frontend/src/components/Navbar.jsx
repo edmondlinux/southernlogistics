@@ -1,15 +1,43 @@
 
-import { Package, UserPlus, LogIn, LogOut, Lock, Truck, Menu, X } from "lucide-react";
+import { Package, UserPlus, LogIn, LogOut, Lock, Truck, Menu, X, Fingerprint } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useUserStore } from "../stores/useUserStore";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "../hooks/useTranslation";
 import LanguageSwitcher from "./LanguageSwitcher";
+import BiometricSetup from "./BiometricSetup";
+import { isWebAuthnSupported, isUserVerifyingPlatformAuthenticatorAvailable } from "../utils/webauthn";
 
 const Navbar = () => {
 	const { user, logout } = useUserStore();
 	const [isOpen, setIsOpen] = useState(false);
+	const [showBiometricSetup, setShowBiometricSetup] = useState(false);
+	const [showBiometricPrompt, setShowBiometricPrompt] = useState(false);
+	const [biometricSupported, setBiometricSupported] = useState(false);
 	const { t } = useTranslation();
+
+	useEffect(() => {
+		const checkBiometricAndPrompt = async () => {
+			if (user) {
+				const supported = isWebAuthnSupported();
+				if (supported) {
+					const available = await isUserVerifyingPlatformAuthenticatorAvailable();
+					setBiometricSupported(available);
+					
+					// Check if user has just logged in and hasn't set up biometric yet
+					const lastLoginEmail = localStorage.getItem('lastLoginEmail');
+					const biometricPromptShown = localStorage.getItem(`biometricPrompt_${user.email}`);
+					
+					if (available && lastLoginEmail === user.email && !biometricPromptShown) {
+						setTimeout(() => setShowBiometricPrompt(true), 2000);
+						localStorage.removeItem('lastLoginEmail');
+					}
+				}
+			}
+		};
+		
+		checkBiometricAndPrompt();
+	}, [user]);
 
 	return (
 		<header className='fixed top-0 left-0 w-full bg-gray-900 bg-opacity-95 backdrop-blur-md z-50 border-b border-gray-800'>
@@ -132,6 +160,63 @@ const Navbar = () => {
 					</div>
 				)}
 			</div>
+
+			{/* Biometric Setup Prompt */}
+			{showBiometricPrompt && biometricSupported && (
+				<div className="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg border border-gray-200 p-4 max-w-sm z-40">
+					<div className="flex items-start space-x-3">
+						<Fingerprint className="h-6 w-6 text-emerald-500 mt-1" />
+						<div className="flex-1">
+							<h4 className="font-medium text-gray-900 text-sm">
+								{t('biometric.setup.offer')}
+							</h4>
+							<p className="text-xs text-gray-600 mt-1">
+								Use Face ID, Touch ID, or fingerprint for faster login.
+							</p>
+							<div className="flex space-x-2 mt-3">
+								<button
+									onClick={() => {
+										setShowBiometricSetup(true);
+										setShowBiometricPrompt(false);
+									}}
+									className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1 rounded transition-colors"
+								>
+									Enable
+								</button>
+								<button
+									onClick={() => {
+										setShowBiometricPrompt(false);
+										localStorage.setItem(`biometricPrompt_${user?.email}`, 'shown');
+									}}
+									className="text-xs bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded transition-colors"
+								>
+									Later
+								</button>
+							</div>
+						</div>
+						<button
+							onClick={() => {
+								setShowBiometricPrompt(false);
+								localStorage.setItem(`biometricPrompt_${user?.email}`, 'shown');
+							}}
+							className="text-gray-400 hover:text-gray-600"
+						>
+							<X className="h-4 w-4" />
+						</button>
+					</div>
+				</div>
+			)}
+
+			{/* Biometric Setup Modal */}
+			{showBiometricSetup && (
+				<BiometricSetup
+					onClose={() => setShowBiometricSetup(false)}
+					onSuccess={() => {
+						localStorage.setItem(`biometricPrompt_${user?.email}`, 'shown');
+						localStorage.setItem('lastBiometricEmail', user?.email);
+					}}
+				/>
+			)}
 		</header>
 	);
 };

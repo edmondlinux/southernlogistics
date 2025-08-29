@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.route.js";
 import kycRoutes from "./routes/kyc.route.js";
 import shipmentRoutes from "./routes/shipment.route.js";
 import contactRoutes from "./routes/contact.route.js";
+import webauthnRoutes from "./routes/webauthn.route.js";
 
 import { connectDB } from "./lib/db.js";
 
@@ -21,8 +22,9 @@ app.use(express.json({ limit: "10mb" })); // allows you to parse the body of the
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/shipments", shipmentRoutes);
+app.use("/api/auth/webauthn", webauthnRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/shipments", shipmentRoutes);
 app.use("/api/kyc", kycRoutes);
 
 if (process.env.NODE_ENV === "production") {

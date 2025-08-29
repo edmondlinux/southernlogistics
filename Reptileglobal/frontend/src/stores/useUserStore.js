@@ -27,12 +27,14 @@ export const useUserStore = create((set, get) => ({
 		set({ loading: true });
 
 		try {
-			const res = await axios.post("/auth/login", { email, password });
+			const response = await axios.post("/auth/login", { email, password });
+			set({ user: response.data, loading: false });
 
-			set({ user: res.data, loading: false });
+			// Store email for potential biometric setup
+			localStorage.setItem('lastLoginEmail', email);
 		} catch (error) {
 			set({ loading: false });
-			toast.error(error.response.data.message || "An error occurred");
+			throw error;
 		}
 	},
 
