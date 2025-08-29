@@ -69,35 +69,66 @@ const OpenStreetMap = ({
       }
     }
 
-    // Add click event for interactive mode
+    // Add click and double tap events for interactive mode
     if (interactive && onCoordinatesChange) {
+      let clickTimeout = null;
+      let lastTap = 0;
+
       mapRef.current.on('click', (e) => {
-        const { lat, lng } = e.lngLat;
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
         
-        // Remove existing marker
-        if (markerRef.current) {
-          markerRef.current.remove();
+        // Clear any existing timeout
+        if (clickTimeout) {
+          clearTimeout(clickTimeout);
+          clickTimeout = null;
         }
 
-        // Add new draggable marker
-        markerRef.current = new mapboxgl.Marker({ draggable: true })
-          .setLngLat([lng, lat])
-          .addTo(mapRef.current);
-
-        // Add drag event listener
-        markerRef.current.on('dragend', () => {
-          const lngLat = markerRef.current.getLngLat();
-          onCoordinatesChange({
-            latitude: lngLat.lat,
-            longitude: lngLat.lng,
+        // Check if this is a double tap (within 300ms)
+        if (tapLength < 300 && tapLength > 0) {
+          // Double tap - zoom in gradually
+          const currentZoom = mapRef.current.getZoom();
+          mapRef.current.easeTo({
+            zoom: currentZoom + 1,
+            duration: 300
           });
-        });
+          lastTap = 0; // Reset to prevent triple tap
+          return;
+        }
 
-        // Update coordinates
-        onCoordinatesChange({
-          latitude: lat,
-          longitude: lng,
-        });
+        // Single tap - add marker after a short delay to distinguish from double tap
+        clickTimeout = setTimeout(() => {
+          const { lat, lng } = e.lngLat;
+          
+          // Remove existing marker
+          if (markerRef.current) {
+            markerRef.current.remove();
+          }
+
+          // Add new draggable marker
+          markerRef.current = new mapboxgl.Marker({ draggable: true })
+            .setLngLat([lng, lat])
+            .addTo(mapRef.current);
+
+          // Add drag event listener
+          markerRef.current.on('dragend', () => {
+            const lngLat = markerRef.current.getLngLat();
+            onCoordinatesChange({
+              latitude: lngLat.lat,
+              longitude: lngLat.lng,
+            });
+          });
+
+          // Update coordinates
+          onCoordinatesChange({
+            latitude: lat,
+            longitude: lng,
+          });
+          
+          clickTimeout = null;
+        }, 250);
+
+        lastTap = currentTime;
       });
     }
 
@@ -153,11 +184,8 @@ const OpenStreetMap = ({
       });
     }
 
-    // Center map on new coordinates
-    mapRef.current.flyTo({
-      center: [selectedCoordinates.longitude, selectedCoordinates.latitude],
-      zoom: 10
-    });
+    // Only center map if this is the initial load with coordinates
+    // Don't auto-zoom when marker is moved or new coordinates are set
   }, [selectedCoordinates]);
 
   // Handle country selection
@@ -329,7 +357,8 @@ const OpenStreetMap = ({
         <div className="mb-4 p-3 bg-gray-800 rounded-lg text-sm text-gray-300">
           <strong>Interactive Mode:</strong> 
           <ul className="mt-1 ml-4 list-disc">
-            <li>Click anywhere on the map to drop a pin for specific coordinates</li>
+            <li>Single tap anywhere on the map to drop a pin for specific coordinates</li>
+            <li>Double tap to zoom in gradually</li>
             <li>Hold and drag the pin to move its location</li>
             <li>Use the country selector above to highlight and view entire countries</li>
           </ul>
