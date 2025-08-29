@@ -1,5 +1,5 @@
 
-import { BarChart, Plus, Package, List, Search, Truck, Key } from "lucide-react";
+import { BarChart, Plus, Package, List, Search, Truck, Key, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -69,7 +69,7 @@ const SearchEditShipments = () => {
 	const [selectedShipment, setSelectedShipment] = useState(null);
 	const [showKYCModal, setShowKYCModal] = useState(false);
 	const [selectedShipmentForKYC, setSelectedShipmentForKYC] = useState(null);
-	const { shipments, trackShipment, updateShipmentStatus } = useShipmentStore();
+	const { shipments, trackShipment, updateShipmentStatus, deleteShipment } = useShipmentStore();
 
 	const filteredShipments = shipments.filter(shipment => 
 		shipment.trackingNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -89,6 +89,12 @@ const SearchEditShipments = () => {
 	const handleGenerateKYCLink = (shipment) => {
 		setSelectedShipmentForKYC(shipment);
 		setShowKYCModal(true);
+	};
+
+	const handleDeleteShipment = async (shipmentId) => {
+		if (window.confirm("Are you sure you want to delete this shipment?")) {
+			await deleteShipment(shipmentId);
+		}
 	};
 
 	return (
@@ -132,6 +138,13 @@ const SearchEditShipments = () => {
 												className="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm transition duration-300"
 											>
 												Edit
+											</button>
+											<button
+												onClick={() => handleDeleteShipment(shipment._id)}
+												className='bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-sm transition duration-300'
+												title="Delete Shipment"
+											>
+												<Trash2 className='w-4 h-4' />
 											</button>
 										</div>
 									</div>
