@@ -8,6 +8,7 @@ import AnalyticsTab from "../components/AnalyticsTab";
 import CreateShipmentForm from "../components/CreateShipmentForm";
 import ShipmentsList from "../components/ShipmentsList";
 import KYCMagicLinkGenerator from "../components/KYCMagicLinkGenerator";
+import EditShipmentForm from "../components/EditShipmentForm";
 import { useShipmentStore } from "../stores/useShipmentStore";
 
 
@@ -69,7 +70,7 @@ const SearchEditShipments = () => {
 	const [selectedShipment, setSelectedShipment] = useState(null);
 	const [showKYCModal, setShowKYCModal] = useState(false);
 	const [selectedShipmentForKYC, setSelectedShipmentForKYC] = useState(null);
-	const { shipments, trackShipment, updateShipmentStatus } = useShipmentStore();
+	const { shipments, trackShipment, updateShipment } = useShipmentStore();
 
 	const filteredShipments = shipments.filter(shipment => 
 		shipment.trackingNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -77,9 +78,9 @@ const SearchEditShipments = () => {
 		shipment.recipient.name.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
-	const handleStatusUpdate = async (shipmentId, newStatus, location) => {
+	const handleShipmentUpdate = async (shipmentId, updatedData) => {
 		try {
-			await updateShipmentStatus(shipmentId, newStatus, location);
+			await updateShipment(shipmentId, updatedData);
 			setSelectedShipment(null);
 		} catch (error) {
 			console.error("Failed to update shipment:", error);
@@ -143,14 +144,11 @@ const SearchEditShipments = () => {
 			)}
 
 			{selectedShipment && (
-				<div className="bg-gray-800 rounded-lg p-6">
-					<h3 className="text-xl font-semibold text-emerald-400 mb-4">Edit Shipment #{selectedShipment.trackingNumber}</h3>
-					<ShipmentEditForm 
-						shipment={selectedShipment} 
-						onUpdate={handleStatusUpdate}
-						onCancel={() => setSelectedShipment(null)}
-					/>
-				</div>
+				<EditShipmentForm 
+					shipment={selectedShipment} 
+					onUpdate={handleShipmentUpdate}
+					onClose={() => setSelectedShipment(null)}
+				/>
 			)}
 
 			{showKYCModal && selectedShipmentForKYC && (
