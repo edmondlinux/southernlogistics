@@ -90,7 +90,7 @@ const SearchEditShipments = () => {
 	const [selectedShipment, setSelectedShipment] = useState(null);
 	const [showKYCModal, setShowKYCModal] = useState(false);
 	const [selectedShipmentForKYC, setSelectedShipmentForKYC] = useState(null);
-	const { shipments, trackShipment, updateShipmentStatus, deleteShipment } = useShipmentStore();
+	const { shipments, trackShipment, updateShipment, deleteShipment } = useShipmentStore();
 
 	const filteredShipments = shipments.filter(shipment => 
 		shipment.trackingNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -98,9 +98,9 @@ const SearchEditShipments = () => {
 		shipment.recipient.name.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
-	const handleStatusUpdate = async (shipmentId, newStatus, location) => {
+	const handleShipmentUpdate = async (shipmentId, shipmentData) => {
 		try {
-			await updateShipmentStatus(shipmentId, newStatus, location);
+			await updateShipment(shipmentId, shipmentData);
 			setSelectedShipment(null);
 		} catch (error) {
 			console.error("Failed to update shipment:", error);
@@ -117,6 +117,18 @@ const SearchEditShipments = () => {
 			await deleteShipment(shipmentId);
 		}
 	};
+
+	// If a shipment is selected for editing, render the edit form
+	if (selectedShipment) {
+		return (
+			<EditShipmentForm 
+				shipment={selectedShipment} 
+				onUpdate={handleShipmentUpdate}
+				onClose={() => setSelectedShipment(null)}
+				isInline={true}
+			/>
+		);
+	}
 
 	return (
 		<div className="space-y-6">
@@ -173,17 +185,6 @@ const SearchEditShipments = () => {
 							))}
 						</div>
 					)}
-				</div>
-			)}
-
-			{selectedShipment && (
-				<div className="bg-gray-800 rounded-lg p-6">
-					<h3 className="text-xl font-semibold text-emerald-400 mb-4">Edit Shipment #{selectedShipment.trackingNumber}</h3>
-					<EditShipmentForm 
-						shipment={selectedShipment} 
-						onUpdate={handleStatusUpdate}
-						onCancel={() => setSelectedShipment(null)}
-					/>
 				</div>
 			)}
 
