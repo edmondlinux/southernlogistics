@@ -63,21 +63,6 @@ export const useShipmentStore = create((set, get) => ({
 	},
 
 	// Update shipment status (admin only)
-	updateShipment: async (shipmentId, shipmentData) => {
-		try {
-			const response = await axios.put(`/shipments/${shipmentId}`, shipmentData);
-			set((state) => ({
-				shipments: state.shipments.map((shipment) =>
-					shipment._id === shipmentId ? { ...shipment, ...response.data } : shipment
-				),
-			}));
-			toast.success("Shipment updated successfully");
-		} catch (error) {
-			toast.error(error.response?.data?.message || "Error updating shipment");
-			throw error;
-		}
-	},
-
 	updateShipmentStatus: async (shipmentId, status, location) => {
 		set({ loading: true });
 		try {
