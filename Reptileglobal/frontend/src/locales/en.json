@@ -15,13 +15,7 @@
   },
   "languages": {
     "en": "English",
-    "zh": "中文",
-    "ms": "Bahasa Malaysia",
-    "ko": "한국어",
-    "fr": "Français",
-    "es": "Español",
-    "de": "Deutsch",
-    "nl": "Nederlands"
+    "fr": "Français"
   },
   "common": {
     "loading": "Loading...",
