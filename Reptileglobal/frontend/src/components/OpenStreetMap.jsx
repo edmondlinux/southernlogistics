@@ -16,6 +16,11 @@ const OpenStreetMap = ({
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [manualLat, setManualLat] = useState('');
+  const [manualLng, setManualLng] = useState('');
 
   // Fetch all countries
   useEffect(() => {
@@ -188,6 +193,94 @@ const OpenStreetMap = ({
     // Don't auto-zoom when marker is moved or new coordinates are set
   }, [selectedCoordinates]);
 
+  // Handle location search using Mapbox Geocoding API
+  const handleLocationSearch = async (query) => {
+    if (!query.trim() || query.length < 3) {
+      setSearchResults([]);
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      const response = await fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${mapboxgl.accessToken}&types=place,locality,neighborhood,address,poi&limit=5`
+      );
+      const data = await response.json();
+      
+      if (data.features) {
+        setSearchResults(data.features.map(feature => ({
+          id: feature.id,
+          place_name: feature.place_name,
+          center: feature.center,
+          place_type: feature.place_type[0]
+        })));
+      }
+    } catch (error) {
+      console.error('Search failed:', error);
+      setSearchResults([]);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  // Handle search result selection
+  const handleSearchResultSelect = (result) => {
+    const [lng, lat] = result.center;
+    
+    // Clear search
+    setSearchQuery('');
+    setSearchResults([]);
+    
+    // Update coordinates
+    if (onCoordinatesChange) {
+      onCoordinatesChange({
+        latitude: lat,
+        longitude: lng,
+      });
+    }
+    
+    // Center map and add marker
+    if (mapRef.current) {
+      mapRef.current.flyTo({
+        center: [lng, lat],
+        zoom: 15,
+        duration: 1500
+      });
+    }
+  };
+
+  // Handle manual coordinate input
+  const handleManualCoordinates = () => {
+    const lat = parseFloat(manualLat);
+    const lng = parseFloat(manualLng);
+    
+    if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+      alert('Please enter valid coordinates (Latitude: -90 to 90, Longitude: -180 to 180)');
+      return;
+    }
+    
+    // Update coordinates
+    if (onCoordinatesChange) {
+      onCoordinatesChange({
+        latitude: lat,
+        longitude: lng,
+      });
+    }
+    
+    // Center map
+    if (mapRef.current) {
+      mapRef.current.flyTo({
+        center: [lng, lat],
+        zoom: 15,
+        duration: 1500
+      });
+    }
+    
+    // Clear inputs
+    setManualLat('');
+    setManualLng('');
+  };
+
   // Handle country selection
   const handleCountrySelect = async (countryName) => {
     if (!countryName || !mapRef.current) return;
@@ -327,6 +420,81 @@ const OpenStreetMap = ({
 
   return (
     <div>
+      {/* Location Search */}
+      <div className="mb-4 p-3 bg-gray-800 rounded-lg">
+        <label className="block text-sm font-medium text-gray-300 mb-2">
+          Search Location
+        </label>
+        <div className="relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              handleLocationSearch(e.target.value);
+            }}
+            placeholder="Search for addresses, places, or landmarks..."
+            className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          />
+          {isSearching && (
+            <div className="absolute right-3 top-2">
+              <div className="animate-spin h-5 w-5 border-2 border-emerald-400 border-t-transparent rounded-full"></div>
+            </div>
+          )}
+        </div>
+        
+        {/* Search Results */}
+        {searchResults.length > 0 && (
+          <div className="mt-2 bg-gray-700 rounded-lg border border-gray-600 max-h-48 overflow-y-auto">
+            {searchResults.map((result) => (
+              <button
+                key={result.id}
+                onClick={() => handleSearchResultSelect(result)}
+                className="w-full text-left px-3 py-2 hover:bg-gray-600 text-white text-sm border-b border-gray-600 last:border-b-0 focus:outline-none focus:bg-gray-600"
+              >
+                <div className="font-medium">{result.place_name}</div>
+                <div className="text-xs text-gray-400 capitalize">{result.place_type}</div>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Manual Coordinate Input */}
+      <div className="mb-4 p-3 bg-gray-800 rounded-lg">
+        <label className="block text-sm font-medium text-gray-300 mb-2">
+          Manual Coordinate Entry
+        </label>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <input
+            type="number"
+            step="any"
+            value={manualLat}
+            onChange={(e) => setManualLat(e.target.value)}
+            placeholder="Latitude (-90 to 90)"
+            className="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          />
+          <input
+            type="number"
+            step="any"
+            value={manualLng}
+            onChange={(e) => setManualLng(e.target.value)}
+            placeholder="Longitude (-180 to 180)"
+            className="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          />
+          <button
+            onClick={handleManualCoordinates}
+            disabled={!manualLat || !manualLng}
+            className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg px-3 py-2 font-medium transition-colors"
+          >
+            Go to Location
+          </button>
+        </div>
+        <div className="mt-1 text-xs text-gray-400">
+          Example: 40.7128, -74.0060 (New York City)
+        </div>
+      </div>
+
       {/* Country Selector */}
       <div className="mb-4 p-3 bg-gray-800 rounded-lg">
         <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -357,10 +525,12 @@ const OpenStreetMap = ({
         <div className="mb-4 p-3 bg-gray-800 rounded-lg text-sm text-gray-300">
           <strong>Interactive Mode:</strong> 
           <ul className="mt-1 ml-4 list-disc">
-            <li>Single tap anywhere on the map to drop a pin for specific coordinates</li>
+            <li>Search for any location using the search box above</li>
+            <li>Enter coordinates manually for precise positioning</li>
+            <li>Single tap anywhere on the map to drop a pin</li>
             <li>Double tap to zoom in gradually</li>
             <li>Hold and drag the pin to move its location</li>
-            <li>Use the country selector above to highlight and view entire countries</li>
+            <li>Use the country selector to highlight entire countries</li>
           </ul>
         </div>
       )}
