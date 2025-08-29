@@ -40,7 +40,6 @@ function App() {
 						element={user?.role === "admin" ? <AdminPage /> : <Navigate to='/' />}
 					/>
 				</Routes>
-				<FloatingActionButtons />
 			</div>
 			<Toaster />
 		</div>
