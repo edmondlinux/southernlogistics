@@ -194,7 +194,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 
 				<form onSubmit={handleSubmit} className="space-y-8">
 					{/* Status Section */}
-					<div className="bg-gray-800 rounded-lg p-6">
+					<div className="bg-gray-800 rounded-lg p-1">
 						<div className="flex items-center mb-4">
 							<Package className="w-6 h-6 text-emerald-400 mr-2" />
 							<h3 className="text-xl font-semibold text-emerald-400">
@@ -230,7 +230,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 					</div>
 
 					{/* Sender Information */}
-					<div className="bg-gray-800 rounded-lg p-6">
+					<div className="bg-gray-800 rounded-lg p-1">
 						<div className="flex items-center mb-4">
 							<User className="w-6 h-6 text-emerald-400 mr-2" />
 							<h3 className="text-xl font-semibold text-emerald-400">
@@ -306,7 +306,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 					</div>
 
 					{/* Recipient Information */}
-					<div className="bg-gray-800 rounded-lg p-6">
+					<div className="bg-gray-800 rounded-lg p-1">
 						<div className="flex items-center mb-4">
 							<MapPin className="w-6 h-6 text-emerald-400 mr-2" />
 							<h3 className="text-xl font-semibold text-emerald-400">
@@ -382,7 +382,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 					</div>
 
 					{/* Package Details */}
-					<div className="bg-gray-800 rounded-lg p-6">
+					<div className="bg-gray-800 rounded-lg p-1">
 						<div className="flex items-center mb-4">
 							<Package className="w-6 h-6 text-emerald-400 mr-2" />
 							<h3 className="text-xl font-semibold text-emerald-400">
@@ -460,7 +460,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 
 					{/* OpenStreetMap Component */}
 					<div className="mt-8">
-						<div className="bg-gray-800 rounded-lg p-6">
+						<div className="bg-gray-800 rounded-lg p-1">
 							<div className="flex items-center mb-4">
 								<MapPin className="w-6 h-6 text-emerald-400 mr-2" />
 								<h3 className="text-xl font-semibold text-emerald-400">
@@ -478,7 +478,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 					</div>
 
 					{/* Shipping Options */}
-					<div className="bg-gray-800 rounded-lg p-6">
+					<div className="bg-gray-800 rounded-lg p-1">
 						<div className="flex items-center mb-4">
 							<DollarSign className="w-6 h-6 text-emerald-400 mr-2" />
 							<h3 className="text-xl font-semibold text-emerald-400">
