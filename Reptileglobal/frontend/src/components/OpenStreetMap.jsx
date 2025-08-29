@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -13,6 +13,27 @@ const OpenStreetMap = ({
   const mapContainerRef = useRef();
   const mapRef = useRef();
   const markerRef = useRef();
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // Fetch countries with population data
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch('https://restcountries.com/v3.1/all?fields=name,population,latlng');
+        const data = await response.json();
+        const sortedCountries = data
+          .filter(country => country.latlng && country.latlng.length === 2)
+          .sort((a, b) => b.population - a.population)
+          .slice(0, 50); // Top 50 most populated countries
+        setCountries(sortedCountries);
+      } catch (error) {
+        console.error('Failed to fetch countries:', error);
+      }
+    };
+    fetchCountries();
+  }, []);
 
   useEffect(() => {
     // Set Mapbox access token from environment variable
@@ -33,9 +54,20 @@ const OpenStreetMap = ({
 
     // Add marker if coordinates are provided
     if (selectedCoordinates) {
-      markerRef.current = new mapboxgl.Marker()
+      markerRef.current = new mapboxgl.Marker({ draggable: interactive })
         .setLngLat([selectedCoordinates.longitude, selectedCoordinates.latitude])
         .addTo(mapRef.current);
+
+      // Add drag event listener for interactive mode
+      if (interactive && onCoordinatesChange) {
+        markerRef.current.on('dragend', () => {
+          const lngLat = markerRef.current.getLngLat();
+          onCoordinatesChange({
+            latitude: lngLat.lat,
+            longitude: lngLat.lng,
+          });
+        });
+      }
     }
 
     // Add click event for interactive mode
@@ -48,10 +80,19 @@ const OpenStreetMap = ({
           markerRef.current.remove();
         }
 
-        // Add new marker
-        markerRef.current = new mapboxgl.Marker()
+        // Add new draggable marker
+        markerRef.current = new mapboxgl.Marker({ draggable: true })
           .setLngLat([lng, lat])
           .addTo(mapRef.current);
+
+        // Add drag event listener
+        markerRef.current.on('dragend', () => {
+          const lngLat = markerRef.current.getLngLat();
+          onCoordinatesChange({
+            latitude: lngLat.lat,
+            longitude: lngLat.lng,
+          });
+        });
 
         // Update coordinates
         onCoordinatesChange({
@@ -83,10 +124,21 @@ const OpenStreetMap = ({
       markerRef.current.remove();
     }
 
-    // Add new marker
-    markerRef.current = new mapboxgl.Marker()
+    // Add new draggable marker
+    markerRef.current = new mapboxgl.Marker({ draggable: interactive })
       .setLngLat([selectedCoordinates.longitude, selectedCoordinates.latitude])
       .addTo(mapRef.current);
+
+    // Add drag event listener for interactive mode
+    if (interactive && onCoordinatesChange) {
+      markerRef.current.on('dragend', () => {
+        const lngLat = markerRef.current.getLngLat();
+        onCoordinatesChange({
+          latitude: lngLat.lat,
+          longitude: lngLat.lng,
+        });
+      });
+    }
 
     // Center map on new coordinates
     mapRef.current.flyTo({
@@ -95,13 +147,101 @@ const OpenStreetMap = ({
     });
   }, [selectedCoordinates]);
 
+  // Handle country selection
+  const handleCountrySelect = async (countryName) => {
+    if (!countryName || !mapRef.current) return;
+    
+    setLoading(true);
+    setSelectedCountry(countryName);
+
+    try {
+      const country = countries.find(c => c.name.common === countryName);
+      if (country && country.latlng) {
+        const [lat, lng] = country.latlng;
+
+        // Remove existing marker
+        if (markerRef.current) {
+          markerRef.current.remove();
+        }
+
+        // Add new marker at country location
+        markerRef.current = new mapboxgl.Marker({ draggable: interactive })
+          .setLngLat([lng, lat])
+          .addTo(mapRef.current);
+
+        // Add drag event listener for interactive mode
+        if (interactive && onCoordinatesChange) {
+          markerRef.current.on('dragend', () => {
+            const lngLat = markerRef.current.getLngLat();
+            onCoordinatesChange({
+              latitude: lngLat.lat,
+              longitude: lngLat.lng,
+            });
+          });
+        }
+
+        // Fly to country location
+        mapRef.current.flyTo({
+          center: [lng, lat],
+          zoom: 6,
+          duration: 2000
+        });
+
+        // Update coordinates if callback provided
+        if (onCoordinatesChange) {
+          onCoordinatesChange({
+            latitude: lat,
+            longitude: lng,
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Failed to navigate to country:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
+      {/* Country Selector */}
+      <div className="mb-4 p-3 bg-gray-800 rounded-lg">
+        <label className="block text-sm font-medium text-gray-300 mb-2">
+          Navigate to Country (by Population)
+        </label>
+        <select
+          value={selectedCountry}
+          onChange={(e) => handleCountrySelect(e.target.value)}
+          disabled={loading}
+          className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:opacity-50"
+        >
+          <option value="">Select a country...</option>
+          {countries.map((country) => (
+            <option key={country.name.common} value={country.name.common}>
+              {country.name.common} (Pop: {country.population.toLocaleString()})
+            </option>
+          ))}
+        </select>
+        {loading && (
+          <div className="mt-2 text-sm text-emerald-400">
+            Navigating to {selectedCountry}...
+          </div>
+        )}
+      </div>
+
+      {/* Interactive Instructions */}
       {interactive && (
         <div className="mb-4 p-3 bg-gray-800 rounded-lg text-sm text-gray-300">
-          <strong>Interactive Mode:</strong> Click anywhere on the map to drop a pin
+          <strong>Interactive Mode:</strong> 
+          <ul className="mt-1 ml-4 list-disc">
+            <li>Click anywhere on the map to drop a pin</li>
+            <li>Hold and drag the pin to move its location</li>
+            <li>Use the country selector above to navigate to specific countries</li>
+          </ul>
         </div>
       )}
+
+      {/* Map Container */}
       <div
         ref={mapContainerRef}
         style={{ height: height }}
