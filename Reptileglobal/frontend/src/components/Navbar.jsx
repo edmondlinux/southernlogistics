@@ -21,12 +21,7 @@ const Navbar = () => {
 					</Link>
 
 					{/* Desktop Navigation */}
-					<nav className='hidden md:flex items-center space-x-8'>
-						<Link to='/admin-dashboard' className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'>
-							{t('nav.home')}
-						</Link>
 					
-					</nav>
 
 					{/* Desktop Actions */}
 					<div className='hidden md:flex items-center space-x-4'>
@@ -43,13 +38,7 @@ const Navbar = () => {
 										{t('nav.dashboard')}
 									</Link>
 								)}
-								<Link
-									to='/shipments'
-									className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out flex items-center'
-								>
-									<Truck className='mr-2 h-4 w-4' />
-									{t('nav.myShipments')}
-								</Link>
+								
 								<button
 									onClick={logout}
 									className='bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md font-medium transition duration-300 ease-in-out flex items-center'
@@ -60,13 +49,7 @@ const Navbar = () => {
 							</div>
 						) : (
 							<div className='flex items-center space-x-4'>
-								<Link
-									to='/signup'
-									className='bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md font-medium transition duration-300 ease-in-out flex items-center'
-								>
-									<UserPlus className='mr-2 h-4 w-4' />
-									{t('nav.signUp')}
-								</Link>
+								
 								<Link
 									to='/login'
 									className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out flex items-center'
@@ -94,49 +77,6 @@ const Navbar = () => {
 				{isOpen && (
 					<div className='md:hidden'>
 						<div className='px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-800 bg-opacity-95 backdrop-blur-md'>
-							<Link
-								to='/'
-								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
-								onClick={() => setIsOpen(false)}
-							>
-								{t('nav.home')}
-							</Link>
-							<Link
-								to='/about'
-								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
-								onClick={() => setIsOpen(false)}
-							>
-								{t('nav.about')}
-							</Link>
-							<Link
-								to='/team'
-								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
-								onClick={() => setIsOpen(false)}
-							>
-								{t('nav.team')}
-							</Link>
-							<Link
-								to='/testimonials'
-								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
-								onClick={() => setIsOpen(false)}
-							>
-								{t('nav.testimonials')}
-							</Link>
-							<Link
-								to='/contact'
-								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
-								onClick={() => setIsOpen(false)}
-							>
-								{t('nav.contact')}
-							</Link>
-							<Link
-								to='/track'
-								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
-								onClick={() => setIsOpen(false)}
-							>
-								{t('nav.track')}
-							</Link>
-
 							{user ? (
 								<div className='border-t border-gray-700 pt-4 mt-4'>
 									{user.role === 'admin' && (
@@ -150,12 +90,12 @@ const Navbar = () => {
 										</Link>
 									)}
 									<Link
-										to='/shipments'
+										to='/login'
 										className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
 										onClick={() => setIsOpen(false)}
 									>
-										<Truck className='inline mr-2 h-4 w-4' />
-										{t('nav.myShipments')}
+										<Lock className='inline mr-2 h-4 w-4' />
+										{t('nav.login')}
 									</Link>
 									<button
 										onClick={() => {
