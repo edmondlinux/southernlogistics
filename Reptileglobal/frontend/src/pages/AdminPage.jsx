@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import AnalyticsTab from "../components/AnalyticsTab";
 import CreateShipmentForm from "../components/CreateShipmentForm";
 import ShipmentsList from "../components/ShipmentsList";
+import EditShipmentForm from "../components/EditShipmentForm";
 import KYCMagicLinkGenerator from "../components/KYCMagicLinkGenerator";
 import { useShipmentStore } from "../stores/useShipmentStore";
 
@@ -15,16 +16,23 @@ const tabs = [
 	{ id: "create", label: "Create Shipment", icon: Plus },
 	{ id: "shipments", label: "All Shipments", icon: Package },
 	{ id: "search", label: "Search & Edit", icon: Search },
+	{ id: "edit", label: "Edit Shipment", icon: Package },
 	{ id: "analytics", label: "Analytics", icon: BarChart },
 ];
 
 const AdminPage = () => {
 	const [activeTab, setActiveTab] = useState("create");
+	const [editingShipment, setEditingShipment] = useState(null);
 	const { shipments, getAllShipments } = useShipmentStore();
 
 	useEffect(() => {
 		getAllShipments();
 	}, [getAllShipments]);
+
+	const handleEditShipment = (shipment) => {
+		setEditingShipment(shipment);
+		setActiveTab("edit");
+	};
 
 	return (
 		<div className='min-h-screen bg-gray-900 text-white relative overflow-hidden pt-20'>
@@ -56,8 +64,23 @@ const AdminPage = () => {
 				</div>
 
 				{activeTab === "create" && <CreateShipmentForm />}
-				{activeTab === "shipments" && <ShipmentsList isAdmin={true} />}
+				{activeTab === "shipments" && <ShipmentsList isAdmin={true} onEditShipment={handleEditShipment} />}
 				{activeTab === "search" && <SearchEditShipments />}
+				{activeTab === "edit" && editingShipment && (
+					<EditShipmentForm 
+						shipment={editingShipment} 
+						onUpdate={async (shipmentId, shipmentData) => {
+							// Handle update logic here
+							setEditingShipment(null);
+							setActiveTab("shipments");
+						}}
+						onClose={() => {
+							setEditingShipment(null);
+							setActiveTab("shipments");
+						}}
+						isInline={true}
+					/>
+				)}
 				{activeTab === "analytics" && <AnalyticsTab />}
 			</div>
 		</div>

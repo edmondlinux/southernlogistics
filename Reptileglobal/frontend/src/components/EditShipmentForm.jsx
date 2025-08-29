@@ -4,7 +4,7 @@ import { useShipmentStore } from "../stores/useShipmentStore";
 import { Package, User, MapPin, Calendar, DollarSign, X } from "lucide-react";
 import OpenStreetMap from "./OpenStreetMap";
 
-const EditShipmentForm = ({ shipment, onClose, onUpdate }) => {
+const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 	const { updateShipmentStatus, loading } = useShipmentStore();
 	const [coordinates, setCoordinates] = useState(shipment.coordinates || null);
 	const [formData, setFormData] = useState({
@@ -166,20 +166,31 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate }) => {
 		{ value: 'exception', label: 'Exception' }
 	];
 
-	return (
-		<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-			<div className="bg-gray-900 rounded-lg p-6 w-full max-w-6xl max-h-[95vh] overflow-y-auto">
-				<div className="flex items-center justify-between mb-6">
-					<h2 className="text-2xl font-semibold text-emerald-400">
-						Edit Shipment #{shipment.trackingNumber}
-					</h2>
+	const { isInline = false } = props;
+
+	const containerClass = isInline 
+		? "bg-gray-800 rounded-lg p-6 w-full" 
+		: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto";
+	
+	const formClass = isInline 
+		? "space-y-8" 
+		: "bg-gray-900 rounded-lg p-6 w-full max-w-6xl max-h-[95vh] overflow-y-auto";
+
+	const content = (
+		<>
+			<div className="flex items-center justify-between mb-6">
+				<h2 className="text-2xl font-semibold text-emerald-400">
+					Edit Shipment #{shipment.trackingNumber}
+				</h2>
+				{!isInline && (
 					<button
 						onClick={onClose}
 						className="text-gray-400 hover:text-white p-2"
 					>
 						<X className="w-6 h-6" />
 					</button>
-				</div>
+				)}
+			</div>
 
 				<form onSubmit={handleSubmit} className="space-y-8">
 					{/* Status Section */}
@@ -580,6 +591,17 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate }) => {
 						</button>
 					</div>
 				</form>
+			</>
+	);
+
+	return isInline ? (
+		<div className={containerClass}>
+			{content}
+		</div>
+	) : (
+		<div className={containerClass}>
+			<div className={formClass}>
+				{content}
 			</div>
 		</div>
 	);
