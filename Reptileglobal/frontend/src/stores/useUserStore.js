@@ -27,12 +27,15 @@ export const useUserStore = create((set, get) => ({
 		set({ loading: true });
 
 		try {
-			const res = await axios.post("/auth/login", { email, password });
-
+			const res = await axios.post("/auth/login", {
+				email: email,
+				password: password
+			});
 			set({ user: res.data, loading: false });
+			return res.data;
 		} catch (error) {
 			set({ loading: false });
-			toast.error(error.response.data.message || "An error occurred");
+			throw error;
 		}
 	},
 

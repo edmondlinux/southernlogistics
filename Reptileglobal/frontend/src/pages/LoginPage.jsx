@@ -10,6 +10,48 @@ const LoginPage = () => {
 		email: "",
 		password: "",
 	});
+	const [loading, setLoading] = useState(false);
+	const { login } = useUserStore();
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setLoading(true);
+		try {
+			await login(formData.email, formData.password);
+		} catch (error) {
+			console.error("Login failed:", error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	return (
+		<div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900 py-12 px-4 sm:px-6 lg:px-8'>
+			<div className='max-w-md w-full space-y-8'>
+				<div>
+					<motion.div
+						className='mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-emerald-600'
+						initial={{ scale: 0 }}
+						animate={{ scale: 1 }}
+						transition={{ duration: 0.5 }}
+					>
+						<LogIn className='h-6 w-6 text-white' />
+					</motion.div>
+					<motion.h2
+						className='mt-6 text-center text-3xl font-extrabold text-white'
+						initial={{ opacity: 0, y: -20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: 0.1, duration: 0.8 }}
+					>
+						Admin Login
+					</motion.h2>
+				</div>
+
+const LoginPage = () => {
+	const [formData, setFormData] = useState({
+		email: "",
+		password: "",
+	});
 
 	const { login, loading } = useUserStore();
 
