@@ -1,4 +1,5 @@
-import { BarChart, Plus, Package, List, Search, Truck, Key, Trash2 } from "lucide-react";
+
+import { BarChart, Plus, Package, List, Search, Truck, Key } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -19,7 +20,7 @@ const tabs = [
 
 const AdminPage = () => {
 	const [activeTab, setActiveTab] = useState("create");
-	const { shipments, getAllShipments, deleteShipment } = useShipmentStore();
+	const { shipments, getAllShipments } = useShipmentStore();
 
 	useEffect(() => {
 		getAllShipments();
@@ -56,14 +57,14 @@ const AdminPage = () => {
 
 				{activeTab === "create" && <CreateShipmentForm />}
 				{activeTab === "shipments" && <ShipmentsList isAdmin={true} />}
-				{activeTab === "search" && <SearchEditShipments onDelete={deleteShipment} />}
+				{activeTab === "search" && <SearchEditShipments />}
 				{activeTab === "analytics" && <AnalyticsTab />}
 			</div>
 		</div>
 	);
 };
 
-const SearchEditShipments = ({ onDelete }) => {
+const SearchEditShipments = () => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [selectedShipment, setSelectedShipment] = useState(null);
 	const [showKYCModal, setShowKYCModal] = useState(false);
@@ -88,12 +89,6 @@ const SearchEditShipments = ({ onDelete }) => {
 	const handleGenerateKYCLink = (shipment) => {
 		setSelectedShipmentForKYC(shipment);
 		setShowKYCModal(true);
-	};
-
-	const handleDeleteShipment = async (shipmentId) => {
-		if (window.confirm("Are you sure you want to delete this shipment?")) {
-			await onDelete(shipmentId);
-		}
 	};
 
 	return (
@@ -137,12 +132,6 @@ const SearchEditShipments = ({ onDelete }) => {
 												className="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm transition duration-300"
 											>
 												Edit
-											</button>
-											<button
-												onClick={() => handleDeleteShipment(shipment._id)}
-												className='bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-sm transition duration-300'
-											>
-												<Trash2 className='w-4 h-4' />
 											</button>
 										</div>
 									</div>
@@ -228,7 +217,7 @@ const ShipmentEditForm = ({ shipment, onUpdate, onCancel }) => {
 				>
 					Update Shipment
 				</button>
-
+			
 				<button
 					type="button"
 					onClick={onCancel}
@@ -237,7 +226,7 @@ const ShipmentEditForm = ({ shipment, onUpdate, onCancel }) => {
 					Cancel
 				</button>
 			</div>
-
+			
 		</form>
 	);
 };

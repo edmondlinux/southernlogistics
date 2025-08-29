@@ -274,15 +274,13 @@ const ShipmentsList = ({ isAdmin = false }) => {
 				</div>
 			)}
 
-			{/* Edit Form as Full Page Content */}
+			{/* Edit Modal */}
 			{editingShipment && (
-				<div className="fixed inset-0 bg-gray-900 z-50 overflow-y-auto">
-					<EditShipmentForm
-						shipment={editingShipment}
-						onUpdate={handleShipmentUpdate}
-						onClose={() => setEditingShipment(null)}
-					/>
-				</div>
+				<EditShipmentForm
+					shipment={editingShipment}
+					onUpdate={handleShipmentUpdate}
+					onClose={() => setEditingShipment(null)}
+				/>
 			)}
 
 			{showKYCModal && selectedShipmentForKYC && (
