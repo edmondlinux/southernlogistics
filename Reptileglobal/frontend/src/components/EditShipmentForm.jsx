@@ -6,7 +6,12 @@ import OpenStreetMap from "./OpenStreetMap";
 
 const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 	const { updateShipmentStatus, loading } = useShipmentStore();
-	const [coordinates, setCoordinates] = useState(shipment.coordinates || null);
+	const [coordinates, setCoordinates] = useState(
+		shipment.coordinates ? {
+			latitude: shipment.coordinates.latitude,
+			longitude: shipment.coordinates.longitude
+		} : null
+	);
 	const [formData, setFormData] = useState({
 		// Sender Information
 		senderName: shipment.sender.name || "",
