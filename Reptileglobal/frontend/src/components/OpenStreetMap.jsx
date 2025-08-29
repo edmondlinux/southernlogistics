@@ -1,5 +1,8 @@
+
 import { useEffect, useRef, useState } from "react";
 import { MapPin, X, ChevronDown } from "lucide-react";
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const OpenStreetMap = ({
   height = "400px",
@@ -126,8 +129,11 @@ const OpenStreetMap = ({
       const country = countries.find(c => c.code === countryCode);
       if (country) {
         // Move map to country and place marker
-        mapInstanceRef.current.setView([country.lat, country.lng], 6);
-        placeMarker(country.lat, country.lng, mapInstanceRef.current, false);
+        mapInstanceRef.current.flyTo({
+          center: [country.lng, country.lat],
+          zoom: 6
+        });
+        placeMarker(country.lat, country.lng, false);
       }
     }
   };
@@ -140,242 +146,193 @@ const OpenStreetMap = ({
       const state = states[parseInt(stateIndex)];
       if (state) {
         // Move map to state/city and place marker
-        mapInstanceRef.current.setView([state.lat, state.lng], 10);
-        placeMarker(state.lat, state.lng, mapInstanceRef.current, false);
+        mapInstanceRef.current.flyTo({
+          center: [state.lng, state.lat],
+          zoom: 10
+        });
+        placeMarker(state.lat, state.lng, false);
       }
     }
   };
 
-  // Separate effect for map initialization (runs only once)
+  // Function to place marker
+  const placeMarker = (lat, lng, updateCoordinates = true) => {
+    if (!mapInstanceRef.current) return;
+
+    // Remove existing marker
+    if (markerRef.current) {
+      markerRef.current.remove();
+    }
+
+    // Create custom marker element
+    const markerElement = document.createElement('div');
+    markerElement.innerHTML = `
+      <div style="position: relative;">
+        <div style="
+          width: 0; 
+          height: 0; 
+          border-left: 12px solid transparent; 
+          border-right: 12px solid transparent; 
+          border-top: 20px solid #10b981;
+          position: relative;
+          filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        "></div>
+        <div style="
+          width: 16px; 
+          height: 16px; 
+          background-color: #10b981; 
+          border-radius: 50%; 
+          border: 2px solid white;
+          position: absolute;
+          top: -18px;
+          left: -8px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        "></div>
+      </div>
+    `;
+
+    // Add new marker
+    markerRef.current = new mapboxgl.Marker({
+      element: markerElement,
+      draggable: interactive
+    })
+      .setLngLat([lng, lat])
+      .addTo(mapInstanceRef.current);
+
+    // Add popup
+    const popup = new mapboxgl.Popup({ offset: 25 })
+      .setHTML(`<strong>Selected Location</strong><br/>
+                Latitude: ${lat.toFixed(6)}<br/>
+                Longitude: ${lng.toFixed(6)}`);
+    
+    markerRef.current.setPopup(popup);
+
+    // Add drag event listeners for interactive mode
+    if (interactive && onCoordinatesChange) {
+      markerRef.current.on('dragend', (e) => {
+        const lngLat = e.target.getLngLat();
+        onCoordinatesChange({
+          latitude: lngLat.lat,
+          longitude: lngLat.lng,
+        });
+        
+        // Update popup content
+        const newPopup = new mapboxgl.Popup({ offset: 25 })
+          .setHTML(`<strong>Selected Location</strong><br/>
+                    Latitude: ${lngLat.lat.toFixed(6)}<br/>
+                    Longitude: ${lngLat.lng.toFixed(6)}`);
+        markerRef.current.setPopup(newPopup);
+      });
+    }
+
+    // Update coordinates
+    if (updateCoordinates && onCoordinatesChange) {
+      onCoordinatesChange({
+        latitude: lat,
+        longitude: lng,
+      });
+    }
+  };
+
+  // Initialize map
   useEffect(() => {
-    // Load Leaflet CSS and JS dynamically
-    const loadLeaflet = async () => {
-      // Check if Leaflet is already loaded
-      if (window.L) {
-        initializeMap();
-        return;
-      }
+    // Set Mapbox access token from environment variable
+    mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_API_TOKEN || 'pk.eyJ1IjoiZ25zbGVpZ2h0cyIsImEiOiJjbWV3cGFjeW0wbGE4MmlyMnV6ZGJ6ODN4In0.jIwl67v_ymjWSHEDxfnFZw';
 
-      // Load Leaflet CSS
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-      link.integrity = "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
-      link.crossOrigin = "";
-      document.head.appendChild(link);
+    if (!mapRef.current || mapInstanceRef.current) return;
 
-      // Load Leaflet JS
-      const script = document.createElement("script");
-      script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-      script.integrity = "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
-      script.crossOrigin = "";
-      script.onload = initializeMap;
-      document.head.appendChild(script);
-    };
+    // Use coordinates if provided, otherwise default to world view
+    const lat = selectedCoordinates ? selectedCoordinates.latitude : 20;
+    const lng = selectedCoordinates ? selectedCoordinates.longitude : 0;
+    const zoom = selectedCoordinates ? 12 : defaultZoom;
 
-    const initializeMap = () => {
-      if (!mapRef.current || mapInstanceRef.current) return;
+    // Initialize the map
+    mapInstanceRef.current = new mapboxgl.Map({
+      container: mapRef.current,
+      style: 'mapbox://styles/mapbox/streets-v12', // You can change this to other styles
+      center: [lng, lat],
+      zoom: zoom,
+      dragPan: true,
+      scrollZoom: true,
+      doubleClickZoom: false,
+      touchZoomRotate: true,
+      keyboard: interactive,
+    });
 
-      // Use coordinates if provided, otherwise default to world view
-      const lat = selectedCoordinates ? selectedCoordinates.latitude : 20;
-      const lng = selectedCoordinates ? selectedCoordinates.longitude : 0;
-      const zoom = selectedCoordinates ? 12 : defaultZoom;
+    // Add navigation controls
+    mapInstanceRef.current.addControl(new mapboxgl.NavigationControl());
 
-      // Initialize the map with appropriate interactions based on mode
-      const map = window.L.map(mapRef.current, {
-        dragging: true,
-        touchZoom: true,
-        doubleClickZoom: false,
-        scrollWheelZoom: true,
-        boxZoom: false,
-        keyboard: interactive,
-        zoomControl: true,
-        tap: false,
-        tapTolerance: 15,
-      }).setView([lat, lng], zoom);
-
-      // Disable specific zoom handlers that might cause issues
-      map.touchZoom.disable();
-      map.touchZoom.enable();
-
-      // Set touch zoom to only work with multi-touch (pinch)
-      if (map.touchZoom._enabled) {
-        map.touchZoom._onTouchStart = (function (original) {
-          return function (e) {
-            if (e.touches && e.touches.length >= 2) {
-              return original.call(this, e);
-            }
-          };
-        })(map.touchZoom._onTouchStart);
-      }
-
-      // Add OpenStreetMap tiles
-      window.L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }).addTo(map);
-
-      // Add click/touch event listeners for interactive mode
-      if (interactive && onCoordinatesChange) {
-        // For desktop - double click
-        map.on("dblclick", (e) => {
-          const { lat, lng } = e.latlng;
-          placeMarker(lat, lng, map);
-        });
-
-        // For mobile - long press (hold)
-        let pressTimer = null;
-        let startPos = null;
-        let hasMoved = false;
-
-        map.on("mousedown touchstart", (e) => {
-          const originalEvent = e.originalEvent;
-          startPos = { x: e.containerPoint.x, y: e.containerPoint.y };
-          hasMoved = false;
-
-          // Handle touch events (only single touch)
-          if (originalEvent.touches && originalEvent.touches.length === 1) {
-            pressTimer = setTimeout(() => {
-              if (!hasMoved) {
-                const { lat, lng } = e.latlng;
-                placeMarker(lat, lng, map);
-              }
-            }, 700);
-          }
-          // Handle mouse events (excluding right clicks)
-          else if (!originalEvent.touches && originalEvent.button === 0) {
-            pressTimer = setTimeout(() => {
-              if (!hasMoved) {
-                const { lat, lng } = e.latlng;
-                placeMarker(lat, lng, map);
-              }
-            }, 700);
-          }
-        });
-
-        map.on("mousemove touchmove", (e) => {
-          if (startPos) {
-            const currentPos = { x: e.containerPoint.x, y: e.containerPoint.y };
-            const distance = Math.sqrt(
-              Math.pow(currentPos.x - startPos.x, 2) + 
-              Math.pow(currentPos.y - startPos.y, 2)
-            );
-
-            if (distance > 10) {
-              hasMoved = true;
-              if (pressTimer) {
-                clearTimeout(pressTimer);
-                pressTimer = null;
-              }
-            }
-          }
-        });
-
-        map.on("mouseup touchend", () => {
-          if (pressTimer) {
-            clearTimeout(pressTimer);
-            pressTimer = null;
-          }
-          startPos = null;
-          hasMoved = false;
-        });
-
-        // Prevent context menu on long press
-        map.on("contextmenu", (e) => {
-          e.originalEvent.preventDefault();
-          return false;
-        });
-      }
-
-      mapInstanceRef.current = map;
-    };
-
-    const placeMarker = (lat, lng, map, updateCoordinates = true) => {
-      // Custom pin icon for shipment location
-      const shipmentIcon = window.L.divIcon({
-        html: `<div style="position: relative;">
-                 <div style="
-                   width: 0; 
-                   height: 0; 
-                   border-left: 12px solid transparent; 
-                   border-right: 12px solid transparent; 
-                   border-top: 20px solid #10b981;
-                   position: relative;
-                   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-                 "></div>
-                 <div style="
-                   width: 16px; 
-                   height: 16px; 
-                   background-color: #10b981; 
-                   border-radius: 50%; 
-                   border: 2px solid white;
-                   position: absolute;
-                   top: -18px;
-                   left: -8px;
-                   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-                 "></div>
-               </div>`,
-        iconSize: [24, 32],
-        iconAnchor: [12, 32],
-        className: "shipment-location-icon",
+    // Add click/touch event listeners for interactive mode
+    if (interactive && onCoordinatesChange) {
+      // For desktop - double click
+      mapInstanceRef.current.on('dblclick', (e) => {
+        const { lat, lng } = e.lngLat;
+        placeMarker(lat, lng);
       });
 
-      // Remove existing marker
-      if (markerRef.current) {
-        map.removeLayer(markerRef.current);
-      }
+      // For mobile - long press (hold)
+      let pressTimer = null;
+      let startPos = null;
+      let hasMoved = false;
 
-      // Add new marker with drag functionality
-      markerRef.current = window.L.marker([lat, lng], {
-        icon: shipmentIcon,
-        draggable: interactive,
-      }).addTo(map).bindPopup(`<strong>Selected Location</strong><br/>
-                   Latitude: ${lat.toFixed(6)}<br/>
-                   Longitude: ${lng.toFixed(6)}`);
+      mapInstanceRef.current.on('mousedown touchstart', (e) => {
+        const originalEvent = e.originalEvent;
+        startPos = { x: e.point.x, y: e.point.y };
+        hasMoved = false;
 
-      // Add drag event listeners for interactive mode
-      if (interactive && onCoordinatesChange) {
-        // Disable map dragging when starting to drag the marker
-        markerRef.current.on("dragstart", (e) => {
-          map.dragging.disable();
-        });
+        // Handle touch events (only single touch)
+        if (originalEvent.touches && originalEvent.touches.length === 1) {
+          pressTimer = setTimeout(() => {
+            if (!hasMoved) {
+              const { lat, lng } = e.lngLat;
+              placeMarker(lat, lng);
+            }
+          }, 700);
+        }
+        // Handle mouse events (excluding right clicks)
+        else if (!originalEvent.touches && originalEvent.button === 0) {
+          pressTimer = setTimeout(() => {
+            if (!hasMoved) {
+              const { lat, lng } = e.lngLat;
+              placeMarker(lat, lng);
+            }
+          }, 700);
+        }
+      });
 
-        // Re-enable map dragging when marker drag ends
-        markerRef.current.on("dragend", (e) => {
-          map.dragging.enable();
-          const { lat: newLat, lng: newLng } = e.target.getLatLng();
-          onCoordinatesChange({
-            latitude: newLat,
-            longitude: newLng,
-          });
-          // Update popup content
-          e.target.setPopupContent(`<strong>Selected Location</strong><br/>
-                                  Latitude: ${newLat.toFixed(6)}<br/>
-                                  Longitude: ${newLng.toFixed(6)}`);
-        });
+      mapInstanceRef.current.on('mousemove touchmove', (e) => {
+        if (startPos) {
+          const currentPos = { x: e.point.x, y: e.point.y };
+          const distance = Math.sqrt(
+            Math.pow(currentPos.x - startPos.x, 2) + 
+            Math.pow(currentPos.y - startPos.y, 2)
+          );
 
-        // Optional: Handle drag event for real-time updates
-        markerRef.current.on("drag", (e) => {
-          // You can uncomment this if you want real-time coordinate updates while dragging
-          // const { lat: newLat, lng: newLng } = e.target.getLatLng();
-          // onCoordinatesChange({
-          //   latitude: newLat,
-          //   longitude: newLng,
-          // });
-        });
-      }
+          if (distance > 10) {
+            hasMoved = true;
+            if (pressTimer) {
+              clearTimeout(pressTimer);
+              pressTimer = null;
+            }
+          }
+        }
+      });
 
-      // Update coordinates
-      if (updateCoordinates && onCoordinatesChange) {
-        onCoordinatesChange({
-          latitude: lat,
-          longitude: lng,
-        });
-      }
-    };
+      mapInstanceRef.current.on('mouseup touchend', () => {
+        if (pressTimer) {
+          clearTimeout(pressTimer);
+          pressTimer = null;
+        }
+        startPos = null;
+        hasMoved = false;
+      });
 
-    loadLeaflet();
+      // Prevent context menu on long press
+      mapInstanceRef.current.on('contextmenu', (e) => {
+        e.preventDefault();
+        return false;
+      });
+    }
 
     // Cleanup function
     return () => {
@@ -383,90 +340,19 @@ const OpenStreetMap = ({
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
       }
-      markerRef.current = null;
+      if (markerRef.current) {
+        markerRef.current.remove();
+        markerRef.current = null;
+      }
     };
   }, [defaultZoom, interactive]);
 
-  // Separate effect to handle coordinate changes without reinitializing the map
+  // Handle coordinate changes
   useEffect(() => {
     if (!mapInstanceRef.current || !selectedCoordinates) return;
 
-    // Custom pin icon for shipment location
-    const shipmentIcon = window.L.divIcon({
-      html: `<div style="position: relative;">
-               <div style="
-                 width: 0; 
-                 height: 0; 
-                 border-left: 12px solid transparent; 
-                 border-right: 12px solid transparent; 
-                 border-top: 20px solid #10b981;
-                 position: relative;
-                 filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-               "></div>
-               <div style="
-                 width: 16px; 
-                 height: 16px; 
-                 background-color: #10b981; 
-                 border-radius: 50%; 
-                 border: 2px solid white;
-                 position: absolute;
-                 top: -18px;
-                 left: -8px;
-                 box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-               "></div>
-             </div>`,
-      iconSize: [24, 32],
-      iconAnchor: [12, 32],
-      className: "shipment-location-icon",
-    });
-
-    // Remove existing marker
-    if (markerRef.current) {
-      mapInstanceRef.current.removeLayer(markerRef.current);
-    }
-
-    // Add marker at new coordinates without changing zoom
-    markerRef.current = window.L.marker(
-      [selectedCoordinates.latitude, selectedCoordinates.longitude],
-      {
-        icon: shipmentIcon,
-        draggable: interactive,
-      },
-    ).addTo(mapInstanceRef.current).bindPopup(`<strong>Shipment Location</strong><br/>
-                 Latitude: ${selectedCoordinates.latitude.toFixed(6)}<br/>
-                 Longitude: ${selectedCoordinates.longitude.toFixed(6)}`);
-
-    // Add drag event listeners for interactive mode
-    if (interactive && onCoordinatesChange) {
-      // Disable map dragging when starting to drag the marker
-      markerRef.current.on("dragstart", (e) => {
-        mapInstanceRef.current.dragging.disable();
-      });
-
-      // Re-enable map dragging when marker drag ends
-      markerRef.current.on("dragend", (e) => {
-        mapInstanceRef.current.dragging.enable();
-        const { lat, lng } = e.target.getLatLng();
-        onCoordinatesChange({
-          latitude: lat,
-          longitude: lng,
-        });
-        // Update popup content
-        e.target.setPopupContent(`<strong>Shipment Location</strong><br/>
-                                Latitude: ${lat.toFixed(6)}<br/>
-                                Longitude: ${lng.toFixed(6)}`);
-      });
-
-      // Optional: Handle drag event for real-time updates
-      markerRef.current.on("drag", (e) => {
-        // You can uncomment this if you want real-time coordinate updates while dragging
-        // const { lat, lng } = e.target.getLatLng();
-        // onCoordinatesChange({
-        //   latitude: lat,
-        //   longitude: lng,
-        // });
-      });
-    }
+    // Place marker at new coordinates
+    placeMarker(selectedCoordinates.latitude, selectedCoordinates.longitude, false);
   }, [selectedCoordinates, interactive, onCoordinatesChange]);
 
   return (
@@ -537,9 +423,12 @@ const OpenStreetMap = ({
                 setSelectedCountry("");
                 setSelectedState("");
                 if (mapInstanceRef.current && markerRef.current) {
-                  mapInstanceRef.current.removeLayer(markerRef.current);
+                  markerRef.current.remove();
                   markerRef.current = null;
-                  mapInstanceRef.current.setView([20, 0], defaultZoom);
+                  mapInstanceRef.current.flyTo({
+                    center: [0, 20],
+                    zoom: defaultZoom
+                  });
                 }
               }}
               className="flex items-center gap-1 text-sm text-red-400 hover:text-red-300 transition-colors"
