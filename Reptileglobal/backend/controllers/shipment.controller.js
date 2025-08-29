@@ -1,4 +1,6 @@
+
 import Shipment from "../models/shipment.model.js";
+import EmailService from "../lib/emailService.js";
 
 // Generate a new tracking number
 export const generateTrackingNumber = async (req, res) => {
@@ -11,7 +13,36 @@ export const generateTrackingNumber = async (req, res) => {
 	}
 };
 
-// Create a new shipment (admin only)
+// Track a shipment by tracking number (public endpoint)
+export const trackShipment = async (req, res) => {
+	try {
+		const { trackingNumber } = req.params;
+		
+		const shipment = await Shipment.findOne({ trackingNumber }).populate('user', 'name email');
+		
+		if (!shipment) {
+			return res.status(404).json({ message: "Shipment not found" });
+		}
+
+		res.json(shipment);
+	} catch (error) {
+		console.log("Error in trackShipment controller", error.message);
+		res.status(500).json({ message: "Server error", error: error.message });
+	}
+};
+
+// Get all shipments for logged-in user
+export const getUserShipments = async (req, res) => {
+	try {
+		const shipments = await Shipment.find({ user: req.user._id }).sort({ createdAt: -1 });
+		res.json(shipments);
+	} catch (error) {
+		console.log("Error in getUserShipments controller", error.message);
+		res.status(500).json({ message: "Server error", error: error.message });
+	}
+};
+
+// Create a new shipment
 export const createShipment = async (req, res) => {
 	try {
 		const {
@@ -35,7 +66,7 @@ export const createShipment = async (req, res) => {
 
 		const shipment = new Shipment({
 			trackingNumber: finalTrackingNumber,
-			user: req.user._id, // Assuming the user is an admin
+			user: req.user ? req.user._id : null, // Allow creation without user for admin
 			sender,
 			recipient,
 			packageDetails,
@@ -53,11 +84,39 @@ export const createShipment = async (req, res) => {
 				status: 'pending',
 				location: 'Origin facility',
 				timestamp: new Date(),
-				notes: 'Shipment created by admin'
+				notes: 'Shipment created'
 			}]
 		});
 
 		const savedShipment = await shipment.save();
+		
+		// Send email notifications (non-transactional)
+		const emailService = new EmailService();
+		
+		// Send email to sender (fire and forget)
+		setImmediate(async () => {
+			try {
+				const result = await emailService.sendShipmentNotification(savedShipment, 'sender');
+				if (result.success) {
+					console.log(`Sender notification sent successfully for ${savedShipment.trackingNumber}`);
+				}
+			} catch (error) {
+				console.error(`Failed to send sender notification for ${savedShipment.trackingNumber}:`, error);
+			}
+		});
+		
+		// Send email to recipient (fire and forget)
+		setImmediate(async () => {
+			try {
+				const result = await emailService.sendShipmentNotification(savedShipment, 'recipient');
+				if (result.success) {
+					console.log(`Recipient notification sent successfully for ${savedShipment.trackingNumber}`);
+				}
+			} catch (error) {
+				console.error(`Failed to send recipient notification for ${savedShipment.trackingNumber}:`, error);
+			}
+		});
+		
 		res.status(201).json(savedShipment);
 	} catch (error) {
 		console.log("Error in createShipment controller", error.message);
@@ -72,7 +131,7 @@ export const updateShipmentStatus = async (req, res) => {
 		const { status, location } = req.body;
 
 		const shipment = await Shipment.findById(shipmentId);
-
+		
 		if (!shipment) {
 			return res.status(404).json({ message: "Shipment not found" });
 		}
@@ -103,7 +162,7 @@ export const updateShipment = async (req, res) => {
 		const updateData = req.body;
 
 		const shipment = await Shipment.findById(shipmentId);
-
+		
 		if (!shipment) {
 			return res.status(404).json({ message: "Shipment not found" });
 		}
@@ -141,15 +200,15 @@ export const updateShipment = async (req, res) => {
 // Get all shipments (admin only)
 export const getAllShipments = async (req, res) => {
 	try {
-		const { page = 1, limit = 50, status, search } = req.query;
-
+		const { page = 1, limit = 20, status, search } = req.query;
+		
 		let query = {};
-
+		
 		// Filter by status if provided
 		if (status && status !== 'all') {
 			query.status = status;
 		}
-
+		
 		// Search by tracking number, sender name, or recipient name
 		if (search) {
 			query.$or = [
@@ -183,9 +242,9 @@ export const getAllShipments = async (req, res) => {
 export const deleteShipment = async (req, res) => {
 	try {
 		const { shipmentId } = req.params;
-
+		
 		const shipment = await Shipment.findByIdAndDelete(shipmentId);
-
+		
 		if (!shipment) {
 			return res.status(404).json({ message: "Shipment not found" });
 		}
@@ -201,9 +260,9 @@ export const deleteShipment = async (req, res) => {
 export const getShipmentById = async (req, res) => {
 	try {
 		const { shipmentId } = req.params;
-
+		
 		const shipment = await Shipment.findById(shipmentId).populate('user', 'name email');
-
+		
 		if (!shipment) {
 			return res.status(404).json({ message: "Shipment not found" });
 		}

@@ -167,18 +167,19 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate }) => {
 	];
 
 	return (
-		<div className="bg-gray-800 rounded-lg p-6">
-			<div className="flex items-center justify-between mb-6">
-				<h2 className="text-2xl font-semibold text-emerald-400">
-					Edit Shipment #{shipment.trackingNumber}
-				</h2>
-				<button
-					onClick={onClose}
-					className="text-gray-400 hover:text-white p-2"
-				>
-					<X className="w-6 h-6" />
-				</button>
-			</div>
+		<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+			<div className="bg-gray-900 rounded-lg p-6 w-full max-w-6xl max-h-[95vh] overflow-y-auto">
+				<div className="flex items-center justify-between mb-6">
+					<h2 className="text-2xl font-semibold text-emerald-400">
+						Edit Shipment #{shipment.trackingNumber}
+					</h2>
+					<button
+						onClick={onClose}
+						className="text-gray-400 hover:text-white p-2"
+					>
+						<X className="w-6 h-6" />
+					</button>
+				</div>
 
 				<form onSubmit={handleSubmit} className="space-y-8">
 					{/* Status Section */}
@@ -579,6 +580,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate }) => {
 						</button>
 					</div>
 				</form>
+			</div>
 		</div>
 	);
 };

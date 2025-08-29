@@ -1,128 +1,120 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Lock, LogIn, Loader } from "lucide-react";
 import { Link } from "react-router-dom";
+import { LogIn, Mail, Lock, ArrowRight, Loader } from "lucide-react";
 import { useUserStore } from "../stores/useUserStore";
+import { useTranslation } from "../hooks/useTranslation";
 
 const LoginPage = () => {
-	const [formData, setFormData] = useState({
-		email: "",
-		password: "",
-	});
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const { t } = useTranslation();
 
 	const { login, loading } = useUserStore();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		login(formData);
+		console.log(email, password);
+		login(email, password);
 	};
 
 	return (
-		<div className='min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden'>
-			<div className='max-w-md w-full space-y-8 bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 relative z-10'>
-				<div>
-					<motion.div
-						className='mx-auto h-12 w-12 bg-emerald-600 rounded-full flex items-center justify-center'
-						initial={{ scale: 0 }}
-						animate={{ scale: 1 }}
-						transition={{ duration: 0.5 }}
-					>
-						<LogIn className='h-6 w-6 text-white' />
-					</motion.div>
-					<motion.h2
-						className='mt-6 text-center text-3xl font-extrabold text-white'
-						initial={{ opacity: 0, y: -20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.8 }}
-					>
-						Admin Login
-					</motion.h2>
-					<motion.p
-						className='mt-2 text-center text-sm text-gray-400'
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ delay: 0.3, duration: 0.8 }}
-					>
-						Access the Reptile Global Admin Dashboard
-					</motion.p>
-				</div>
+		<div className='flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
+			<motion.div
+				className='sm:mx-auto sm:w-full sm:max-w-md'
+				initial={{ opacity: 0, y: -20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.8 }}
+			>
+				<h2 className='mt-6 text-center text-3xl font-extrabold text-emerald-400'>
+					{t('auth.login.title')}
+				</h2>
+			</motion.div>
 
-				<motion.form
-					className='mt-8 space-y-6'
-					onSubmit={handleSubmit}
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.2, duration: 0.8 }}
-				>
-					<div className='space-y-4'>
+			<motion.div
+				className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'
+				initial={{ opacity: 0, y: 20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.8, delay: 0.2 }}
+			>
+				<div className='bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10'>
+					<form onSubmit={handleSubmit} className='space-y-6'>
 						<div>
-							<label htmlFor='email' className='sr-only'>
-								Email address
+							<label htmlFor='email' className='block text-sm font-medium text-gray-300'>
+								{t('auth.login.emailLabel')}
 							</label>
-							<div className='relative'>
+							<div className='mt-1 relative rounded-md shadow-sm'>
 								<div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
-									<Mail className='h-5 w-5 text-gray-400' />
+									<Mail className='h-5 w-5 text-gray-400' aria-hidden='true' />
 								</div>
 								<input
 									id='email'
-									name='email'
 									type='email'
 									required
-									className='appearance-none relative block w-full px-3 py-3 pl-10 border border-gray-600 placeholder-gray-400 text-white bg-gray-700 rounded-lg focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm'
-									placeholder='Admin email address'
-									value={formData.email}
-									onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+									className=' block w-full px-3 py-2 pl-10 bg-gray-700 border border-gray-600 
+									rounded-md shadow-sm
+									 placeholder-gray-400 focus:outline-none focus:ring-emerald-500 
+									 focus:border-emerald-500 sm:text-sm'
+									placeholder={t('auth.login.emailPlaceholder')}
 								/>
 							</div>
 						</div>
+
 						<div>
-							<label htmlFor='password' className='sr-only'>
-								Password
+							<label htmlFor='password' className='block text-sm font-medium text-gray-300'>
+								{t('auth.login.passwordLabel')}
 							</label>
-							<div className='relative'>
+							<div className='mt-1 relative rounded-md shadow-sm'>
 								<div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
-									<Lock className='h-5 w-5 text-gray-400' />
+									<Lock className='h-5 w-5 text-gray-400' aria-hidden='true' />
 								</div>
 								<input
 									id='password'
-									name='password'
 									type='password'
 									required
-									className='appearance-none relative block w-full px-3 py-3 pl-10 border border-gray-600 placeholder-gray-400 text-white bg-gray-700 rounded-lg focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm'
-									placeholder='Admin password'
-									value={formData.password}
-									onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+									className=' block w-full px-3 py-2 pl-10 bg-gray-700 border border-gray-600 
+									rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm'
+									placeholder={t('auth.login.passwordPlaceholder')}
 								/>
 							</div>
 						</div>
-					</div>
 
-					<div>
 						<button
 							type='submit'
+							className='w-full flex justify-center py-2 px-4 border border-transparent 
+							rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600
+							 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2
+							  focus:ring-emerald-500 transition duration-150 ease-in-out disabled:opacity-50'
 							disabled={loading}
-							className='group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300'
 						>
 							{loading ? (
-								<Loader className='h-5 w-5 animate-spin' />
+								<>
+									<Loader className='mr-2 h-5 w-5 animate-spin' aria-hidden='true' />
+									{t('common.loading')}
+								</>
 							) : (
 								<>
-									<LogIn className='h-5 w-5 mr-2' />
-									Access Admin Dashboard
+									<LogIn className='mr-2 h-5 w-5' aria-hidden='true' />
+									{t('auth.login.loginButton')}
 								</>
 							)}
 						</button>
-					</div>
+					</form>
 
-					<div className='text-center'>
-						<p className='text-sm text-gray-400'>
-							Admin access only. Contact system administrator for credentials.
-						</p>
-					</div>
-				</motion.form>
-			</div>
+					<p className='mt-8 text-center text-sm text-gray-400'>
+						{t('auth.login.notMember')}{" "}
+						<Link to='/signup' className='font-medium text-emerald-400 hover:text-emerald-300'>
+							{t('auth.login.signUpNow')} <ArrowRight className='inline h-4 w-4' />
+						</Link>
+					</p>
+				</div>
+			</motion.div>
 		</div>
 	);
 };
-
 export default LoginPage;

@@ -1,11 +1,12 @@
-
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path";
 
 import authRoutes from "./routes/auth.route.js";
+import kycRoutes from "./routes/kyc.route.js";
 import shipmentRoutes from "./routes/shipment.route.js";
+import contactRoutes from "./routes/contact.route.js";
 
 import { connectDB } from "./lib/db.js";
 
@@ -13,29 +14,30 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
 const __dirname = path.resolve();
 
-app.use(express.json({ limit: "10mb" }));
+app.use(express.json({ limit: "10mb" })); // allows you to parse the body of the request
 app.use(cookieParser());
 
-// API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/shipments", shipmentRoutes);
-
-// Health check endpoint
-app.get("/api/health", (req, res) => {
-	res.json({ status: "OK", message: "Admin server running" });
-});
+app.use("/api/contact", contactRoutes);
+app.use("/api/kyc", kycRoutes);
 
 if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.join(__dirname, "Reptileglobal/frontend/dist")));
+	app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
 	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "Reptileglobal", "frontend", "dist", "index.html"));
+		if (!req.path.startsWith('/api')) {
+			res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+		} else {
+			res.status(404).json({ message: "API route not found" });
+		}
 	});
 }
 
-app.listen(PORT, "0.0.0.0", () => {
-	console.log("Admin server running on port", PORT);
+app.listen(PORT, () => {
+	console.log("Server is running on http://localhost:" + PORT);
 	connectDB();
 });
