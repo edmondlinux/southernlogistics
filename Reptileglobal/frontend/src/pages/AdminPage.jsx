@@ -16,7 +16,6 @@ const tabs = [
 	{ id: "create", label: "Create Shipment", icon: Plus },
 	{ id: "shipments", label: "All Shipments", icon: Package },
 	{ id: "search", label: "Search & Edit", icon: Search },
-	{ id: "edit", label: "Edit Shipment", icon: Package },
 	{ id: "analytics", label: "Analytics", icon: BarChart },
 ];
 
