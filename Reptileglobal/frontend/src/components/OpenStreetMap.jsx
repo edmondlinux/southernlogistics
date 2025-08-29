@@ -104,12 +104,19 @@ const OpenStreetMap = ({
     // Cleanup function
     return () => {
       if (mapRef.current) {
-        // Clean up country highlight layer
-        if (mapRef.current.getLayer('country-highlight')) {
-          mapRef.current.removeLayer('country-highlight');
-        }
-        if (mapRef.current.getSource('country-highlight')) {
-          mapRef.current.removeSource('country-highlight');
+        // Clean up country highlight layers
+        try {
+          if (mapRef.current.getLayer('country-highlight-fill')) {
+            mapRef.current.removeLayer('country-highlight-fill');
+          }
+          if (mapRef.current.getLayer('country-highlight-line')) {
+            mapRef.current.removeLayer('country-highlight-line');
+          }
+          if (mapRef.current.getSource('country-highlight')) {
+            mapRef.current.removeSource('country-highlight');
+          }
+        } catch (e) {
+          // Ignore cleanup errors
         }
         mapRef.current.remove();
         mapRef.current = null;
@@ -171,9 +178,12 @@ const OpenStreetMap = ({
           markerRef.current = null;
         }
 
-        // Remove any existing country highlight layer
-        if (mapRef.current.getLayer('country-highlight')) {
-          mapRef.current.removeLayer('country-highlight');
+        // Remove any existing country highlight layers
+        if (mapRef.current.getLayer('country-highlight-fill')) {
+          mapRef.current.removeLayer('country-highlight-fill');
+        }
+        if (mapRef.current.getLayer('country-highlight-line')) {
+          mapRef.current.removeLayer('country-highlight-line');
         }
         if (mapRef.current.getSource('country-highlight')) {
           mapRef.current.removeSource('country-highlight');
@@ -182,33 +192,98 @@ const OpenStreetMap = ({
         // Get country ISO code for boundary lookup
         const countryISO = country.cca3 || country.cca2;
         
-        // Add country boundaries highlighting
-        mapRef.current.on('sourcedata', function onSourceData(e) {
-          if (e.sourceId === 'composite' && e.isSourceLoaded) {
-            mapRef.current.off('sourcedata', onSourceData);
+        // Fetch country boundary data from REST Countries API
+        try {
+          // First try to get detailed country info with borders
+          const detailResponse = await fetch(`https://restcountries.com/v3.1/alpha/${countryISO.toLowerCase()}`);
+          const detailData = await detailResponse.json();
+          
+          if (detailData && detailData.length > 0) {
+            const countryDetail = detailData[0];
             
-            // Add country highlight layer
-            mapRef.current.addLayer({
-              id: 'country-highlight',
-              type: 'fill',
-              source: 'composite',
-              'source-layer': 'country_boundaries',
-              paint: {
-                'fill-color': '#22c55e',
-                'fill-opacity': 0.3,
-                'fill-outline-color': '#16a34a'
-              },
-              filter: ['==', ['get', 'iso_3166_1_alpha_3'], countryISO.toUpperCase()]
-            });
+            // Use Natural Earth data for better country boundaries
+            const boundaryResponse = await fetch(`https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson`);
+            const boundaryData = await boundaryResponse.json();
+            
+            // Find the country in the GeoJSON data
+            const countryFeature = boundaryData.features.find(feature => 
+              feature.properties.NAME === countryName ||
+              feature.properties.NAME_EN === countryName ||
+              feature.properties.ISO_A2 === country.cca2 ||
+              feature.properties.ISO_A3 === country.cca3
+            );
+            
+            if (countryFeature) {
+              // Create a GeoJSON source with just this country
+              const countryGeoJSON = {
+                type: 'FeatureCollection',
+                features: [countryFeature]
+              };
+              
+              // Add the source
+              mapRef.current.addSource('country-highlight', {
+                type: 'geojson',
+                data: countryGeoJSON
+              });
+              
+              // Add fill layer
+              mapRef.current.addLayer({
+                id: 'country-highlight-fill',
+                type: 'fill',
+                source: 'country-highlight',
+                paint: {
+                  'fill-color': '#22c55e',
+                  'fill-opacity': 0.3
+                }
+              });
+              
+              // Add outline layer
+              mapRef.current.addLayer({
+                id: 'country-highlight-line',
+                type: 'line',
+                source: 'country-highlight',
+                paint: {
+                  'line-color': '#16a34a',
+                  'line-width': 2
+                }
+              });
+              
+              // Fit the map to the country bounds
+              const coordinates = countryFeature.geometry.coordinates;
+              const bounds = new mapboxgl.LngLatBounds();
+              
+              const addCoordinatesToBounds = (coords) => {
+                if (Array.isArray(coords[0])) {
+                  coords.forEach(addCoordinatesToBounds);
+                } else {
+                  bounds.extend(coords);
+                }
+              };
+              
+              coordinates.forEach(addCoordinatesToBounds);
+              
+              mapRef.current.fitBounds(bounds, {
+                padding: 50,
+                duration: 2000
+              });
+            } else {
+              // Fallback to center coordinates if boundary data not found
+              mapRef.current.flyTo({
+                center: [lng, lat],
+                zoom: 5,
+                duration: 2000
+              });
+            }
           }
-        });
-
-        // Fly to country location with appropriate zoom
-        mapRef.current.flyTo({
-          center: [lng, lat],
-          zoom: 5,
-          duration: 2000
-        });
+        } catch (boundaryError) {
+          console.log('Using fallback country view without detailed boundaries');
+          // Fallback to simple center view
+          mapRef.current.flyTo({
+            center: [lng, lat],
+            zoom: 5,
+            duration: 2000
+          });
+        }
 
         // Clear coordinates when showing country boundaries (not a specific point)
         if (onCoordinatesChange) {
