@@ -21,7 +21,7 @@ const OpenStreetMap = ({
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await fetch('https://restcountries.com/v3.1/all?fields=name,latlng');
+        const response = await fetch('https://restcountries.com/v3.1/all?fields=name,latlng,cca2,cca3');
         const data = await response.json();
         const sortedCountries = data
           .filter(country => country.latlng && country.latlng.length === 2)
@@ -104,6 +104,13 @@ const OpenStreetMap = ({
     // Cleanup function
     return () => {
       if (mapRef.current) {
+        // Clean up country highlight layer
+        if (mapRef.current.getLayer('country-highlight')) {
+          mapRef.current.removeLayer('country-highlight');
+        }
+        if (mapRef.current.getSource('country-highlight')) {
+          mapRef.current.removeSource('country-highlight');
+        }
         mapRef.current.remove();
         mapRef.current = null;
       }
@@ -158,40 +165,54 @@ const OpenStreetMap = ({
       if (country && country.latlng) {
         const [lat, lng] = country.latlng;
 
-        // Remove existing marker
+        // Remove existing marker when selecting from dropdown (country view mode)
         if (markerRef.current) {
           markerRef.current.remove();
+          markerRef.current = null;
         }
 
-        // Add new marker at country location
-        markerRef.current = new mapboxgl.Marker({ draggable: interactive })
-          .setLngLat([lng, lat])
-          .addTo(mapRef.current);
+        // Remove any existing country highlight layer
+        if (mapRef.current.getLayer('country-highlight')) {
+          mapRef.current.removeLayer('country-highlight');
+        }
+        if (mapRef.current.getSource('country-highlight')) {
+          mapRef.current.removeSource('country-highlight');
+        }
 
-        // Add drag event listener for interactive mode
-        if (interactive && onCoordinatesChange) {
-          markerRef.current.on('dragend', () => {
-            const lngLat = markerRef.current.getLngLat();
-            onCoordinatesChange({
-              latitude: lngLat.lat,
-              longitude: lngLat.lng,
+        // Get country ISO code for boundary lookup
+        const countryISO = country.cca3 || country.cca2;
+        
+        // Add country boundaries highlighting
+        mapRef.current.on('sourcedata', function onSourceData(e) {
+          if (e.sourceId === 'composite' && e.isSourceLoaded) {
+            mapRef.current.off('sourcedata', onSourceData);
+            
+            // Add country highlight layer
+            mapRef.current.addLayer({
+              id: 'country-highlight',
+              type: 'fill',
+              source: 'composite',
+              'source-layer': 'country_boundaries',
+              paint: {
+                'fill-color': '#22c55e',
+                'fill-opacity': 0.3,
+                'fill-outline-color': '#16a34a'
+              },
+              filter: ['==', ['get', 'iso_3166_1_alpha_3'], countryISO.toUpperCase()]
             });
-          });
-        }
+          }
+        });
 
-        // Fly to country location
+        // Fly to country location with appropriate zoom
         mapRef.current.flyTo({
           center: [lng, lat],
-          zoom: 6,
+          zoom: 5,
           duration: 2000
         });
 
-        // Update coordinates if callback provided
+        // Clear coordinates when showing country boundaries (not a specific point)
         if (onCoordinatesChange) {
-          onCoordinatesChange({
-            latitude: lat,
-            longitude: lng,
-          });
+          onCoordinatesChange(null);
         }
       }
     } catch (error) {
@@ -233,9 +254,9 @@ const OpenStreetMap = ({
         <div className="mb-4 p-3 bg-gray-800 rounded-lg text-sm text-gray-300">
           <strong>Interactive Mode:</strong> 
           <ul className="mt-1 ml-4 list-disc">
-            <li>Click anywhere on the map to drop a pin</li>
+            <li>Click anywhere on the map to drop a pin for specific coordinates</li>
             <li>Hold and drag the pin to move its location</li>
-            <li>Use the country selector above to navigate to specific countries</li>
+            <li>Use the country selector above to highlight and view entire countries</li>
           </ul>
         </div>
       )}
