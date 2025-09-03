@@ -22,9 +22,6 @@ const Navbar = () => {
 
 					{/* Desktop Navigation */}
 					<nav className='hidden md:flex items-center space-x-8'>
-						<Link to='/admin-dashboard' className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'>
-							{t('nav.home')}
-						</Link>
 					
 					</nav>
 
@@ -94,48 +91,6 @@ const Navbar = () => {
 				{isOpen && (
 					<div className='md:hidden'>
 						<div className='px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-800 bg-opacity-95 backdrop-blur-md'>
-							<Link
-								to='/'
-								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
-								onClick={() => setIsOpen(false)}
-							>
-								{t('nav.home')}
-							</Link>
-							<Link
-								to='/about'
-								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
-								onClick={() => setIsOpen(false)}
-							>
-								{t('nav.about')}
-							</Link>
-							<Link
-								to='/team'
-								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
-								onClick={() => setIsOpen(false)}
-							>
-								{t('nav.team')}
-							</Link>
-							<Link
-								to='/testimonials'
-								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
-								onClick={() => setIsOpen(false)}
-							>
-								{t('nav.testimonials')}
-							</Link>
-							<Link
-								to='/contact'
-								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
-								onClick={() => setIsOpen(false)}
-							>
-								{t('nav.contact')}
-							</Link>
-							<Link
-								to='/track'
-								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
-								onClick={() => setIsOpen(false)}
-							>
-								{t('nav.track')}
-							</Link>
 
 							{user ? (
 								<div className='border-t border-gray-700 pt-4 mt-4'>
