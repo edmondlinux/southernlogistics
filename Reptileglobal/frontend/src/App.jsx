@@ -7,6 +7,8 @@ import AdminPage from "./pages/AdminPage";
 import Navbar from "./components/Navbar";
 import { useUserStore } from "./stores/useUserStore";
 import LoadingSpinner from "./components/LoadingSpinner";
+import PWASessionManager from "./utils/pwaUtils";
+import PWAInstallPrompt from "./components/PWAInstallPrompt";
 import "./i18n";
 
 function App() {
@@ -29,10 +31,10 @@ function App() {
 
 			<div className='relative z-50'>
 				<Navbar />
-
+				<PWAInstallPrompt />
 				<Routes>
 					<Route path='/' element={<LoginPage />} />
-					
+
 					<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/' />} />
 					<Route path='/login' element={!user ? <LoginPage /> : <Navigate to='/' />} />
 					<Route
@@ -42,6 +44,7 @@ function App() {
 				</Routes>
 			</div>
 			<Toaster />
+			<PWASessionManager />
 		</div>
 	);
 }

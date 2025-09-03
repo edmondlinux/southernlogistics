@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axios from "../lib/axios";
 import { toast } from "react-hot-toast";
+import PWASessionManager from "../utils/pwaUtils";
 
 export const useUserStore = create((set, get) => ({
 	user: null,
@@ -40,8 +41,23 @@ export const useUserStore = create((set, get) => ({
 		try {
 			await axios.post("/auth/logout");
 			set({ user: null });
+			
+			// Clear all PWA data and caches
+			await PWASessionManager.clearAllData();
+			
+			// Force reload to ensure clean state
+			setTimeout(() => {
+				PWASessionManager.forceReload();
+			}, 500);
+			
 		} catch (error) {
 			toast.error(error.response?.data?.message || "An error occurred during logout");
+			
+			// Even if logout API fails, clear local data
+			await PWASessionManager.clearAllData();
+			setTimeout(() => {
+				PWASessionManager.forceReload();
+			}, 500);
 		}
 	},
 
