@@ -35,13 +35,13 @@ function App() {
 				<Navbar />
 				<PWAInstallPrompt />
 				<Routes>
-					<Route path='/' element={<LoginPage />} />
+					<Route path='/' element={!user ? <LoginPage /> : <Navigate to='/admin-dashboard' />} />
 
-					<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/' />} />
-					<Route path='/login' element={!user ? <LoginPage /> : <Navigate to='/' />} />
+					<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/admin-dashboard' />} />
+					<Route path='/login' element={!user ? <LoginPage /> : <Navigate to='/admin-dashboard' />} />
 					<Route
 						path='/admin-dashboard'
-						element={user?.role === "admin" ? <AdminPage /> : <Navigate to='/' />}
+						element={user ? <AdminPage /> : <Navigate to='/' />}
 					/>
 				</Routes>
 			</div>
