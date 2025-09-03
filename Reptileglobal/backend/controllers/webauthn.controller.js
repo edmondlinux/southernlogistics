@@ -9,8 +9,12 @@ const challenges = new Map();
 
 // Your app's details
 const rpName = 'Reptile Global';
-const rpID = process.env.NODE_ENV === 'production' ? 'reptileglobal.site' : 'localhost';
-const origin = process.env.NODE_ENV === 'production' ? 'https://reptileglobal.site' : 'http://localhost:5173';
+const rpID = process.env.NODE_ENV === 'production' 
+  ? 'reptileglobal.site' 
+  : 'cb55267d-e3a8-48a3-b762-5f311052b5ea-00-11c4k57kf0mh3.worf.replit.dev';
+const origin = process.env.NODE_ENV === 'production' 
+  ? 'https://reptileglobal.site' 
+  : 'https://cb55267d-e3a8-48a3-b762-5f311052b5ea-00-11c4k57kf0mh3.worf.replit.dev';
 
 export const beginRegistration = async (req, res) => {
   try {
