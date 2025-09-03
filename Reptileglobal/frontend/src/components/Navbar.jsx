@@ -16,8 +16,8 @@ const Navbar = () => {
 			<div className='container mx-auto px-4 h-16'>
 				<div className='flex items-center justify-between h-full'>
 					<Link to='/' className='flex items-center space-x-2 text-emerald-400 hover:text-emerald-300 transition-colors'>
-						<img src='/logo.png' alt='Reptile Global Logo' className='h-10 w-10' />
-						<span className='font-bold text-xl'>Reptile Global</span>
+						<img src='/logo.png' alt='Xtracargo Logo' className='h-10 w-10' />
+						<span className='font-bold text-xl'>Xtracargo</span>
 					</Link>
 
 					{/* Desktop Navigation */}

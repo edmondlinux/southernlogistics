@@ -1,8 +1,8 @@
 
 {
-  "name": "Reptile Global - Worldwide Reptiles Shipping",
-  "short_name": "Reptile Global",
-  "description": "Reptile Global offers reliable worldwide shipping of Reptiles. We are a secure, and cost-effective transport services.",
+  "name": "Xtracargo - Worldwide Cargo Shipping",
+  "short_name": "Xtracargo",
+  "description": "Reliable worldwide cargo shipping and freight forwarding solutions",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#111827",
@@ -20,24 +20,9 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
-    },
-    {
-      "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png"
-    },
-    {
-      "src": "/favicon-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png"
-    },
-    {
-      "src": "/favicon-16x16.png",
-      "sizes": "16x16",
-      "type": "image/png"
     }
   ],
-  "categories": ["business", "logistics", "shipping"],
+  "categories": ["logistics", "shipping", "business"],
   "lang": "en",
   "dir": "ltr"
 }

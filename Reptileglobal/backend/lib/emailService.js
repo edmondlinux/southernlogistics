@@ -129,9 +129,9 @@ class EmailService {
 
           <!-- Header -->
           <div style="background: linear-gradient(135deg, #10b981, #059669); padding: 30px 20px; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold;">🦎 Reptile Global</h1>
+            <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold;">📦 Xtracargo</h1>
             <p style="color: rgba(255, 255, 255, 0.9); margin: 5px 0 0 0; font-size: 16px;">
-              New Reptile Shipping Inquiry
+              New Cargo Shipping Inquiry
             </p>
           </div>
 
