@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'reptile-global-v1';
+const CACHE_NAME = 'extra-cargo-v1';
 const urlsToCache = [
   '/',
   '/static/js/bundle.js',

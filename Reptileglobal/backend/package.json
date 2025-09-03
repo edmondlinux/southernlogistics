@@ -1,7 +1,7 @@
 {
-  "name": "e-commerce-store",
+  "name": "extra-cargo-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Extra Cargo Backend - Worldwide Shipping and Logistics API",
   "main": "backend/server.js",
   "scripts": {
     "dev": "nodemon server.js",

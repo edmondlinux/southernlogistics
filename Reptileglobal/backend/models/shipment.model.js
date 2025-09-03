@@ -90,7 +90,7 @@ const shipmentSchema = new mongoose.Schema({
 // Generate tracking number before saving
 shipmentSchema.pre('save', function(next) {
   if (!this.trackingNumber) {
-    this.trackingNumber = 'GL' + Date.now().toString() + Math.random().toString(36).substr(2, 5).toUpperCase();
+    this.trackingNumber = 'EC' + Date.now().toString() + Math.random().toString(36).substr(2, 5).toUpperCase();
   }
   next();
 });
