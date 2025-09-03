@@ -26,7 +26,7 @@ export const useUserStore = create((set, get) => ({
 			toast.error(error.response.data.message || "An error occurred");
 		}
 	},
-	login: async (email, password) => {
+	login: async (email, password, navigate) => {
 		set({ loading: true });
 
 		try {
@@ -34,11 +34,13 @@ export const useUserStore = create((set, get) => ({
 
 			set({ user: res.data, loading: false });
 			
-			// Navigate to admin dashboard after successful login
-			if (res.data?.role === 'admin') {
-				window.location.href = '/admin-dashboard';
-			} else {
-				window.location.href = '/admin-dashboard'; // For now, redirect all users to admin dashboard
+			// Navigate to admin dashboard after successful login using React Router
+			if (navigate) {
+				if (res.data?.role === 'admin') {
+					navigate('/admin-dashboard');
+				} else {
+					navigate('/admin-dashboard'); // For now, redirect all users to admin dashboard
+				}
 			}
 		} catch (error) {
 			set({ loading: false });
