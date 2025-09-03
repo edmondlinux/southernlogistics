@@ -82,15 +82,20 @@ export const finishRegistration = async (req, res) => {
     if (verification.verified && verification.registrationInfo) {
       const { credentialPublicKey, credentialID, counter, credentialDeviceType, credentialBackedUp } = verification.registrationInfo;
 
+      // Validate required fields
+      if (!credentialPublicKey) {
+        return res.status(400).json({ message: 'Invalid credential data: missing public key' });
+      }
+
       // Save credential to database
       const newCredential = new WebAuthnCredential({
         credentialID: credentialID ? Buffer.from(credentialID).toString('base64url') : credential.id,
         publicKey: Buffer.from(credentialPublicKey).toString('base64url'),
-        counter,
+        counter: counter || 0,
         userId,
         userEmail: req.user.email,
-        credentialDeviceType,
-        credentialBackedUp,
+        credentialDeviceType: credentialDeviceType || 'singleDevice',
+        credentialBackedUp: credentialBackedUp || false,
         transports: credential.response.transports || [],
       });
 

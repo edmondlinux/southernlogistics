@@ -6,7 +6,6 @@ const webauthnCredentialSchema = new mongoose.Schema(
     credentialID: {
       type: String,
       required: true,
-      unique: true,
     },
     publicKey: {
       type: String,
@@ -49,7 +48,7 @@ const webauthnCredentialSchema = new mongoose.Schema(
 );
 
 // Index for faster lookups
-webauthnCredentialSchema.index({ credentialID: 1 });
+webauthnCredentialSchema.index({ credentialID: 1 }, { unique: true });
 webauthnCredentialSchema.index({ userId: 1 });
 webauthnCredentialSchema.index({ userEmail: 1 });
 
