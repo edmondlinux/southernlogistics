@@ -33,13 +33,6 @@ export const useUserStore = create((set, get) => ({
 			const res = await axios.post("/auth/login", { email, password });
 
 			set({ user: res.data, loading: false });
-			
-			// Navigate to admin dashboard after successful login
-			if (res.data?.role === 'admin') {
-				window.location.href = '/admin-dashboard';
-			} else {
-				window.location.href = '/admin-dashboard'; // For now, redirect all users to admin dashboard
-			}
 		} catch (error) {
 			set({ loading: false });
 			toast.error(error.response.data.message || "An error occurred");
