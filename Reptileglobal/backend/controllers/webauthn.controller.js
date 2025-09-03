@@ -84,7 +84,7 @@ export const finishRegistration = async (req, res) => {
 
       // Save credential to database
       const newCredential = new WebAuthnCredential({
-        credentialID: Buffer.from(credentialID).toString('base64url'),
+        credentialID: credentialID ? Buffer.from(credentialID).toString('base64url') : credential.id,
         publicKey: Buffer.from(credentialPublicKey).toString('base64url'),
         counter,
         userId,
