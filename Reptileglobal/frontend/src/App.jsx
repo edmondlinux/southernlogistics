@@ -1,45 +1,67 @@
 
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
-import SignUpPage from "./pages/SignUpPage";
+
+import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 import AdminPage from "./pages/AdminPage";
-import Navbar from "./components/Navbar";
+import ContactPage from "./pages/ContactPage";
+import AboutPage from "./pages/AboutPage";
+import TeamPage from "./pages/TeamPage";
+import TestimonialsPage from "./pages/TestimonialsPage";
+import TrackingPage from "./pages/TrackingPage";
+import KYCPage from "./pages/KYCPage";
+
 import { useUserStore } from "./stores/useUserStore";
+import { useShipmentStore } from "./stores/useShipmentStore";
 import LoadingSpinner from "./components/LoadingSpinner";
-import PWASessionManager from "./utils/pwaUtils";
+import Navbar from "./components/Navbar";
 import PWAInstallPrompt from "./components/PWAInstallPrompt";
-import "./i18n";
 
 function App() {
 	const { user, checkAuth, isCheckingAuth } = useUserStore();
+	const { fetchShipments } = useShipmentStore();
 
 	useEffect(() => {
 		checkAuth();
 	}, [checkAuth]);
 
+	useEffect(() => {
+		if (user) {
+			fetchShipments();
+		}
+	}, [user, fetchShipments]);
+
 	if (isCheckingAuth) return <LoadingSpinner />;
 
 	return (
-		<div className='min-h-screen bg-gray-900 text-white relative overflow-hidden'>
-			<PWASessionManager />
-			<div className='absolute inset-0 overflow-hidden'>
-				<div className='absolute inset-0'>
-					<div className='absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.3)_0%,rgba(10,80,60,0.2)_45%,rgba(0,0,0,0.1)_100%)]' />
-				</div>
-			</div>
-
-			<div className='relative z-50'>
-				<Navbar />
-				<Routes>
-					<Route path='/' element={user ? <Navigate to='/admin-dashboard' /> : <Navigate to='/login' />} />
-					<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/admin-dashboard' />} />
-					<Route path='/login' element={!user ? <LoginPage /> : <Navigate to='/admin-dashboard' />} />
-					<Route path='/admin-dashboard' element={user ? <AdminPage /> : <Navigate to='/login' />} />
-					<Route path='/shipments' element={user ? <AdminPage /> : <Navigate to='/login' />} />
-				</Routes>
-			</div>
+		<div className='min-h-screen bg-gray-50 text-gray-900'>
+			<Navbar />
+			<Routes>
+				<Route path='/' element={<HomePage />} />
+				<Route path='/contact' element={<ContactPage />} />
+				<Route path='/about' element={<AboutPage />} />
+				<Route path='/team' element={<TeamPage />} />
+				<Route path='/testimonials' element={<TestimonialsPage />} />
+				<Route path='/track' element={<TrackingPage />} />
+				<Route path='/kyc/:token' element={<KYCPage />} />
+				<Route
+					path='/signup'
+					element={!user ? <SignUpPage /> : <Navigate to='/' />}
+				/>
+				<Route
+					path='/login'
+					element={!user ? <LoginPage /> : <Navigate to='/' />}
+				/>
+				<Route
+					path='/admin'
+					element={
+						user?.role === "admin" ? <AdminPage /> : <Navigate to='/login' />
+					}
+				/>
+			</Routes>
 			<Toaster />
 			<PWAInstallPrompt />
 		</div>
