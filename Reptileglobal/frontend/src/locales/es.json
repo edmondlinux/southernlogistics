@@ -175,24 +175,24 @@
   "about": {
     "title": "Acerca de Reptile Global",
     "description": "Con más de 5 años de experiencia especializada en transporte de reptiles, nos hemos convertido en un experto líder en envío seguro y legal de reptiles en todo el mundo. Nuestra red conecta criadores europeos con mercados en China, Malasia, Corea y toda Asia.",
-    "compliance": "Estamos certificados por autoridades CITES y mantenemos los más altos estándares para el bienestar de la carga y cumplimiento internacional.",
+    "compliance": "Estamos certificados por autoridades CITES y mantenemos los más altos estándares para el bienestar de animales vivos y cumplimiento internacional.",
     "experience": "Años de Experiencia",
-    "countries": "Países Servidos",
-    "shipped": "Envíos Entregados",
-    "certified": "Certificado ISO",
-    "certifiedDesc": "Estándares internacionales de calidad",
+    "countries": "Países Asiáticos",
+    "shipped": "Reptiles Enviados",
+    "certified": "Certificado CITES",
+    "certifiedDesc": "Permisos oficiales de comercio de vida silvestre",
     "climate": "Climatizado",
     "climateDesc": "Temperatura y humedad óptimas",
-    "monitoring": "Rastreo 24/7",
-    "monitoringDesc": "Monitoreo de carga en tiempo real",
+    "monitoring": "Monitoreo 24/7",
+    "monitoringDesc": "Rastreo y cuidado de animales vivos",
     "rates": "Tarifas Competitivas",
-    "ratesDesc": "Mejores precios para envío de carga"
+    "ratesDesc": "Mejores precios para envío de reptiles"
   },
   "cta": {
-    "title": "¿Listo para enviar tu carga?",
-    "description": "Conéctate con mercados globales a través de nuestros especialistas premier en transporte de carga.",
+    "title": "¿Listo para enviar tus reptiles?",
+    "description": "Conéctate con mercados asiáticos a través de los especialistas europeos premier en transporte de reptiles.",
     "getQuote": "Obtener Cotización de Envío",
-    "email": "email: support@xtracargo.site"
+    "email": "email: support@reptileglobal.site"
   },
   "contact": {
     "hero": {
@@ -201,13 +201,13 @@
       "description": "Ponte en contacto con nuestros expertos en transporte de reptiles. Estamos aquí para ayudar a enviar tus reptiles de manera segura a mercados asiáticos."
     },
     "form": {
-      "title": "Obtener una cotización de envío de carga",
+      "title": "Obtener una cotización de envío de reptiles",
       "name": "Nombre completo",
       "email": "Dirección de correo electrónico",
       "phone": "Número de teléfono",
-      "company": "Empresa/Negocio",
+      "company": "Empresa/Granja de Cría",
       "subject": "Asunto",
-      "message": "Cuéntanos sobre tu carga, destino y requisitos de envío",
+      "message": "Cuéntanos sobre tus reptiles, destino y requisitos de envío",
       "serviceType": "Tipo de servicio",
       "submit": "Obtener cotización de envío de reptiles",
       "sending": "Enviando...",

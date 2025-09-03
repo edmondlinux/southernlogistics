@@ -5,7 +5,7 @@ import EmailService from "../lib/emailService.js";
 // Generate a new tracking number
 export const generateTrackingNumber = async (req, res) => {
 	try {
-		const trackingNumber = 'XC' + Date.now().toString() + Math.random().toString(36).substr(2, 5).toUpperCase();
+		const trackingNumber = 'GL' + Date.now().toString() + Math.random().toString(36).substr(2, 5).toUpperCase();
 		res.json({ trackingNumber });
 	} catch (error) {
 		console.log("Error in generateTrackingNumber controller", error.message);
@@ -62,7 +62,7 @@ export const createShipment = async (req, res) => {
 		} = req.body;
 
 		// Use provided tracking number or generate one if not provided
-		const finalTrackingNumber = trackingNumber || 'XC' + Date.now().toString() + Math.random().toString(36).substr(2, 5).toUpperCase();
+		const finalTrackingNumber = trackingNumber || 'GL' + Date.now().toString() + Math.random().toString(36).substr(2, 5).toUpperCase();
 
 		const shipment = new Shipment({
 			trackingNumber: finalTrackingNumber,

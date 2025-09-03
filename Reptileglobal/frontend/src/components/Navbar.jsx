@@ -16,16 +16,30 @@ const Navbar = () => {
 			<div className='container mx-auto px-4 h-16'>
 				<div className='flex items-center justify-between h-full'>
 					<Link to='/' className='flex items-center space-x-2 text-emerald-400 hover:text-emerald-300 transition-colors'>
-						<img src='/logo.png' alt='Xtracargo Logo' className='h-10 w-10' />
-						<span className='font-bold text-xl'>Xtracargo</span>
+						<img src='/logo.png' alt='Reptile Global Logo' className='h-10 w-10' />
+						<span className='font-bold text-xl'>Reptile Global</span>
 					</Link>
 
 					{/* Desktop Navigation */}
 					<nav className='hidden md:flex items-center space-x-8'>
-						<Link to='/admin-dashboard' className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'>
+						<Link to='/' className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'>
 							{t('nav.home')}
 						</Link>
-					
+						<Link to='/about' className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'>
+							{t('nav.about')}
+						</Link>
+						<Link to='/team' className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'>
+							{t('nav.team')}
+						</Link>
+						<Link to='/testimonials' className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'>
+							{t('nav.testimonials')}
+						</Link>
+						<Link to='/contact' className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'>
+							{t('nav.contact')}
+						</Link>
+						<Link to='/track' className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'>
+							{t('nav.track')}
+						</Link>
 					</nav>
 
 					{/* Desktop Actions */}
@@ -43,7 +57,13 @@ const Navbar = () => {
 										{t('nav.dashboard')}
 									</Link>
 								)}
-							
+								<Link
+									to='/shipments'
+									className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out flex items-center'
+								>
+									<Truck className='mr-2 h-4 w-4' />
+									{t('nav.myShipments')}
+								</Link>
 								<button
 									onClick={logout}
 									className='bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md font-medium transition duration-300 ease-in-out flex items-center'
@@ -88,7 +108,48 @@ const Navbar = () => {
 				{isOpen && (
 					<div className='md:hidden'>
 						<div className='px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-800 bg-opacity-95 backdrop-blur-md'>
-							
+							<Link
+								to='/'
+								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
+								onClick={() => setIsOpen(false)}
+							>
+								{t('nav.home')}
+							</Link>
+							<Link
+								to='/about'
+								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
+								onClick={() => setIsOpen(false)}
+							>
+								{t('nav.about')}
+							</Link>
+							<Link
+								to='/team'
+								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
+								onClick={() => setIsOpen(false)}
+							>
+								{t('nav.team')}
+							</Link>
+							<Link
+								to='/testimonials'
+								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
+								onClick={() => setIsOpen(false)}
+							>
+								{t('nav.testimonials')}
+							</Link>
+							<Link
+								to='/contact'
+								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
+								onClick={() => setIsOpen(false)}
+							>
+								{t('nav.contact')}
+							</Link>
+							<Link
+								to='/track'
+								className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
+								onClick={() => setIsOpen(false)}
+							>
+								{t('nav.track')}
+							</Link>
 
 							{user ? (
 								<div className='border-t border-gray-700 pt-4 mt-4'>

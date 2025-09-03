@@ -1,0 +1,387 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "team": "Team",
+    "testimonials": "Testimonials",
+    "contact": "Contact",
+    "track": "Track",
+    "myShipments": "My Shipments",
+    "dashboard": "Dashboard",
+    "logOut": "Log Out",
+    "signUp": "Sign Up",
+    "login": "Login",
+    "language": "Language"
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文",
+    "ms": "Bahasa Malaysia",
+    "ko": "한국어",
+    "fr": "Français",
+    "es": "Español",
+    "de": "Deutsch",
+    "nl": "Nederlands"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "submit": "Submit",
+    "close": "Close"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to your account",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "loginButton": "Login",
+      "notMember": "Not a member?",
+      "signUpNow": "Sign up now"
+    },
+    "signup": {
+      "title": "Create your account",
+      "nameLabel": "Full name",
+      "namePlaceholder": "John Doe",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "••••••••",
+      "signUpButton": "Sign up",
+      "alreadyMember": "Already have an account?",
+      "loginHere": "Login here"
+    }
+  },
+  "hero": {
+    "title": "Xtracargo",
+    "subtitle": "",
+    "description": "We're all about getting your cargo where it needs to go safely and efficiently. With worldwide shipping capabilities, we serve North America, Europe, Asia, and beyond. Our specialized transport ensures your cargo travels stress-free to destinations across the globe.",
+    "getQuote": "Get a Quote",
+    "trackShipment": "Track Shipment",
+    "enterTracking": "Enter tracking number...",
+    "trackNow": "Track Now",
+    "tracking": "Tracking your shipment..."
+  },
+  "partners": {
+    "title": "Trusted by Industry Leaders",
+    "description": "We partner with the world's leading logistics companies to provide you with comprehensive shipping solutions and global coverage.",
+    "morePartners": "And many more trusted partners worldwide"
+  },
+  "services": {
+    "title": "Our Services",
+    "description": "Comprehensive logistics solutions tailored to meet your business needs",
+    "climateTransport": {
+      "title": "Climate-Controlled Transport",
+      "description": "Temperature and humidity controlled vehicles ensuring optimal conditions for cargo transportation worldwide."
+    },
+    "globalShipping": {
+      "title": "Global Shipping Network",
+      "description": "Specialized international shipping to North America, Europe, Asia, and other regions with full documentation and compliance."
+    },
+    "quarantine": {
+      "title": "Quarantine Facilities",
+      "description": "Certified quarantine and holding facilities meeting international standards for cargo health and safety."
+    },
+    "doorToDoor": {
+      "title": "Door-to-Door Service",
+      "description": "Complete pickup and delivery service from origin to destination with expert cargo handling."
+    },
+    "breederNetwork": {
+      "title": "Global Breeder Network",
+      "description": "Connecting cargo suppliers worldwide with international markets through our trusted global network."
+    },
+    "cites": {
+      "title": "CITES Documentation",
+      "description": "Full CITES permit handling and wildlife documentation for legal international reptile trade."
+    }
+  },
+  "features": {
+    "title": "Why Choose Us",
+    "description": "Experience the difference with our industry-leading capabilities",
+    "express": {
+      "title": "Express Cargo Delivery",
+      "description": "Priority shipping with minimal transit times for cargo integrity"
+    },
+    "tracking": {
+      "title": "Live Shipment Tracking",
+      "description": "Real-time monitoring of location and status"
+    },
+    "insurance": {
+      "title": "Cargo Insurance",
+      "description": "Comprehensive coverage and expert cargo handling protocols"
+    },
+    "network": {
+      "title": "Global Network",
+      "description": "Specialized routes covering North America, Europe, Asia, and emerging markets worldwide"
+    }
+  },
+  "process": {
+    "title": "How It Works",
+    "description": "Simple steps to get your shipment moving",
+    "consultation": {
+      "title": "Consultation",
+      "description": "Contact us for cargo shipping consultation and documentation requirements"
+    },
+    "pickup": {
+      "title": "Secure Pickup",
+      "description": "Expert collection with proper packaging and preparation"
+    },
+    "transport": {
+      "title": "Climate Transport",
+      "description": "Temperature-controlled transport through our global shipping network"
+    },
+    "delivery": {
+      "title": "Safe Delivery",
+      "description": "Healthy arrival with full documentation and transit certificates"
+    }
+  },
+  "testimonials": {
+    "title": "What Our Clients Say",
+    "description": "Trusted by businesses worldwide",
+    "marco": {
+      "company": "Global Cargo Logistics",
+      "quote": "Xtracargo has revolutionized how we ship worldwide. Every shipment arrives safely and efficiently. Truly professional service."
+    },
+    "lisa": {
+      "company": "Asia Exotic Imports",
+      "quote": "Reliable shipping from North America to China with perfect documentation. Their climate control systems are top-notch."
+    },
+    "johan": {
+      "company": "American Cargo Co.",
+      "quote": "Professional handling and fast delivery to Malaysia from the US. Xtracargo understands the needs of live animal transport."
+    },
+    "sophie": {
+      "company": "International Gecko Farm",
+      "quote": "Excellent service to Korea and other global markets. Full CITES support and healthy arrivals every time."
+    }
+  },
+  "showcase": {
+    "title": "Our Cargo Operations",
+    "description": "Specialized facilities and expert handling for cargo transportation",
+    "handlers": "Expert Cargo Handlers",
+    "vehicles": "Climate-Controlled Vehicles",
+    "facilities": "Specialized Facilities",
+    "distribution": "Global Distribution Network"
+  },
+  "about": {
+    "title": "About Xtracargo",
+    "description": "With over 5 years of specialized experience in cargo transportation, we've become a leading expert in safe, legal cargo shipping across the globe. Our network connects suppliers worldwide with markets in North America, Europe, Asia, and emerging regions.",
+    "compliance": "We're certified by relevant authorities and maintain the highest standards for cargo welfare and international compliance.",
+    "experience": "Years Experience",
+    "countries": "Asian Countries",
+    "shipped": "Cargo Shipped",
+    "certified": "CITES Certified",
+    "certifiedDesc": "Official wildlife trade permits",
+    "climate": "Climate Controlled",
+    "climateDesc": "Optimal temperature & humidity",
+    "monitoring": "24/7 Monitoring",
+    "monitoringDesc": "Live shipment tracking & care",
+    "rates": "Competitive Rates",
+    "ratesDesc": "Best prices for cargo shipping"
+  },
+  "cta": {
+    "title": "Ready to ship your cargo?",
+    "description": "Connect with global markets through our premier cargo transport specialists.",
+    "getQuote": "Get Shipping Quote",
+    "email": "email: support@xtracargo.site"
+  },
+  "contact": {
+    "hero": {
+      "title": "Contact",
+      "subtitle": "Xtracargo",
+      "description": "Get in touch with our cargo transport experts. We're here to help ship your goods safely to global markets."
+    },
+    "form": {
+      "title": "Get a cargo shipping quote",
+      "name": "Full name",
+      "email": "Email address",
+      "phone": "Phone number",
+      "company": "Company/Business",
+      "subject": "Subject",
+      "message": "Tell us about your cargo, destination, and shipping requirements",
+      "serviceType": "Service Type",
+      "submit": "Get Cargo Shipping Quote",
+      "sending": "Sending...",
+      "success": "Message sent successfully! Our cargo experts will contact you within 24 hours.",
+      "error": "Failed to send message. Please try again or contact us directly.",
+      "required": "*"
+    },
+    "serviceTypes": {
+      "general": "General Inquiry",
+      "shipping": "Cargo Shipping Quote",
+      "tracking": "Track My Shipment",
+      "documentation": "CITES Documentation",
+      "emergency": "Emergency Transport",
+      "partnership": "Supplier Partnership"
+    },
+    "info": {
+      "title": "Cargo Shipping Experts",
+      "description": "Ready to ship your cargo globally? Our specialized team handles everything from climate-controlled transport to documentation for safe, legal international shipping.",
+      "quickContact": "Quick Contact",
+      "emergencyTitle": "Emergency Cargo Transport",
+      "emergencyDesc": "For urgent cargo shipments or transport emergencies",
+      "servicesTitle": "Our Cargo Services",
+      "climateTransport": "Climate-Controlled Transport",
+      "citesDoc": "CITES Documentation",
+      "globalShipping": "Global Shipping",
+      "animalWelfare": "Cargo Welfare Priority"
+    },
+    "offices": {
+      "title": "Our Global Transport Network",
+      "description": "Strategic locations worldwide for seamless cargo shipping",
+      "newjersey": "100 Corporate Blvd, South Plainfield, NJ 07080, USA",
+      "amsterdam": "European Hub, Netherlands",
+      "rome": "Central Operations",
+      "singapore": "Asian Operations Center",
+      "hongkong": "China Gateway Office"
+    },
+    "map": {
+      "title": " Headquarters",
+      "description": "Visit our main cargo facility in New Jersey",
+      "placeholder": "Cargo Transport Hub Map",
+      "coming": "Interactive shipping route map coming soon"
+    }
+  },
+  "gallery": {
+    "title": "Our Work in Action",
+    "description": "Explore our gallery showcasing cargo transportation, specialized equipment, and successful deliveries across Europe and Asia",
+    "categories": {
+      "all": "All",
+      "cargo": "Cargo",
+      "equipment": "Equipment",
+      "process": "Process"
+    },
+    "images": {
+      "beardedTransport": "Professional bearded dragon transportation with climate control",
+      "insulatedBox": "Well insulated box for safe cargo transportation",
+      "climateContainers": "State-of-the-art shipping containers with temperature monitoring",
+      "transportSetup": "Specialized boxes for large snake transportation",
+      "documentation": "Complete CITES documentation and health certificates",
+      "packaging": "Professional packaging ensuring cargo safety during transport",
+      "lizardCollection": "Various lizard species prepared for international shipping",
+      "monitoring": "Real-time monitoring and tracking throughout the journey"
+    }
+  },
+  "contactForm": {
+    "title": "Get In Touch",
+    "description": "Ready to ship? Contact us for a personalized quote",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Message sent successfully! We'll get back to you soon.",
+    "error": "Failed to send message. Please try again.",
+    "contactInfo": "Contact Information",
+    "phone": "Phone",
+    "address": "Address",
+    "googleMap": "Google Map"
+  },
+  "tracking": {
+    "title": "Track Your Shipment",
+    "subtitle": "Enter your tracking number to get real-time updates",
+    "currentLocation": "Current Location",
+    "estimatedDelivery": "Estimated Delivery",
+    "history": "Tracking History",
+    "notFound": "No shipment found",
+    "checkNumber": "Please check your tracking number and try again",
+    "readyToTrack": "Ready to track",
+    "enterNumber": "Enter a tracking number above to get started",
+    "trackingNumber": "Tracking Number",
+    "clearResults": "← Clear Results",
+    "downloadPDF": "Download PDF",
+    "from": "From",
+    "to": "To",
+    "packageDetails": "Package Details",
+    "serviceDetails": "Service Details"
+  },
+  "shipping": {
+    "from": "From",
+    "to": "To",
+    "packageDetails": "Package Details",
+    "serviceDetails": "Service Details",
+    "description": "Description",
+    "category": "Category",
+    "weight": "Weight",
+    "value": "Value",
+    "dimensions": "Dimensions",
+    "fragile": "Fragile",
+    "priority": "Priority",
+    "cost": "Shipping Cost",
+    "date": "Shipping Date",
+    "signatureRequired": "Signature Required",
+    "specialInstructions": "Special Instructions"
+  },
+  "team": {
+    "hero": {
+      "title": "Meet Our",
+      "titleHighlight": "Cargo Experts",
+      "description": "Passionate professionals dedicated to safe cargo transportation and connecting suppliers worldwide with global markets."
+    },
+    "stats": {
+      "teamMembers": "Team Members",
+      "countriesServed": "Countries Served",
+      "averageExperience": "Years Average Experience",
+      "animalWelfareTrained": "Cargo Handling Trained"
+    },
+    "leadership": {
+      "title": "Leadership Team",
+      "description": "Expert leaders with deep knowledge in cargo care, logistics, and international trade"
+    },
+    "departments": {
+      "title": "Our Specialized Teams",
+      "description": "Expert departments working together to ensure safe global cargo transportation",
+      "animalCare": {
+        "title": "Cargo Care Team",
+        "description": "Specialized cargo handlers and technicians ensuring cargo welfare"
+      },
+      "logistics": {
+        "title": "Logistics & Transport",
+        "description": "Climate-controlled transport specialists and route coordinators"
+      },
+      "climate": {
+        "title": "Climate Technology",
+        "description": "Environmental monitoring and temperature control systems specialists"
+      }
+    },
+    "positions": {
+      "ceo": "Chief Executive Officer & Logistics Expert",
+      "operationsDirector": "Operations Director",
+      "asianMarketsDirector": "Asian Markets Director",
+      "complianceOfficer": "Compliance & Documentation Officer",
+      "leadVeterinarian": "Lead Cargo Specialist",
+      "seniorReptileHandler": "Senior Cargo Handler",
+      "quarantineSupervisor": "Operations Supervisor",
+      "animalWelfareSpecialist": "Cargo Welfare Specialist",
+      "transportManager": "Transport Manager",
+      "routeCoordinator": "Route Coordinator - MENA",
+      "airFreightSpecialist": "Air Freight Specialist",
+      "vehicleFleetManager": "Vehicle Fleet Manager",
+      "climateSystemsEngineer": "Climate Systems Engineer",
+      "environmentalMonitoring": "Environmental Monitoring Specialist",
+      "qualityControlTechnician": "Quality Control Technician",
+      "systemsMaintenanceEngineer": "Systems Maintenance Engineer"
+    },
+    "bios": {
+      "elena": "With 20+ years in logistics and cargo care, Elena ensures the highest standards in cargo welfare.",
+      "marcus": "Former wildlife transport specialist with expertise in international reptile shipping regulations and logistics.",
+      "liWei": "Based in Singapore, Li Wei manages our Asian operations and maintains relationships with importers across 12 countries.",
+      "sarah": "CITES specialist ensuring all shipments meet international wildlife trade regulations and documentation requirements."
+    },
+    "joinTeam": {
+      "title": "Join Our Cargo Team",
+      "description": "Passionate about cargo and logistics? Join our specialized team and help us continue leading the global cargo transportation industry worldwide.",
+      "viewCareers": "View Cargo Careers",
+      "sendCV": "Send Your CV"
+    }
+  }
+}

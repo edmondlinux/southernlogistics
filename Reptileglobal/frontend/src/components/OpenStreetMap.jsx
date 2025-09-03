@@ -1,7 +1,5 @@
-
-import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { useEffect, useRef, useState } from "react";
+import { MapPin, X, ChevronDown } from "lucide-react";
 
 const OpenStreetMap = ({
   height = "400px",
@@ -10,537 +8,576 @@ const OpenStreetMap = ({
   onCoordinatesChange,
   interactive = false,
 }) => {
-  const mapContainerRef = useRef();
-  const mapRef = useRef();
-  const markerRef = useRef();
-  const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [manualLat, setManualLat] = useState('');
-  const [manualLng, setManualLng] = useState('');
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+  const markerRef = useRef(null);
 
-  // Fetch all countries
+  // New state for location selection
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [loadingCountries, setLoadingCountries] = useState(false);
+  const [loadingStates, setLoadingStates] = useState(false);
+
+  // Fetch countries on component mount
   useEffect(() => {
     const fetchCountries = async () => {
+      setLoadingCountries(true);
       try {
-        const response = await fetch('https://restcountries.com/v3.1/all?fields=name,latlng,cca2,cca3');
+        const response = await fetch('https://restcountries.com/v3.1/all?fields=name,cca2,latlng');
         const data = await response.json();
+
+        // Sort countries alphabetically and filter out those without coordinates
         const sortedCountries = data
-          .filter(country => country.latlng && country.latlng.length === 2)
-          .sort((a, b) => a.name.common.localeCompare(b.name.common)); // Sort alphabetically
+          .filter(country => country.latlng && country.latlng.length >= 2)
+          .sort((a, b) => a.name.common.localeCompare(b.name.common))
+          .map(country => ({
+            name: country.name.common,
+            code: country.cca2,
+            lat: country.latlng[0],
+            lng: country.latlng[1]
+          }));
+
         setCountries(sortedCountries);
       } catch (error) {
-        console.error('Failed to fetch countries:', error);
+        console.error('Error fetching countries:', error);
+      } finally {
+        setLoadingCountries(false);
       }
     };
+
     fetchCountries();
   }, []);
 
+  // Fetch states/provinces when country changes
   useEffect(() => {
-    // Set Mapbox access token from environment variable
-    mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_API_TOKEN || 'pk.eyJ1IjoiZ25zbGVpZ2h0cyIsImEiOiJjbWV3cGFjeW0wbGE4MmlyMnV6ZGJ6ODN4In0.jIwl67v_ymjWSHEDxfnFZw';
+    if (!selectedCountry) {
+      setStates([]);
+      setSelectedState("");
+      return;
+    }
 
-    if (!mapContainerRef.current || mapRef.current) return;
+    const fetchStates = async () => {
+      setLoadingStates(true);
+      try {
+        const country = countries.find(c => c.code === selectedCountry);
+        if (!country) return;
 
-    // Initialize map with default settings
-    mapRef.current = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: selectedCoordinates ? [selectedCoordinates.longitude, selectedCoordinates.latitude] : [0, 20],
-      zoom: selectedCoordinates ? 10 : defaultZoom
-    });
+        // Use Nominatim to search for administrative divisions (states/provinces)
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/search?` +
+          `country=${encodeURIComponent(country.name)}&` +
+          `featuretype=state&` +
+          `format=json&` +
+          `limit=20&` +
+          `addressdetails=1`
+        );
 
-    // Add navigation controls
-    mapRef.current.addControl(new mapboxgl.NavigationControl());
+        let data = await response.json();
 
-    // Add marker if coordinates are provided
-    if (selectedCoordinates) {
-      markerRef.current = new mapboxgl.Marker({ draggable: interactive })
-        .setLngLat([selectedCoordinates.longitude, selectedCoordinates.latitude])
-        .addTo(mapRef.current);
+        // If no states found, try searching for major cities instead
+        if (data.length === 0) {
+          const cityResponse = await fetch(
+            `https://nominatim.openstreetmap.org/search?` +
+            `country=${encodeURIComponent(country.name)}&` +
+            `featuretype=city&` +
+            `format=json&` +
+            `limit=15&` +
+            `addressdetails=1`
+          );
+          data = await cityResponse.json();
+        }
 
-      // Add drag event listener for interactive mode
-      if (interactive && onCoordinatesChange) {
-        markerRef.current.on('dragend', () => {
-          const lngLat = markerRef.current.getLngLat();
-          onCoordinatesChange({
-            latitude: lngLat.lat,
-            longitude: lngLat.lng,
-          });
-        });
+        // Process and deduplicate results
+        const processedStates = data
+          .filter(item => item.lat && item.lon && item.display_name)
+          .map(item => ({
+            name: item.display_name.split(',')[0].trim(),
+            lat: parseFloat(item.lat),
+            lng: parseFloat(item.lon),
+            fullName: item.display_name
+          }))
+          .filter((state, index, array) => 
+            // Remove duplicates based on name
+            array.findIndex(s => s.name === state.name) === index
+          )
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .slice(0, 20); // Limit to 20 results
+
+        setStates(processedStates);
+      } catch (error) {
+        console.error('Error fetching states:', error);
+        setStates([]);
+      } finally {
+        setLoadingStates(false);
+      }
+    };
+
+    fetchStates();
+  }, [selectedCountry, countries]);
+
+  // Handle country selection
+  const handleCountryChange = (countryCode) => {
+    setSelectedCountry(countryCode);
+    setSelectedState("");
+
+    if (countryCode && mapInstanceRef.current) {
+      const country = countries.find(c => c.code === countryCode);
+      if (country) {
+        // Move map to country and place marker
+        mapInstanceRef.current.setView([country.lat, country.lng], 6);
+        placeMarker(country.lat, country.lng, mapInstanceRef.current, false);
       }
     }
+  };
 
-    // Add click and double tap events for interactive mode
-    if (interactive && onCoordinatesChange) {
-      let clickTimeout = null;
-      let lastTap = 0;
+  // Handle state selection
+  const handleStateChange = (stateIndex) => {
+    setSelectedState(stateIndex);
 
-      mapRef.current.on('click', (e) => {
-        const currentTime = new Date().getTime();
-        const tapLength = currentTime - lastTap;
-        
-        // Clear any existing timeout
-        if (clickTimeout) {
-          clearTimeout(clickTimeout);
-          clickTimeout = null;
-        }
-
-        // Check if this is a double tap (within 300ms)
-        if (tapLength < 300 && tapLength > 0) {
-          // Double tap - zoom in gradually
-          const currentZoom = mapRef.current.getZoom();
-          mapRef.current.easeTo({
-            zoom: currentZoom + 1,
-            duration: 300
-          });
-          lastTap = 0; // Reset to prevent triple tap
-          return;
-        }
-
-        // Single tap - add marker after a short delay to distinguish from double tap
-        clickTimeout = setTimeout(() => {
-          const { lat, lng } = e.lngLat;
-          
-          // Remove existing marker
-          if (markerRef.current) {
-            markerRef.current.remove();
-          }
-
-          // Add new draggable marker
-          markerRef.current = new mapboxgl.Marker({ draggable: true })
-            .setLngLat([lng, lat])
-            .addTo(mapRef.current);
-
-          // Add drag event listener
-          markerRef.current.on('dragend', () => {
-            const lngLat = markerRef.current.getLngLat();
-            onCoordinatesChange({
-              latitude: lngLat.lat,
-              longitude: lngLat.lng,
-            });
-          });
-
-          // Update coordinates
-          onCoordinatesChange({
-            latitude: lat,
-            longitude: lng,
-          });
-          
-          clickTimeout = null;
-        }, 250);
-
-        lastTap = currentTime;
-      });
+    if (stateIndex !== "" && mapInstanceRef.current) {
+      const state = states[parseInt(stateIndex)];
+      if (state) {
+        // Move map to state/city and place marker
+        mapInstanceRef.current.setView([state.lat, state.lng], 10);
+        placeMarker(state.lat, state.lng, mapInstanceRef.current, false);
+      }
     }
+  };
+
+  // Separate effect for map initialization (runs only once)
+  useEffect(() => {
+    // Load Leaflet CSS and JS dynamically
+    const loadLeaflet = async () => {
+      // Check if Leaflet is already loaded
+      if (window.L) {
+        initializeMap();
+        return;
+      }
+
+      // Load Leaflet CSS
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+      link.integrity = "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
+      link.crossOrigin = "";
+      document.head.appendChild(link);
+
+      // Load Leaflet JS
+      const script = document.createElement("script");
+      script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+      script.integrity = "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
+      script.crossOrigin = "";
+      script.onload = initializeMap;
+      document.head.appendChild(script);
+    };
+
+    const initializeMap = () => {
+      if (!mapRef.current || mapInstanceRef.current) return;
+
+      // Use coordinates if provided, otherwise default to world view
+      const lat = selectedCoordinates ? selectedCoordinates.latitude : 20;
+      const lng = selectedCoordinates ? selectedCoordinates.longitude : 0;
+      const zoom = selectedCoordinates ? 12 : defaultZoom;
+
+      // Initialize the map with appropriate interactions based on mode
+      const map = window.L.map(mapRef.current, {
+        dragging: true,
+        touchZoom: true,
+        doubleClickZoom: false,
+        scrollWheelZoom: true,
+        boxZoom: false,
+        keyboard: interactive,
+        zoomControl: true,
+        tap: false,
+        tapTolerance: 15,
+      }).setView([lat, lng], zoom);
+
+      // Disable specific zoom handlers that might cause issues
+      map.touchZoom.disable();
+      map.touchZoom.enable();
+
+      // Set touch zoom to only work with multi-touch (pinch)
+      if (map.touchZoom._enabled) {
+        map.touchZoom._onTouchStart = (function (original) {
+          return function (e) {
+            if (e.touches && e.touches.length >= 2) {
+              return original.call(this, e);
+            }
+          };
+        })(map.touchZoom._onTouchStart);
+      }
+
+      // Add OpenStreetMap tiles
+      window.L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(map);
+
+      // Add click/touch event listeners for interactive mode
+      if (interactive && onCoordinatesChange) {
+        // For desktop - double click
+        map.on("dblclick", (e) => {
+          const { lat, lng } = e.latlng;
+          placeMarker(lat, lng, map);
+        });
+
+        // For mobile - long press (hold)
+        let pressTimer = null;
+        let startPos = null;
+        let hasMoved = false;
+
+        map.on("mousedown touchstart", (e) => {
+          const originalEvent = e.originalEvent;
+          startPos = { x: e.containerPoint.x, y: e.containerPoint.y };
+          hasMoved = false;
+
+          // Handle touch events (only single touch)
+          if (originalEvent.touches && originalEvent.touches.length === 1) {
+            pressTimer = setTimeout(() => {
+              if (!hasMoved) {
+                const { lat, lng } = e.latlng;
+                placeMarker(lat, lng, map);
+              }
+            }, 700);
+          }
+          // Handle mouse events (excluding right clicks)
+          else if (!originalEvent.touches && originalEvent.button === 0) {
+            pressTimer = setTimeout(() => {
+              if (!hasMoved) {
+                const { lat, lng } = e.latlng;
+                placeMarker(lat, lng, map);
+              }
+            }, 700);
+          }
+        });
+
+        map.on("mousemove touchmove", (e) => {
+          if (startPos) {
+            const currentPos = { x: e.containerPoint.x, y: e.containerPoint.y };
+            const distance = Math.sqrt(
+              Math.pow(currentPos.x - startPos.x, 2) + 
+              Math.pow(currentPos.y - startPos.y, 2)
+            );
+
+            if (distance > 10) {
+              hasMoved = true;
+              if (pressTimer) {
+                clearTimeout(pressTimer);
+                pressTimer = null;
+              }
+            }
+          }
+        });
+
+        map.on("mouseup touchend", () => {
+          if (pressTimer) {
+            clearTimeout(pressTimer);
+            pressTimer = null;
+          }
+          startPos = null;
+          hasMoved = false;
+        });
+
+        // Prevent context menu on long press
+        map.on("contextmenu", (e) => {
+          e.originalEvent.preventDefault();
+          return false;
+        });
+      }
+
+      mapInstanceRef.current = map;
+    };
+
+    const placeMarker = (lat, lng, map, updateCoordinates = true) => {
+      // Custom pin icon for shipment location
+      const shipmentIcon = window.L.divIcon({
+        html: `<div style="position: relative;">
+                 <div style="
+                   width: 0; 
+                   height: 0; 
+                   border-left: 12px solid transparent; 
+                   border-right: 12px solid transparent; 
+                   border-top: 20px solid #10b981;
+                   position: relative;
+                   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+                 "></div>
+                 <div style="
+                   width: 16px; 
+                   height: 16px; 
+                   background-color: #10b981; 
+                   border-radius: 50%; 
+                   border: 2px solid white;
+                   position: absolute;
+                   top: -18px;
+                   left: -8px;
+                   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                 "></div>
+               </div>`,
+        iconSize: [24, 32],
+        iconAnchor: [12, 32],
+        className: "shipment-location-icon",
+      });
+
+      // Remove existing marker
+      if (markerRef.current) {
+        map.removeLayer(markerRef.current);
+      }
+
+      // Add new marker with drag functionality
+      markerRef.current = window.L.marker([lat, lng], {
+        icon: shipmentIcon,
+        draggable: interactive,
+      }).addTo(map).bindPopup(`<strong>Selected Location</strong><br/>
+                   Latitude: ${lat.toFixed(6)}<br/>
+                   Longitude: ${lng.toFixed(6)}`);
+
+      // Add drag event listeners for interactive mode
+      if (interactive && onCoordinatesChange) {
+        // Disable map dragging when starting to drag the marker
+        markerRef.current.on("dragstart", (e) => {
+          map.dragging.disable();
+        });
+
+        // Re-enable map dragging when marker drag ends
+        markerRef.current.on("dragend", (e) => {
+          map.dragging.enable();
+          const { lat: newLat, lng: newLng } = e.target.getLatLng();
+          onCoordinatesChange({
+            latitude: newLat,
+            longitude: newLng,
+          });
+          // Update popup content
+          e.target.setPopupContent(`<strong>Selected Location</strong><br/>
+                                  Latitude: ${newLat.toFixed(6)}<br/>
+                                  Longitude: ${newLng.toFixed(6)}`);
+        });
+
+        // Optional: Handle drag event for real-time updates
+        markerRef.current.on("drag", (e) => {
+          // You can uncomment this if you want real-time coordinate updates while dragging
+          // const { lat: newLat, lng: newLng } = e.target.getLatLng();
+          // onCoordinatesChange({
+          //   latitude: newLat,
+          //   longitude: newLng,
+          // });
+        });
+      }
+
+      // Update coordinates
+      if (updateCoordinates && onCoordinatesChange) {
+        onCoordinatesChange({
+          latitude: lat,
+          longitude: lng,
+        });
+      }
+    };
+
+    loadLeaflet();
 
     // Cleanup function
     return () => {
-      if (mapRef.current) {
-        // Clean up country highlight layers
-        try {
-          if (mapRef.current.getLayer('country-highlight-fill')) {
-            mapRef.current.removeLayer('country-highlight-fill');
-          }
-          if (mapRef.current.getLayer('country-highlight-line')) {
-            mapRef.current.removeLayer('country-highlight-line');
-          }
-          if (mapRef.current.getSource('country-highlight')) {
-            mapRef.current.removeSource('country-highlight');
-          }
-        } catch (e) {
-          // Ignore cleanup errors
-        }
-        mapRef.current.remove();
-        mapRef.current = null;
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
       }
-      if (markerRef.current) {
-        markerRef.current.remove();
-        markerRef.current = null;
-      }
+      markerRef.current = null;
     };
-  }, []);
+  }, [defaultZoom, interactive]);
 
-  // Handle coordinate changes from props
+  // Separate effect to handle coordinate changes without reinitializing the map
   useEffect(() => {
-    if (!mapRef.current || !selectedCoordinates) return;
+    if (!mapInstanceRef.current || !selectedCoordinates) return;
+
+    // Custom pin icon for shipment location
+    const shipmentIcon = window.L.divIcon({
+      html: `<div style="position: relative;">
+               <div style="
+                 width: 0; 
+                 height: 0; 
+                 border-left: 12px solid transparent; 
+                 border-right: 12px solid transparent; 
+                 border-top: 20px solid #10b981;
+                 position: relative;
+                 filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+               "></div>
+               <div style="
+                 width: 16px; 
+                 height: 16px; 
+                 background-color: #10b981; 
+                 border-radius: 50%; 
+                 border: 2px solid white;
+                 position: absolute;
+                 top: -18px;
+                 left: -8px;
+                 box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+               "></div>
+             </div>`,
+      iconSize: [24, 32],
+      iconAnchor: [12, 32],
+      className: "shipment-location-icon",
+    });
 
     // Remove existing marker
     if (markerRef.current) {
-      markerRef.current.remove();
+      mapInstanceRef.current.removeLayer(markerRef.current);
     }
 
-    // Add new draggable marker
-    markerRef.current = new mapboxgl.Marker({ draggable: interactive })
-      .setLngLat([selectedCoordinates.longitude, selectedCoordinates.latitude])
-      .addTo(mapRef.current);
+    // Add marker at new coordinates without changing zoom
+    markerRef.current = window.L.marker(
+      [selectedCoordinates.latitude, selectedCoordinates.longitude],
+      {
+        icon: shipmentIcon,
+        draggable: interactive,
+      },
+    ).addTo(mapInstanceRef.current).bindPopup(`<strong>Shipment Location</strong><br/>
+                 Latitude: ${selectedCoordinates.latitude.toFixed(6)}<br/>
+                 Longitude: ${selectedCoordinates.longitude.toFixed(6)}`);
 
-    // Add drag event listener for interactive mode
+    // Add drag event listeners for interactive mode
     if (interactive && onCoordinatesChange) {
-      markerRef.current.on('dragend', () => {
-        const lngLat = markerRef.current.getLngLat();
+      // Disable map dragging when starting to drag the marker
+      markerRef.current.on("dragstart", (e) => {
+        mapInstanceRef.current.dragging.disable();
+      });
+
+      // Re-enable map dragging when marker drag ends
+      markerRef.current.on("dragend", (e) => {
+        mapInstanceRef.current.dragging.enable();
+        const { lat, lng } = e.target.getLatLng();
         onCoordinatesChange({
-          latitude: lngLat.lat,
-          longitude: lngLat.lng,
+          latitude: lat,
+          longitude: lng,
         });
+        // Update popup content
+        e.target.setPopupContent(`<strong>Shipment Location</strong><br/>
+                                Latitude: ${lat.toFixed(6)}<br/>
+                                Longitude: ${lng.toFixed(6)}`);
+      });
+
+      // Optional: Handle drag event for real-time updates
+      markerRef.current.on("drag", (e) => {
+        // You can uncomment this if you want real-time coordinate updates while dragging
+        // const { lat, lng } = e.target.getLatLng();
+        // onCoordinatesChange({
+        //   latitude: lat,
+        //   longitude: lng,
+        // });
       });
     }
-
-    // Only center map if this is the initial load with coordinates
-    // Don't auto-zoom when marker is moved or new coordinates are set
-  }, [selectedCoordinates]);
-
-  // Handle location search using Mapbox Geocoding API
-  const handleLocationSearch = async (query) => {
-    if (!query.trim() || query.length < 3) {
-      setSearchResults([]);
-      return;
-    }
-
-    setIsSearching(true);
-    try {
-      const response = await fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${mapboxgl.accessToken}&types=place,locality,neighborhood,address,poi&limit=5`
-      );
-      const data = await response.json();
-      
-      if (data.features) {
-        setSearchResults(data.features.map(feature => ({
-          id: feature.id,
-          place_name: feature.place_name,
-          center: feature.center,
-          place_type: feature.place_type[0]
-        })));
-      }
-    } catch (error) {
-      console.error('Search failed:', error);
-      setSearchResults([]);
-    } finally {
-      setIsSearching(false);
-    }
-  };
-
-  // Handle search result selection
-  const handleSearchResultSelect = (result) => {
-    const [lng, lat] = result.center;
-    
-    // Clear search
-    setSearchQuery('');
-    setSearchResults([]);
-    
-    // Update coordinates
-    if (onCoordinatesChange) {
-      onCoordinatesChange({
-        latitude: lat,
-        longitude: lng,
-      });
-    }
-    
-    // Center map and add marker
-    if (mapRef.current) {
-      mapRef.current.flyTo({
-        center: [lng, lat],
-        zoom: 15,
-        duration: 1500
-      });
-    }
-  };
-
-  // Handle manual coordinate input
-  const handleManualCoordinates = () => {
-    const lat = parseFloat(manualLat);
-    const lng = parseFloat(manualLng);
-    
-    if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
-      alert('Please enter valid coordinates (Latitude: -90 to 90, Longitude: -180 to 180)');
-      return;
-    }
-    
-    // Update coordinates
-    if (onCoordinatesChange) {
-      onCoordinatesChange({
-        latitude: lat,
-        longitude: lng,
-      });
-    }
-    
-    // Center map
-    if (mapRef.current) {
-      mapRef.current.flyTo({
-        center: [lng, lat],
-        zoom: 15,
-        duration: 1500
-      });
-    }
-    
-    // Clear inputs
-    setManualLat('');
-    setManualLng('');
-  };
-
-  // Handle country selection
-  const handleCountrySelect = async (countryName) => {
-    if (!countryName || !mapRef.current) return;
-    
-    setLoading(true);
-    setSelectedCountry(countryName);
-
-    try {
-      const country = countries.find(c => c.name.common === countryName);
-      if (country && country.latlng) {
-        const [lat, lng] = country.latlng;
-
-        // Remove existing marker when selecting from dropdown (country view mode)
-        if (markerRef.current) {
-          markerRef.current.remove();
-          markerRef.current = null;
-        }
-
-        // Remove any existing country highlight layers
-        if (mapRef.current.getLayer('country-highlight-fill')) {
-          mapRef.current.removeLayer('country-highlight-fill');
-        }
-        if (mapRef.current.getLayer('country-highlight-line')) {
-          mapRef.current.removeLayer('country-highlight-line');
-        }
-        if (mapRef.current.getSource('country-highlight')) {
-          mapRef.current.removeSource('country-highlight');
-        }
-
-        // Get country ISO code for boundary lookup
-        const countryISO = country.cca3 || country.cca2;
-        
-        // Fetch country boundary data from REST Countries API
-        try {
-          // First try to get detailed country info with borders
-          const detailResponse = await fetch(`https://restcountries.com/v3.1/alpha/${countryISO.toLowerCase()}`);
-          const detailData = await detailResponse.json();
-          
-          if (detailData && detailData.length > 0) {
-            const countryDetail = detailData[0];
-            
-            // Use Natural Earth data for better country boundaries
-            const boundaryResponse = await fetch(`https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson`);
-            const boundaryData = await boundaryResponse.json();
-            
-            // Find the country in the GeoJSON data
-            const countryFeature = boundaryData.features.find(feature => 
-              feature.properties.NAME === countryName ||
-              feature.properties.NAME_EN === countryName ||
-              feature.properties.ISO_A2 === country.cca2 ||
-              feature.properties.ISO_A3 === country.cca3
-            );
-            
-            if (countryFeature) {
-              // Create a GeoJSON source with just this country
-              const countryGeoJSON = {
-                type: 'FeatureCollection',
-                features: [countryFeature]
-              };
-              
-              // Add the source
-              mapRef.current.addSource('country-highlight', {
-                type: 'geojson',
-                data: countryGeoJSON
-              });
-              
-              // Add fill layer
-              mapRef.current.addLayer({
-                id: 'country-highlight-fill',
-                type: 'fill',
-                source: 'country-highlight',
-                paint: {
-                  'fill-color': '#22c55e',
-                  'fill-opacity': 0.3
-                }
-              });
-              
-              // Add outline layer
-              mapRef.current.addLayer({
-                id: 'country-highlight-line',
-                type: 'line',
-                source: 'country-highlight',
-                paint: {
-                  'line-color': '#16a34a',
-                  'line-width': 2
-                }
-              });
-              
-              // Fit the map to the country bounds
-              const coordinates = countryFeature.geometry.coordinates;
-              const bounds = new mapboxgl.LngLatBounds();
-              
-              const addCoordinatesToBounds = (coords) => {
-                if (Array.isArray(coords[0])) {
-                  coords.forEach(addCoordinatesToBounds);
-                } else {
-                  bounds.extend(coords);
-                }
-              };
-              
-              coordinates.forEach(addCoordinatesToBounds);
-              
-              mapRef.current.fitBounds(bounds, {
-                padding: 50,
-                duration: 2000
-              });
-            } else {
-              // Fallback to center coordinates if boundary data not found
-              mapRef.current.flyTo({
-                center: [lng, lat],
-                zoom: 5,
-                duration: 2000
-              });
-            }
-          }
-        } catch (boundaryError) {
-          console.log('Using fallback country view without detailed boundaries');
-          // Fallback to simple center view
-          mapRef.current.flyTo({
-            center: [lng, lat],
-            zoom: 5,
-            duration: 2000
-          });
-        }
-
-        // Clear coordinates when showing country boundaries (not a specific point)
-        if (onCoordinatesChange) {
-          onCoordinatesChange(null);
-        }
-      }
-    } catch (error) {
-      console.error('Failed to navigate to country:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [selectedCoordinates, interactive, onCoordinatesChange]);
 
   return (
-    <div>
-      {/* Location Search */}
-      <div className="mb-4 p-3 bg-gray-800 rounded-lg">
-        <label className="block text-sm font-medium text-gray-300 mb-2">
-          Search Location
-        </label>
-        <div className="relative">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              handleLocationSearch(e.target.value);
-            }}
-            placeholder="Search for addresses, places, or landmarks..."
-            className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          />
-          {isSearching && (
-            <div className="absolute right-3 top-2">
-              <div className="animate-spin h-5 w-5 border-2 border-emerald-400 border-t-transparent rounded-full"></div>
-            </div>
-          )}
-        </div>
-        
-        {/* Search Results */}
-        {searchResults.length > 0 && (
-          <div className="mt-2 bg-gray-700 rounded-lg border border-gray-600 max-h-48 overflow-y-auto">
-            {searchResults.map((result) => (
-              <button
-                key={result.id}
-                onClick={() => handleSearchResultSelect(result)}
-                className="w-full text-left px-3 py-2 hover:bg-gray-600 text-white text-sm border-b border-gray-600 last:border-b-0 focus:outline-none focus:bg-gray-600"
+    <div className="space-y-4">
+      {/* Location Selection Dropdowns */}
+      <div className="bg-gray-800 p-4 rounded-lg">
+        <h3 className="text-lg font-semibold text-white mb-3">Select Location</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Country Selection */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-300">
+              Country
+            </label>
+            <div className="relative">
+              <select
+                value={selectedCountry}
+                onChange={(e) => handleCountryChange(e.target.value)}
+                disabled={loadingCountries}
+                className="w-full appearance-none bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
               >
-                <div className="font-medium">{result.place_name}</div>
-                <div className="text-xs text-gray-400 capitalize">{result.place_type}</div>
-              </button>
-            ))}
+                <option value="">
+                  {loadingCountries ? "Loading countries..." : "Select a country"}
+                </option>
+                {countries.map((country) => (
+                  <option key={country.code} value={country.code}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
+          </div>
+
+          {/* State/Province Selection */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-300">
+              State/Province/City
+            </label>
+            <div className="relative">
+              <select
+                value={selectedState}
+                onChange={(e) => handleStateChange(e.target.value)}
+                disabled={!selectedCountry || loadingStates || states.length === 0}
+                className="w-full appearance-none bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
+              >
+                <option value="">
+                  {!selectedCountry ? "Select a country first" :
+                   loadingStates ? "Loading locations..." :
+                   states.length === 0 ? "No locations found" :
+                   "Select a location"}
+                </option>
+                {states.map((state, index) => (
+                  <option key={index} value={index}>
+                    {state.name}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
+          </div>
+        </div>
+
+        {/* Clear Selection Button */}
+        {(selectedCountry || selectedState) && (
+          <div className="mt-3">
+            <button
+              onClick={() => {
+                setSelectedCountry("");
+                setSelectedState("");
+                if (mapInstanceRef.current && markerRef.current) {
+                  mapInstanceRef.current.removeLayer(markerRef.current);
+                  markerRef.current = null;
+                  mapInstanceRef.current.setView([20, 0], defaultZoom);
+                }
+              }}
+              className="flex items-center gap-1 text-sm text-red-400 hover:text-red-300 transition-colors"
+            >
+              <X className="w-4 h-4" />
+              Clear Selection
+            </button>
           </div>
         )}
       </div>
 
-      {/* Manual Coordinate Input */}
-      <div className="mb-4 p-3 bg-gray-800 rounded-lg">
-        <label className="block text-sm font-medium text-gray-300 mb-2">
-          Manual Coordinate Entry
-        </label>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          <input
-            type="number"
-            step="any"
-            value={manualLat}
-            onChange={(e) => setManualLat(e.target.value)}
-            placeholder="Latitude (-90 to 90)"
-            className="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          />
-          <input
-            type="number"
-            step="any"
-            value={manualLng}
-            onChange={(e) => setManualLng(e.target.value)}
-            placeholder="Longitude (-180 to 180)"
-            className="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          />
-          <button
-            onClick={handleManualCoordinates}
-            disabled={!manualLat || !manualLng}
-            className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg px-3 py-2 font-medium transition-colors"
-          >
-            Go to Location
-          </button>
-        </div>
-        <div className="mt-1 text-xs text-gray-400">
-          Example: 40.7128, -74.0060 (New York City)
-        </div>
-      </div>
-
-      {/* Country Selector */}
-      <div className="mb-4 p-3 bg-gray-800 rounded-lg">
-        <label className="block text-sm font-medium text-gray-300 mb-2">
-          Navigate to Country
-        </label>
-        <select
-          value={selectedCountry}
-          onChange={(e) => handleCountrySelect(e.target.value)}
-          disabled={loading}
-          className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:opacity-50"
-        >
-          <option value="">Select a country...</option>
-          {countries.map((country) => (
-            <option key={country.name.common} value={country.name.common}>
-              {country.name.common}
-            </option>
-          ))}
-        </select>
-        {loading && (
-          <div className="mt-2 text-sm text-emerald-400">
-            Navigating to {selectedCountry}...
-          </div>
-        )}
-      </div>
-
-      {/* Interactive Instructions */}
+      {/* Interactive Mode Instructions */}
       {interactive && (
-        <div className="mb-4 p-3 bg-gray-800 rounded-lg text-sm text-gray-300">
-          <strong>Interactive Mode:</strong> 
-          <ul className="mt-1 ml-4 list-disc">
-            <li>Search for any location using the search box above</li>
-            <li>Enter coordinates manually for precise positioning</li>
-            <li>Single tap anywhere on the map to drop a pin</li>
-            <li>Double tap to zoom in gradually</li>
-            <li>Hold and drag the pin to move its location</li>
-            <li>Use the country selector to highlight entire countries</li>
+        <div className="text-sm text-gray-400 bg-gray-800 p-3 rounded-lg">
+          <strong>Interactive Mode:</strong>
+          <ul className="mt-1 space-y-1">
+            <li>• Use the dropdowns above to quickly navigate to a location</li>
+            <li>• Desktop: Double-click to place pin</li>
+            <li>• Mobile: Press and hold to place pin</li>
+            <li>• Click and drag the pin to move it</li>
+            <li>• Use mouse wheel or pinch to zoom in/out</li>
           </ul>
         </div>
       )}
 
       {/* Map Container */}
       <div
-        ref={mapContainerRef}
+        ref={mapRef}
         style={{ height: height }}
-        className="w-full rounded-lg border border-gray-600"
-      />
+        className="w-full rounded-lg border border-gray-600 bg-gray-700"
+      >
+        <div className="flex items-center justify-center h-full text-gray-400">
+          <div className="text-center">
+            <MapPin className="w-8 h-8 mx-auto mb-2 opacity-50" />
+            <p>Loading map...</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

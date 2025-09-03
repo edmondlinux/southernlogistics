@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import axios from "../lib/axios";
 import { toast } from "react-hot-toast";
-import PWASessionManager from "../utils/pwaUtils";
 
 export const useUserStore = create((set, get) => ({
 	user: null,
@@ -10,12 +9,10 @@ export const useUserStore = create((set, get) => ({
 
 	signup: async ({ name, email, password, confirmPassword }) => {
 		set({ loading: true });
-		
 
 		if (password !== confirmPassword) {
 			set({ loading: false });
 			return toast.error("Passwords do not match");
-		
 		}
 
 		try {
@@ -26,22 +23,13 @@ export const useUserStore = create((set, get) => ({
 			toast.error(error.response.data.message || "An error occurred");
 		}
 	},
-	login: async (email, password, navigate) => {
+	login: async (email, password) => {
 		set({ loading: true });
 
 		try {
 			const res = await axios.post("/auth/login", { email, password });
 
 			set({ user: res.data, loading: false });
-			
-			// Navigate to admin dashboard after successful login using React Router
-			if (navigate) {
-				if (res.data?.role === 'admin') {
-					navigate('/admin-dashboard');
-				} else {
-					navigate('/admin-dashboard'); // For now, redirect all users to admin dashboard
-				}
-			}
 		} catch (error) {
 			set({ loading: false });
 			toast.error(error.response.data.message || "An error occurred");
@@ -52,23 +40,8 @@ export const useUserStore = create((set, get) => ({
 		try {
 			await axios.post("/auth/logout");
 			set({ user: null });
-			
-			// Clear all PWA data and caches
-			await PWASessionManager.clearAllData();
-			
-			// Force reload to ensure clean state
-			setTimeout(() => {
-				PWASessionManager.forceReload();
-			}, 500);
-			
 		} catch (error) {
 			toast.error(error.response?.data?.message || "An error occurred during logout");
-			
-			// Even if logout API fails, clear local data
-			await PWASessionManager.clearAllData();
-			setTimeout(() => {
-				PWASessionManager.forceReload();
-			}, 500);
 		}
 	},
 

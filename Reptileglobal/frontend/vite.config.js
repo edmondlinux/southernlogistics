@@ -6,7 +6,7 @@ export default defineConfig({
 	plugins: [react()],
 	server: {
 		allowedHosts: [
-			"cb55267d-e3a8-48a3-b762-5f311052b5ea-00-11c4k57kf0mh3.worf.replit.dev"
+			"d9c63c6c-d418-4b35-afad-8d6af14cdd4a-00-7zha2surcz85.spock.replit.dev"
 		],
 		proxy: {
 			"/api": {

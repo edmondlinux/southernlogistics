@@ -1,4 +1,5 @@
-import { BarChart, Plus, Package, List, Search, Truck, Key, Trash2 } from "lucide-react";
+
+import { BarChart, Plus, Package, List, Search, Truck, Key } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -6,7 +7,6 @@ import { motion } from "framer-motion";
 import AnalyticsTab from "../components/AnalyticsTab";
 import CreateShipmentForm from "../components/CreateShipmentForm";
 import ShipmentsList from "../components/ShipmentsList";
-import EditShipmentForm from "../components/EditShipmentForm";
 import KYCMagicLinkGenerator from "../components/KYCMagicLinkGenerator";
 import { useShipmentStore } from "../stores/useShipmentStore";
 
@@ -20,17 +20,11 @@ const tabs = [
 
 const AdminPage = () => {
 	const [activeTab, setActiveTab] = useState("create");
-	const [editingShipment, setEditingShipment] = useState(null);
 	const { shipments, getAllShipments } = useShipmentStore();
 
 	useEffect(() => {
 		getAllShipments();
 	}, [getAllShipments]);
-
-	const handleEditShipment = (shipment) => {
-		setEditingShipment(shipment);
-		setActiveTab("edit");
-	};
 
 	return (
 		<div className='min-h-screen bg-gray-900 text-white relative overflow-hidden pt-20'>
@@ -62,23 +56,8 @@ const AdminPage = () => {
 				</div>
 
 				{activeTab === "create" && <CreateShipmentForm />}
-				{activeTab === "shipments" && <ShipmentsList isAdmin={true} onEditShipment={handleEditShipment} />}
+				{activeTab === "shipments" && <ShipmentsList isAdmin={true} />}
 				{activeTab === "search" && <SearchEditShipments />}
-				{activeTab === "edit" && editingShipment && (
-					<EditShipmentForm 
-						shipment={editingShipment} 
-						onUpdate={async (shipmentId, shipmentData) => {
-							// Handle update logic here
-							setEditingShipment(null);
-							setActiveTab("shipments");
-						}}
-						onClose={() => {
-							setEditingShipment(null);
-							setActiveTab("shipments");
-						}}
-						isInline={true}
-					/>
-				)}
 				{activeTab === "analytics" && <AnalyticsTab />}
 			</div>
 		</div>
@@ -90,7 +69,7 @@ const SearchEditShipments = () => {
 	const [selectedShipment, setSelectedShipment] = useState(null);
 	const [showKYCModal, setShowKYCModal] = useState(false);
 	const [selectedShipmentForKYC, setSelectedShipmentForKYC] = useState(null);
-	const { shipments, trackShipment, updateShipment, deleteShipment } = useShipmentStore();
+	const { shipments, trackShipment, updateShipmentStatus } = useShipmentStore();
 
 	const filteredShipments = shipments.filter(shipment => 
 		shipment.trackingNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -98,9 +77,9 @@ const SearchEditShipments = () => {
 		shipment.recipient.name.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
-	const handleShipmentUpdate = async (shipmentId, shipmentData) => {
+	const handleStatusUpdate = async (shipmentId, newStatus, location) => {
 		try {
-			await updateShipment(shipmentId, shipmentData);
+			await updateShipmentStatus(shipmentId, newStatus, location);
 			setSelectedShipment(null);
 		} catch (error) {
 			console.error("Failed to update shipment:", error);
@@ -111,24 +90,6 @@ const SearchEditShipments = () => {
 		setSelectedShipmentForKYC(shipment);
 		setShowKYCModal(true);
 	};
-
-	const handleDeleteShipment = async (shipmentId) => {
-		if (window.confirm("Are you sure you want to delete this shipment?")) {
-			await deleteShipment(shipmentId);
-		}
-	};
-
-	// If a shipment is selected for editing, render the edit form
-	if (selectedShipment) {
-		return (
-			<EditShipmentForm 
-				shipment={selectedShipment} 
-				onUpdate={handleShipmentUpdate}
-				onClose={() => setSelectedShipment(null)}
-				isInline={true}
-			/>
-		);
-	}
 
 	return (
 		<div className="space-y-6">
@@ -172,19 +133,23 @@ const SearchEditShipments = () => {
 											>
 												Edit
 											</button>
-											<button
-												onClick={() => handleDeleteShipment(shipment._id)}
-												className='bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-sm transition duration-300'
-												title="Delete Shipment"
-											>
-												<Trash2 className='w-4 h-4' />
-											</button>
 										</div>
 									</div>
 								</div>
 							))}
 						</div>
 					)}
+				</div>
+			)}
+
+			{selectedShipment && (
+				<div className="bg-gray-800 rounded-lg p-6">
+					<h3 className="text-xl font-semibold text-emerald-400 mb-4">Edit Shipment #{selectedShipment.trackingNumber}</h3>
+					<ShipmentEditForm 
+						shipment={selectedShipment} 
+						onUpdate={handleStatusUpdate}
+						onCancel={() => setSelectedShipment(null)}
+					/>
 				</div>
 			)}
 
@@ -201,7 +166,69 @@ const SearchEditShipments = () => {
 	);
 };
 
-// The EditShipmentForm component is assumed to be imported correctly and handles all editable fields.
-// The previous ShipmentEditForm component is no longer used.
+const ShipmentEditForm = ({ shipment, onUpdate, onCancel }) => {
+	const [status, setStatus] = useState(shipment.status);
+	const [location, setLocation] = useState(shipment.currentLocation || "");
+
+	const statusOptions = [
+		{ value: 'pending', label: 'Pending' },
+		{ value: 'picked_up', label: 'Picked Up' },
+		{ value: 'in_transit', label: 'In Transit' },
+		{ value: 'out_for_delivery', label: 'Out for Delivery' },
+		{ value: 'delivered', label: 'Delivered' },
+		{ value: 'exception', label: 'Exception' }
+	];
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		onUpdate(shipment._id, status, location);
+	};
+
+	return (
+		<form onSubmit={handleSubmit} className="space-y-4">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+				<div>
+					<label className="block text-sm font-medium text-gray-300 mb-2">Status</label>
+					<select
+						value={status}
+						onChange={(e) => setStatus(e.target.value)}
+						className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+					>
+						{statusOptions.map(option => (
+							<option key={option.value} value={option.value}>{option.label}</option>
+						))}
+					</select>
+				</div>
+				<div>
+					<label className="block text-sm font-medium text-gray-300 mb-2">Current Location</label>
+					<input
+						type="text"
+						value={location}
+						onChange={(e) => setLocation(e.target.value)}
+						className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+						placeholder="Enter current location"
+					/>
+				</div>
+			</div>
+			<div className="flex gap-4">
+				<button
+					type="submit"
+					className="bg-emerald-600 hover:bg-emerald-700 px-6 py-3 rounded-lg font-medium transition duration-300"
+				>
+					Update Shipment
+				</button>
+			
+				<button
+					type="button"
+					onClick={onCancel}
+					className="bg-gray-600 hover:bg-gray-700 px-6 py-3 rounded-lg font-medium transition duration-300"
+				>
+					Cancel
+				</button>
+			</div>
+			
+		</form>
+	);
+};
 
 export default AdminPage;

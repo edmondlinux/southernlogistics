@@ -1,14 +1,23 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
+
+import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import Navbar from "./components/Navbar";
 import { useUserStore } from "./stores/useUserStore";
 import LoadingSpinner from "./components/LoadingSpinner";
-import PWASessionManager from "./utils/pwaUtils";
-import PWAInstallPrompt from "./components/PWAInstallPrompt";
+import ContactPage from "./pages/ContactPage";
+import AboutPage from "./pages/AboutPage";
+import TeamPage from "./pages/TeamPage";
+import TestimonialsPage from "./pages/TestimonialsPage";
+import TrackPage from "./pages/TrackPage";
+import ShipmentsPage from "./pages/ShipmentsPage";
+import FloatingActionButtons from "./components/FloatingActionButtons";
+import KYCVerificationPage from "./pages/KYCVerificationPage";
+
 import "./i18n";
 
 function App() {
@@ -16,8 +25,6 @@ function App() {
 
 	useEffect(() => {
 		checkAuth();
-		// Register service worker for PWA
-		PWASessionManager.registerServiceWorker();
 	}, [checkAuth]);
 
 	if (checkingAuth) return <LoadingSpinner />;
@@ -33,10 +40,16 @@ function App() {
 
 			<div className='relative z-50'>
 				<Navbar />
-				<PWAInstallPrompt />
-				<Routes>
-					<Route path='/' element={<LoginPage />} />
 
+				<Routes>
+					<Route path='/' element={<HomePage />} />
+					<Route path='/about' element={<AboutPage />} />
+					<Route path='/team' element={<TeamPage />} />
+					<Route path='/testimonials' element={<TestimonialsPage />} />
+					<Route path='/contact' element={<ContactPage />} />
+					<Route path='/track' element={<TrackPage />} />
+					<Route path="/kyc-verification/:token" element={<KYCVerificationPage />} />
+					<Route path='/shipments' element={<ShipmentsPage />} />
 					<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/' />} />
 					<Route path='/login' element={!user ? <LoginPage /> : <Navigate to='/' />} />
 					<Route
@@ -44,6 +57,7 @@ function App() {
 						element={user?.role === "admin" ? <AdminPage /> : <Navigate to='/' />}
 					/>
 				</Routes>
+				<FloatingActionButtons />
 			</div>
 			<Toaster />
 		</div>

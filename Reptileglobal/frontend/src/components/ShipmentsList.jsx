@@ -16,10 +16,11 @@ import LoadingSpinner from "./LoadingSpinner";
 import EditShipmentForm from "./EditShipmentForm";
 import KYCMagicLinkGenerator from "./KYCMagicLinkGenerator";
 
-const ShipmentsList = ({ isAdmin = false, onEditShipment }) => {
+const ShipmentsList = ({ isAdmin = false }) => {
 	const { shipments, loading, getAllShipments, getUserShipments, updateShipment, deleteShipment } = useShipmentStore();
 	const [statusFilter, setStatusFilter] = useState("all");
 	const [sortBy, setSortBy] = useState("createdAt");
+	const [editingShipment, setEditingShipment] = useState(null);
 	const [showKYCModal, setShowKYCModal] = useState(false);
 	const [selectedShipmentForKYC, setSelectedShipmentForKYC] = useState(null);
 
@@ -76,7 +77,14 @@ const ShipmentsList = ({ isAdmin = false, onEditShipment }) => {
 		}
 	});
 
-	
+	const handleShipmentUpdate = async (shipmentId, shipmentData) => {
+		try {
+			await updateShipment(shipmentId, shipmentData);
+			setEditingShipment(null);
+		} catch (error) {
+			console.error("Failed to update shipment:", error);
+		}
+	};
 
 	const handleDeleteShipment = async (shipmentId) => {
 		if (window.confirm("Are you sure you want to delete this shipment?")) {
@@ -176,7 +184,7 @@ const ShipmentsList = ({ isAdmin = false, onEditShipment }) => {
 											<Key className='w-4 h-4' />
 										</button>
 										<button
-											onClick={() => onEditShipment && onEditShipment(shipment)}
+											onClick={() => setEditingShipment(shipment)}
 											className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition duration-300 flex items-center gap-2"
 										>
 											<Edit className="w-4 h-4" />
@@ -266,7 +274,14 @@ const ShipmentsList = ({ isAdmin = false, onEditShipment }) => {
 				</div>
 			)}
 
-			
+			{/* Edit Modal */}
+			{editingShipment && (
+				<EditShipmentForm
+					shipment={editingShipment}
+					onUpdate={handleShipmentUpdate}
+					onClose={() => setEditingShipment(null)}
+				/>
+			)}
 
 			{showKYCModal && selectedShipmentForKYC && (
 				<KYCMagicLinkGenerator

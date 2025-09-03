@@ -4,14 +4,9 @@ import { useShipmentStore } from "../stores/useShipmentStore";
 import { Package, User, MapPin, Calendar, DollarSign, X } from "lucide-react";
 import OpenStreetMap from "./OpenStreetMap";
 
-const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
+const EditShipmentForm = ({ shipment, onClose, onUpdate }) => {
 	const { updateShipmentStatus, loading } = useShipmentStore();
-	const [coordinates, setCoordinates] = useState(
-		shipment.coordinates ? {
-			latitude: shipment.coordinates.latitude,
-			longitude: shipment.coordinates.longitude
-		} : null
-	);
+	const [coordinates, setCoordinates] = useState(shipment.coordinates || null);
 	const [formData, setFormData] = useState({
 		// Sender Information
 		senderName: shipment.sender.name || "",
@@ -171,35 +166,24 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 		{ value: 'exception', label: 'Exception' }
 	];
 
-	const { isInline = false } = props;
-
-	const containerClass = isInline 
-		? "bg-gray-800 rounded-lg p-6 w-full" 
-		: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto";
-	
-	const formClass = isInline 
-		? "space-y-8" 
-		: "bg-gray-900 rounded-lg p-6 w-full max-w-6xl max-h-[95vh] overflow-y-auto";
-
-	const content = (
-		<>
-			<div className="flex items-center justify-between mb-6">
-				<h2 className="text-2xl font-semibold text-emerald-400">
-					Edit Shipment #{shipment.trackingNumber}
-				</h2>
-				{!isInline && (
+	return (
+		<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+			<div className="bg-gray-900 rounded-lg p-6 w-full max-w-6xl max-h-[95vh] overflow-y-auto">
+				<div className="flex items-center justify-between mb-6">
+					<h2 className="text-2xl font-semibold text-emerald-400">
+						Edit Shipment #{shipment.trackingNumber}
+					</h2>
 					<button
 						onClick={onClose}
 						className="text-gray-400 hover:text-white p-2"
 					>
 						<X className="w-6 h-6" />
 					</button>
-				)}
-			</div>
+				</div>
 
 				<form onSubmit={handleSubmit} className="space-y-8">
 					{/* Status Section */}
-					<div className="bg-gray-800 rounded-lg p-1">
+					<div className="bg-gray-800 rounded-lg p-6">
 						<div className="flex items-center mb-4">
 							<Package className="w-6 h-6 text-emerald-400 mr-2" />
 							<h3 className="text-xl font-semibold text-emerald-400">
@@ -235,7 +219,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 					</div>
 
 					{/* Sender Information */}
-					<div className="bg-gray-800 rounded-lg p-1">
+					<div className="bg-gray-800 rounded-lg p-6">
 						<div className="flex items-center mb-4">
 							<User className="w-6 h-6 text-emerald-400 mr-2" />
 							<h3 className="text-xl font-semibold text-emerald-400">
@@ -311,7 +295,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 					</div>
 
 					{/* Recipient Information */}
-					<div className="bg-gray-800 rounded-lg p-1">
+					<div className="bg-gray-800 rounded-lg p-6">
 						<div className="flex items-center mb-4">
 							<MapPin className="w-6 h-6 text-emerald-400 mr-2" />
 							<h3 className="text-xl font-semibold text-emerald-400">
@@ -387,7 +371,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 					</div>
 
 					{/* Package Details */}
-					<div className="bg-gray-800 rounded-lg p-1">
+					<div className="bg-gray-800 rounded-lg p-6">
 						<div className="flex items-center mb-4">
 							<Package className="w-6 h-6 text-emerald-400 mr-2" />
 							<h3 className="text-xl font-semibold text-emerald-400">
@@ -465,7 +449,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 
 					{/* OpenStreetMap Component */}
 					<div className="mt-8">
-						<div className="bg-gray-800 rounded-lg p-1">
+						<div className="bg-gray-800 rounded-lg p-6">
 							<div className="flex items-center mb-4">
 								<MapPin className="w-6 h-6 text-emerald-400 mr-2" />
 								<h3 className="text-xl font-semibold text-emerald-400">
@@ -483,7 +467,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 					</div>
 
 					{/* Shipping Options */}
-					<div className="bg-gray-800 rounded-lg p-1">
+					<div className="bg-gray-800 rounded-lg p-6">
 						<div className="flex items-center mb-4">
 							<DollarSign className="w-6 h-6 text-emerald-400 mr-2" />
 							<h3 className="text-xl font-semibold text-emerald-400">
@@ -579,47 +563,23 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 					</div>
 
 					{/* Submit Buttons */}
-					<div className="flex justify-between">
-						{isInline && (
-							<button
-								type="button"
-								onClick={onClose}
-								className="bg-gray-500 hover:bg-gray-600 px-6 py-3 rounded-lg font-medium transition duration-300 flex items-center gap-2"
-							>
-								← Back to Search
-							</button>
-						)}
-						<div className="flex gap-4 ml-auto">
-							{!isInline && (
-								<button
-									type="button"
-									onClick={onClose}
-									className="bg-gray-600 hover:bg-gray-700 px-6 py-3 rounded-lg font-medium transition duration-300"
-								>
-									Cancel
-								</button>
-							)}
-							<button
-								type="submit"
-								disabled={loading}
-								className="bg-emerald-600 hover:bg-emerald-700 px-8 py-3 rounded-lg font-semibold transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-							>
-								{loading ? "Updating Shipment..." : "Update Shipment"}
-							</button>
-						</div>
+					<div className="flex justify-end gap-4">
+						<button
+							type="button"
+							onClick={onClose}
+							className="bg-gray-600 hover:bg-gray-700 px-6 py-3 rounded-lg font-medium transition duration-300"
+						>
+							Cancel
+						</button>
+						<button
+							type="submit"
+							disabled={loading}
+							className="bg-emerald-600 hover:bg-emerald-700 px-8 py-3 rounded-lg font-semibold transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+						>
+							{loading ? "Updating Shipment..." : "Update Shipment"}
+						</button>
 					</div>
 				</form>
-			</>
-	);
-
-	return isInline ? (
-		<div className={containerClass}>
-			{content}
-		</div>
-	) : (
-		<div className={containerClass}>
-			<div className={formClass}>
-				{content}
 			</div>
 		</div>
 	);
