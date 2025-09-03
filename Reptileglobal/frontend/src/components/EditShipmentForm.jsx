@@ -163,8 +163,6 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 	};
 
 	const statusOptions = [
-		{ value: 'draft', label: 'Draft' },
-		{ value: 'scheduled', label: 'Scheduled' },
 		{ value: 'pending', label: 'Pending' },
 		{ value: 'picked_up', label: 'Picked Up' },
 		{ value: 'in_transit', label: 'In Transit' },

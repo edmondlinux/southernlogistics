@@ -1,7 +1,7 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LogIn, Mail, Lock, ArrowRight, Loader } from "lucide-react";
 import { useUserStore } from "../stores/useUserStore";
 import { useTranslation } from "../hooks/useTranslation";
@@ -10,16 +10,8 @@ const LoginPage = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const { t } = useTranslation();
-	const navigate = useNavigate();
 
-	const { login, loading, user } = useUserStore();
-
-	// Redirect to admin dashboard if user is already logged in or after successful login
-	useEffect(() => {
-		if (user) {
-			navigate('/admin-dashboard');
-		}
-	}, [user, navigate]);
+	const { login, loading } = useUserStore();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();

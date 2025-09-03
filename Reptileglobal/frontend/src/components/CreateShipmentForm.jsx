@@ -52,10 +52,6 @@ const CreateShipmentForm = () => {
 		shippingDate: "",
 		estimatedDeliveryDate: "",
 		shippingCost: "",
-
-		// Draft and Scheduling
-		isDraft: false,
-		scheduledDate: "",
 	});
 
 	useEffect(() => {
@@ -91,7 +87,7 @@ const CreateShipmentForm = () => {
 		}
 	};
 
-	const handleSubmit = async (e, saveAsDraft = false) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
     
 		
@@ -136,8 +132,6 @@ const CreateShipmentForm = () => {
 				latitude: coordinates.latitude,
 				longitude: coordinates.longitude
 			} : null,
-			isDraft: saveAsDraft || formData.isDraft,
-			scheduledDate: formData.scheduledDate ? new Date(formData.scheduledDate) : null,
 		};
 
 		try {
@@ -175,8 +169,6 @@ const CreateShipmentForm = () => {
 				signatureRequired: false,
 				estimatedDeliveryDate: "",
 				shippingCost: "",
-				isDraft: false,
-				scheduledDate: "",
 			});
 			setCoordinates(null);
 		} catch (error) {
@@ -530,14 +522,6 @@ const CreateShipmentForm = () => {
 							onChange={handleInputChange}
 							className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
 						/>
-						<p className="text-gray-400 text-sm">Schedule departure</p>
-						<input
-							type="datetime-local"
-							name="scheduledDate"
-							value={formData.scheduledDate}
-							onChange={handleInputChange}
-							className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-						/>
 					</div>
 					<div className="mt-4 space-y-2">
 						<label className="flex items-center text-gray-300">
@@ -573,22 +557,14 @@ const CreateShipmentForm = () => {
 					</div>
 				</div>
 
-				{/* Submit Buttons */}
-				<div className="flex justify-center space-x-4">
-					<button
-						type="button"
-						onClick={(e) => handleSubmit(e, true)}
-						disabled={loading}
-						className="bg-gray-600 hover:bg-gray-700 px-8 py-3 rounded-lg font-semibold text-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-					>
-						{loading ? "Saving..." : "Save as Draft"}
-					</button>
+				{/* Submit Button */}
+				<div className="flex justify-center">
 					<button
 						type="submit"
 						disabled={loading}
 						className="bg-emerald-600 hover:bg-emerald-700 px-8 py-3 rounded-lg font-semibold text-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
 					>
-						{loading ? "Creating..." : formData.scheduledDate ? "Schedule Shipment" : "Create Shipment"}
+						{loading ? "Creating Shipment..." : "Create Shipment"}
 					</button>
 				</div>
 			</form>

@@ -22,6 +22,9 @@ const Navbar = () => {
 
 					{/* Desktop Navigation */}
 					<nav className='hidden md:flex items-center space-x-8'>
+						<Link to='/admin-dashboard' className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'>
+							{t('nav.home')}
+						</Link>
 					
 					</nav>
 
@@ -40,13 +43,7 @@ const Navbar = () => {
 										{t('nav.dashboard')}
 									</Link>
 								)}
-								<Link
-									to='/shipments'
-									className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out flex items-center'
-								>
-									<Truck className='mr-2 h-4 w-4' />
-									{t('nav.myShipments')}
-								</Link>
+							
 								<button
 									onClick={logout}
 									className='bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md font-medium transition duration-300 ease-in-out flex items-center'
@@ -91,6 +88,7 @@ const Navbar = () => {
 				{isOpen && (
 					<div className='md:hidden'>
 						<div className='px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-800 bg-opacity-95 backdrop-blur-md'>
+							
 
 							{user ? (
 								<div className='border-t border-gray-700 pt-4 mt-4'>
