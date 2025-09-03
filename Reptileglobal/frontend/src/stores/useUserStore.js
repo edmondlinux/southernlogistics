@@ -27,25 +27,19 @@ export const useUserStore = create((set, get) => ({
 		set({ loading: true });
 
 		try {
-			const response = await axios.post("/auth/login", { email, password });
-			set({ user: response.data, loading: false });
+			const res = await axios.post("/auth/login", { email, password });
 
-			// Store email for potential biometric setup
-			localStorage.setItem('lastLoginEmail', email);
+			set({ user: res.data, loading: false });
 		} catch (error) {
 			set({ loading: false });
-			throw error;
+			toast.error(error.response.data.message || "An error occurred");
 		}
 	},
 
 	logout: async () => {
 		try {
-			// Clear user state immediately to prevent UI issues
-			set({ user: null });
 			await axios.post("/auth/logout");
-			// Clear any stored biometric data
-			localStorage.removeItem('lastBiometricEmail');
-			localStorage.removeItem('lastLoginEmail');
+			set({ user: null });
 		} catch (error) {
 			toast.error(error.response?.data?.message || "An error occurred during logout");
 		}
@@ -59,9 +53,6 @@ export const useUserStore = create((set, get) => ({
 		} catch (error) {
 			console.log(error.message);
 			set({ checkingAuth: false, user: null });
-			// Clear any stored data when auth check fails
-			localStorage.removeItem('lastBiometricEmail');
-			localStorage.removeItem('lastLoginEmail');
 		}
 	},
 

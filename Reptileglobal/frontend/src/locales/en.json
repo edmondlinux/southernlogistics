@@ -2,51 +2,26 @@
   "nav": {
     "home": "Home",
     "about": "About",
-    "services": "Services",
+    "team": "Team",
+    "testimonials": "Testimonials",
     "contact": "Contact",
-    "login": "Login",
-    "signUp": "Sign Up",
-    "logOut": "Log Out",
+    "track": "Track",
+    "myShipments": "My Shipments",
     "dashboard": "Dashboard",
-    "language": "Language Selector"
-  },
-  "biometric": {
-    "setup": {
-      "title": "Enable Biometric Login",
-      "description": "Secure your account with Face ID, Touch ID, or fingerprint authentication for faster and more secure login.",
-      "enable": "Enable Biometric",
-      "setting": "Setting up...",
-      "offer": "Enable biometric login for faster access?"
-    },
-    "login": {
-      "title": "Biometric Authentication",
-      "description": "Use your fingerprint, face, or device authentication to log in securely.",
-      "authenticate": "Authenticate",
-      "authenticating": "Authenticating...",
-      "useButton": "Use Biometric Login",
-      "usePassword": "Use Password Instead"
-    },
-    "benefits": {
-      "secure": "More secure than passwords",
-      "fast": "Instant authentication",
-      "convenient": "No need to remember passwords"
-    },
-    "success": {
-      "title": "Biometric Login Enabled!",
-      "message": "You can now use biometric authentication to log in quickly and securely."
-    },
-    "notSupported": {
-      "title": "Biometric Authentication Unavailable",
-      "message": "Your device or browser doesn't support biometric authentication."
-    },
-    "notAvailable": {
-      "title": "Biometric Authentication Not Available",
-      "message": "Please ensure you have biometric authentication enabled on your device and try again."
-    }
+    "logOut": "Log Out",
+    "signUp": "Sign Up",
+    "login": "Login",
+    "language": "Language"
   },
   "languages": {
     "en": "English",
-    "fr": "Français"
+    "zh": "中文",
+    "ms": "Bahasa Malaysia",
+    "ko": "한국어",
+    "fr": "Français",
+    "es": "Español",
+    "de": "Deutsch",
+    "nl": "Nederlands"
   },
   "common": {
     "loading": "Loading...",

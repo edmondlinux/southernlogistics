@@ -1,62 +1,22 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LogIn, Mail, Lock, ArrowRight, Loader } from "lucide-react";
 import { useUserStore } from "../stores/useUserStore";
 import { useTranslation } from "../hooks/useTranslation";
-import BiometricLogin from "../components/BiometricLogin";
-import { isWebAuthnSupported, isUserVerifyingPlatformAuthenticatorAvailable } from "../utils/webauthn";
 
 const LoginPage = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [showBiometricLogin, setShowBiometricLogin] = useState(false);
-	const [biometricSupported, setBiometricSupported] = useState(false);
 	const { t } = useTranslation();
-	const navigate = useNavigate();
 
 	const { login, loading } = useUserStore();
-
-	useEffect(() => {
-		const checkBiometricSupport = async () => {
-			const supported = isWebAuthnSupported();
-			if (supported) {
-				const available = await isUserVerifyingPlatformAuthenticatorAvailable();
-				setBiometricSupported(available);
-			}
-		};
-		
-		checkBiometricSupport();
-		
-		// Check if user has previously used biometric login with this email
-		const lastBiometricEmail = localStorage.getItem('lastBiometricEmail');
-		if (lastBiometricEmail && biometricSupported) {
-			setEmail(lastBiometricEmail);
-			setShowBiometricLogin(true);
-		}
-	}, [biometricSupported]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log(email, password);
 		login(email, password);
-	};
-
-	const handleBiometricSuccess = (user) => {
-		localStorage.setItem('lastBiometricEmail', user.email);
-		navigate('/');
-	};
-
-	const handleBiometricError = (error) => {
-		console.error('Biometric login failed:', error);
-		setShowBiometricLogin(false);
-	};
-
-	const handleUseBiometric = () => {
-		if (email && biometricSupported) {
-			setShowBiometricLogin(true);
-		}
 	};
 
 	return (
@@ -144,22 +104,6 @@ const LoginPage = () => {
 								</>
 							)}
 						</button>
-
-						{biometricSupported && email && !showBiometricLogin && (
-							<button
-								type='button'
-								onClick={handleUseBiometric}
-								className='w-full flex justify-center py-2 px-4 border border-gray-600 
-								rounded-md shadow-sm text-sm font-medium text-emerald-400 bg-transparent
-								 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2
-								  focus:ring-emerald-500 transition duration-150 ease-in-out'
-							>
-								<svg className='mr-2 h-5 w-5' fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-								</svg>
-								{t('biometric.login.useButton')}
-							</button>
-						)}
 					</form>
 
 					<p className='mt-8 text-center text-sm text-gray-400'>
@@ -170,22 +114,6 @@ const LoginPage = () => {
 					</p>
 				</div>
 			</motion.div>
-
-			{showBiometricLogin && (
-				<motion.div
-					className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8, delay: 0.2 }}
-				>
-					<BiometricLogin
-						userEmail={email}
-						onSuccess={handleBiometricSuccess}
-						onError={handleBiometricError}
-						onCancel={() => setShowBiometricLogin(false)}
-					/>
-				</motion.div>
-			)}
 		</div>
 	);
 };

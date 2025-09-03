@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@simplewebauthn/server": "^13.1.2",
     "@types/node": "^22.13.11",
     "mapbox-gl": "^3.14.0"
   }
