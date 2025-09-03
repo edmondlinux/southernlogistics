@@ -21,6 +21,10 @@ localPort = 5000
 externalPort = 80
 
 [[ports]]
+localPort = 5002
+externalPort = 3001
+
+[[ports]]
 localPort = 5003
 externalPort = 3000
 
@@ -30,7 +34,6 @@ externalPort = 80
 exposeLocalhost = true
 
 [workflows]
-runButton = "Project"
 
 [[workflows.workflow]]
 name = "App"
@@ -44,24 +47,3 @@ args = "cd Reptileglobal/backend && node server.js"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd Reptileglobal/frontend && npm run dev"
-
-[[workflows.workflow]]
-name = "Project"
-mode = "parallel"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Extra Cargo Frontend"
-
-[[workflows.workflow]]
-name = "Extra Cargo Frontend"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd Reptileglobal/frontend && npm run dev"
-waitForPort = 5000
-
-[workflows.workflow.metadata]
-outputType = "webview"

@@ -3,7 +3,7 @@ import crypto from "crypto";
 import cloudinary from "cloudinary";
 
 // Hardcoded configuration values - using var to ensure global scope
-var FRONTEND_URL = 'https://extracargo.com';
+var FRONTEND_URL = 'https://reptileglobal.site';
 var CLOUDINARY_CLOUD_NAME = 'dykpxav2z';
 var CLOUDINARY_API_KEY = '485318534978719';
 var CLOUDINARY_API_SECRET = 'AVKb7dDnBCcQN6FRTxffiXt9rAY';
