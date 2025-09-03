@@ -16,6 +16,8 @@ function App() {
 
 	useEffect(() => {
 		checkAuth();
+		// Register service worker for PWA
+		PWASessionManager.registerServiceWorker();
 	}, [checkAuth]);
 
 	if (checkingAuth) return <LoadingSpinner />;
@@ -44,7 +46,6 @@ function App() {
 				</Routes>
 			</div>
 			<Toaster />
-			<PWASessionManager />
 		</div>
 	);
 }
