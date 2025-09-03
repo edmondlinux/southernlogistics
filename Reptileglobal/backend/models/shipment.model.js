@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const trackingHistorySchema = new mongoose.Schema({
   status: {
     type: String,
-    enum: ['pending', 'picked_up', 'in_transit', 'out_for_delivery', 'delivered', 'exception'],
+    enum: ['draft', 'scheduled', 'pending', 'picked_up', 'in_transit', 'out_for_delivery', 'delivered', 'exception'],
     required: true
   },
   location: {
@@ -67,8 +67,16 @@ const shipmentSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'picked_up', 'in_transit', 'out_for_delivery', 'delivered', 'exception'],
+    enum: ['draft', 'scheduled', 'pending', 'picked_up', 'in_transit', 'out_for_delivery', 'delivered', 'exception'],
     default: 'pending'
+  },
+  isDraft: {
+    type: Boolean,
+    default: false
+  },
+  scheduledDate: {
+    type: Date,
+    default: null
   },
   currentLocation: String,
   trackingHistory: [trackingHistorySchema],

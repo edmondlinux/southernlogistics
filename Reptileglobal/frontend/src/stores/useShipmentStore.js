@@ -138,6 +138,67 @@ export const useShipmentStore = create((set, get) => ({
 		}
 	},
 
+	// Get draft shipments
+	getDraftShipments: async () => {
+		set({ loading: true });
+		try {
+			const res = await axios.get("/shipments/admin/drafts");
+			const shipmentsData = res.data.shipments || res.data;
+			set({ shipments: shipmentsData, loading: false });
+		} catch (error) {
+			set({ loading: false });
+			toast.error(error.response?.data?.message || "Failed to fetch draft shipments");
+		}
+	},
+
+	// Get scheduled shipments
+	getScheduledShipments: async () => {
+		set({ loading: true });
+		try {
+			const res = await axios.get("/shipments/admin/scheduled");
+			const shipmentsData = res.data.shipments || res.data;
+			set({ shipments: shipmentsData, loading: false });
+		} catch (error) {
+			set({ loading: false });
+			toast.error(error.response?.data?.message || "Failed to fetch scheduled shipments");
+		}
+	},
+
+	// Activate draft shipment
+	activateDraftShipment: async (shipmentId) => {
+		set({ loading: true });
+		try {
+			const res = await axios.put(`/shipments/${shipmentId}/activate`);
+			set((state) => ({
+				shipments: Array.from(state.shipments || []).filter(shipment => 
+					shipment._id !== shipmentId
+				),
+				loading: false
+			}));
+			toast.success("Draft shipment activated successfully");
+			return res.data;
+		} catch (error) {
+			set({ loading: false });
+			toast.error(error.response?.data?.message || "Failed to activate draft shipment");
+			throw error;
+		}
+	},
+
+	// Process scheduled shipments
+	processScheduledShipments: async () => {
+		set({ loading: true });
+		try {
+			const res = await axios.post("/shipments/admin/process-scheduled");
+			toast.success(res.data.message);
+			set({ loading: false });
+			return res.data;
+		} catch (error) {
+			set({ loading: false });
+			toast.error(error.response?.data?.message || "Failed to process scheduled shipments");
+			throw error;
+		}
+	},
+
 	// Clear current shipment
 	clearCurrentShipment: () => {
 		set({ currentShipment: null });

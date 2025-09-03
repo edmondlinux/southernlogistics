@@ -14,6 +14,8 @@ import { useShipmentStore } from "../stores/useShipmentStore";
 const tabs = [
 	{ id: "create", label: "Create Shipment", icon: Plus },
 	{ id: "shipments", label: "All Shipments", icon: Package },
+	{ id: "drafts", label: "Draft Shipments", icon: List },
+	{ id: "scheduled", label: "Scheduled Shipments", icon: Truck },
 	{ id: "search", label: "Search & Edit", icon: Search },
 	{ id: "analytics", label: "Analytics", icon: BarChart },
 ];
@@ -21,11 +23,17 @@ const tabs = [
 const AdminPage = () => {
 	const [activeTab, setActiveTab] = useState("create");
 	const [editingShipment, setEditingShipment] = useState(null);
-	const { shipments, getAllShipments } = useShipmentStore();
+	const { shipments, getAllShipments, getDraftShipments, getScheduledShipments, activateDraftShipment, processScheduledShipments } = useShipmentStore();
 
 	useEffect(() => {
-		getAllShipments();
-	}, [getAllShipments]);
+		if (activeTab === "shipments") {
+			getAllShipments();
+		} else if (activeTab === "drafts") {
+			getDraftShipments();
+		} else if (activeTab === "scheduled") {
+			getScheduledShipments();
+		}
+	}, [activeTab, getAllShipments, getDraftShipments, getScheduledShipments]);
 
 	const handleEditShipment = (shipment) => {
 		setEditingShipment(shipment);
@@ -63,6 +71,8 @@ const AdminPage = () => {
 
 				{activeTab === "create" && <CreateShipmentForm />}
 				{activeTab === "shipments" && <ShipmentsList isAdmin={true} onEditShipment={handleEditShipment} />}
+				{activeTab === "drafts" && <DraftShipmentsList />}
+				{activeTab === "scheduled" && <ScheduledShipmentsList />}
 				{activeTab === "search" && <SearchEditShipments />}
 				{activeTab === "edit" && editingShipment && (
 					<EditShipmentForm 
@@ -81,6 +91,123 @@ const AdminPage = () => {
 				)}
 				{activeTab === "analytics" && <AnalyticsTab />}
 			</div>
+		</div>
+	);
+};
+
+const DraftShipmentsList = () => {
+	const { shipments, loading, activateDraftShipment, deleteShipment } = useShipmentStore();
+
+	const handleActivateDraft = async (shipmentId) => {
+		if (window.confirm("Are you sure you want to activate this draft shipment?")) {
+			await activateDraftShipment(shipmentId);
+		}
+	};
+
+	const handleDeleteDraft = async (shipmentId) => {
+		if (window.confirm("Are you sure you want to delete this draft shipment?")) {
+			await deleteShipment(shipmentId);
+		}
+	};
+
+	if (loading) return <div className="text-center">Loading draft shipments...</div>;
+
+	return (
+		<div className="bg-gray-800 rounded-lg p-6">
+			<h3 className="text-xl font-semibold text-emerald-400 mb-4">Draft Shipments</h3>
+			{shipments.length === 0 ? (
+				<p className="text-gray-400">No draft shipments found</p>
+			) : (
+				<div className="space-y-4">
+					{shipments.map((shipment) => (
+						<div key={shipment._id} className="bg-gray-700 rounded-lg p-4">
+							<div className="flex justify-between items-start">
+								<div>
+									<h4 className="font-semibold text-emerald-400">#{shipment.trackingNumber}</h4>
+									<p className="text-sm text-gray-300">{shipment.sender.name} → {shipment.recipient.name}</p>
+									<p className="text-sm text-gray-400">Created: {new Date(shipment.createdAt).toLocaleDateString()}</p>
+								</div>
+								<div className="flex space-x-2">
+									<button
+										onClick={() => handleActivateDraft(shipment._id)}
+										className="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm transition duration-300"
+									>
+										Activate
+									</button>
+									<button
+										onClick={() => handleDeleteDraft(shipment._id)}
+										className="bg-red-600 hover:bg-red-700 px-3 py-2 rounded-lg text-sm transition duration-300"
+									>
+										<Trash2 className="w-4 h-4" />
+									</button>
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+			)}
+		</div>
+	);
+};
+
+const ScheduledShipmentsList = () => {
+	const { shipments, loading, processScheduledShipments, deleteShipment } = useShipmentStore();
+
+	const handleProcessScheduled = async () => {
+		if (window.confirm("Process all scheduled shipments that are due?")) {
+			await processScheduledShipments();
+		}
+	};
+
+	const handleDeleteScheduled = async (shipmentId) => {
+		if (window.confirm("Are you sure you want to delete this scheduled shipment?")) {
+			await deleteShipment(shipmentId);
+		}
+	};
+
+	if (loading) return <div className="text-center">Loading scheduled shipments...</div>;
+
+	return (
+		<div className="bg-gray-800 rounded-lg p-6">
+			<div className="flex justify-between items-center mb-4">
+				<h3 className="text-xl font-semibold text-emerald-400">Scheduled Shipments</h3>
+				<button
+					onClick={handleProcessScheduled}
+					className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm transition duration-300"
+				>
+					Process Due Shipments
+				</button>
+			</div>
+			{shipments.length === 0 ? (
+				<p className="text-gray-400">No scheduled shipments found</p>
+			) : (
+				<div className="space-y-4">
+					{shipments.map((shipment) => (
+						<div key={shipment._id} className="bg-gray-700 rounded-lg p-4">
+							<div className="flex justify-between items-start">
+								<div>
+									<h4 className="font-semibold text-emerald-400">#{shipment.trackingNumber}</h4>
+									<p className="text-sm text-gray-300">{shipment.sender.name} → {shipment.recipient.name}</p>
+									<p className="text-sm text-yellow-400">
+										Scheduled: {new Date(shipment.scheduledDate).toLocaleString()}
+									</p>
+									<p className="text-sm text-gray-400">
+										Status: {new Date(shipment.scheduledDate) <= new Date() ? "Due" : "Pending"}
+									</p>
+								</div>
+								<div className="flex space-x-2">
+									<button
+										onClick={() => handleDeleteScheduled(shipment._id)}
+										className="bg-red-600 hover:bg-red-700 px-3 py-2 rounded-lg text-sm transition duration-300"
+									>
+										<Trash2 className="w-4 h-4" />
+									</button>
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+			)}
 		</div>
 	);
 };

@@ -58,11 +58,43 @@ export const createShipment = async (req, res) => {
 			shippingDate,
 			estimatedDeliveryDate,
 			shippingCost,
-			coordinates
+			coordinates,
+			isDraft,
+			scheduledDate
 		} = req.body;
 
 		// Use provided tracking number or generate one if not provided
 		const finalTrackingNumber = trackingNumber || 'GL' + Date.now().toString() + Math.random().toString(36).substr(2, 5).toUpperCase();
+
+		// Determine status based on whether it's draft or scheduled
+		let shipmentStatus = 'pending';
+		let currentLocation = "Origin facility";
+		let trackingHistoryEntry = {
+			status: 'pending',
+			location: 'Origin facility',
+			timestamp: new Date(),
+			notes: 'Shipment created'
+		};
+
+		if (isDraft) {
+			shipmentStatus = 'draft';
+			currentLocation = "Draft";
+			trackingHistoryEntry = {
+				status: 'draft',
+				location: 'Draft',
+				timestamp: new Date(),
+				notes: 'Shipment saved as draft'
+			};
+		} else if (scheduledDate) {
+			shipmentStatus = 'scheduled';
+			currentLocation = "Scheduled";
+			trackingHistoryEntry = {
+				status: 'scheduled',
+				location: 'Scheduled',
+				timestamp: new Date(),
+				notes: `Shipment scheduled for ${new Date(scheduledDate).toLocaleString()}`
+			};
+		}
 
 		const shipment = new Shipment({
 			trackingNumber: finalTrackingNumber,
@@ -79,43 +111,43 @@ export const createShipment = async (req, res) => {
 			estimatedDelivery: estimatedDeliveryDate,
 			shippingCost,
 			coordinates,
-			currentLocation: "Origin facility",
-			trackingHistory: [{
-				status: 'pending',
-				location: 'Origin facility',
-				timestamp: new Date(),
-				notes: 'Shipment created'
-			}]
+			isDraft: isDraft || false,
+			scheduledDate: scheduledDate || null,
+			status: shipmentStatus,
+			currentLocation,
+			trackingHistory: [trackingHistoryEntry]
 		});
 
 		const savedShipment = await shipment.save();
 		
-		// Send email notifications (non-transactional)
-		const emailService = new EmailService();
-		
-		// Send email to sender (fire and forget)
-		setImmediate(async () => {
-			try {
-				const result = await emailService.sendShipmentNotification(savedShipment, 'sender');
-				if (result.success) {
-					console.log(`Sender notification sent successfully for ${savedShipment.trackingNumber}`);
+		// Only send email notifications for non-draft and non-scheduled shipments
+		if (!isDraft && !scheduledDate) {
+			const emailService = new EmailService();
+			
+			// Send email to sender (fire and forget)
+			setImmediate(async () => {
+				try {
+					const result = await emailService.sendShipmentNotification(savedShipment, 'sender');
+					if (result.success) {
+						console.log(`Sender notification sent successfully for ${savedShipment.trackingNumber}`);
+					}
+				} catch (error) {
+					console.error(`Failed to send sender notification for ${savedShipment.trackingNumber}:`, error);
 				}
-			} catch (error) {
-				console.error(`Failed to send sender notification for ${savedShipment.trackingNumber}:`, error);
-			}
-		});
-		
-		// Send email to recipient (fire and forget)
-		setImmediate(async () => {
-			try {
-				const result = await emailService.sendShipmentNotification(savedShipment, 'recipient');
-				if (result.success) {
-					console.log(`Recipient notification sent successfully for ${savedShipment.trackingNumber}`);
+			});
+			
+			// Send email to recipient (fire and forget)
+			setImmediate(async () => {
+				try {
+					const result = await emailService.sendShipmentNotification(savedShipment, 'recipient');
+					if (result.success) {
+						console.log(`Recipient notification sent successfully for ${savedShipment.trackingNumber}`);
+					}
+				} catch (error) {
+					console.error(`Failed to send recipient notification for ${savedShipment.trackingNumber}:`, error);
 				}
-			} catch (error) {
-				console.error(`Failed to send recipient notification for ${savedShipment.trackingNumber}:`, error);
-			}
-		});
+			});
+		}
 		
 		res.status(201).json(savedShipment);
 	} catch (error) {
@@ -270,6 +302,161 @@ export const getShipmentById = async (req, res) => {
 		res.json(shipment);
 	} catch (error) {
 		console.log("Error in getShipmentById controller", error.message);
+		res.status(500).json({ message: "Server error", error: error.message });
+	}
+};
+
+// Get all draft shipments (admin only)
+export const getDraftShipments = async (req, res) => {
+	try {
+		const { page = 1, limit = 20 } = req.query;
+		
+		const draftShipments = await Shipment.find({ isDraft: true })
+			.populate('user', 'name email')
+			.sort({ createdAt: -1 })
+			.limit(limit * 1)
+			.skip((page - 1) * limit);
+
+		const total = await Shipment.countDocuments({ isDraft: true });
+
+		res.json({
+			shipments: draftShipments,
+			totalPages: Math.ceil(total / limit),
+			currentPage: page,
+			total
+		});
+	} catch (error) {
+		console.log("Error in getDraftShipments controller", error.message);
+		res.status(500).json({ message: "Server error", error: error.message });
+	}
+};
+
+// Get all scheduled shipments (admin only)
+export const getScheduledShipments = async (req, res) => {
+	try {
+		const { page = 1, limit = 20 } = req.query;
+		
+		const scheduledShipments = await Shipment.find({ 
+			status: 'scheduled',
+			scheduledDate: { $exists: true, $ne: null }
+		})
+			.populate('user', 'name email')
+			.sort({ scheduledDate: 1 })
+			.limit(limit * 1)
+			.skip((page - 1) * limit);
+
+		const total = await Shipment.countDocuments({ 
+			status: 'scheduled',
+			scheduledDate: { $exists: true, $ne: null }
+		});
+
+		res.json({
+			shipments: scheduledShipments,
+			totalPages: Math.ceil(total / limit),
+			currentPage: page,
+			total
+		});
+	} catch (error) {
+		console.log("Error in getScheduledShipments controller", error.message);
+		res.status(500).json({ message: "Server error", error: error.message });
+	}
+};
+
+// Convert draft to active shipment
+export const activateDraftShipment = async (req, res) => {
+	try {
+		const { shipmentId } = req.params;
+		
+		const shipment = await Shipment.findById(shipmentId);
+		
+		if (!shipment) {
+			return res.status(404).json({ message: "Shipment not found" });
+		}
+
+		if (!shipment.isDraft) {
+			return res.status(400).json({ message: "Shipment is not a draft" });
+		}
+
+		// Update shipment to active status
+		shipment.isDraft = false;
+		shipment.status = 'pending';
+		shipment.currentLocation = 'Origin facility';
+		shipment.trackingHistory.push({
+			status: 'pending',
+			location: 'Origin facility',
+			timestamp: new Date(),
+			notes: 'Shipment activated from draft'
+		});
+
+		const updatedShipment = await shipment.save();
+
+		// Send email notifications
+		const emailService = new EmailService();
+		
+		setImmediate(async () => {
+			try {
+				await emailService.sendShipmentNotification(updatedShipment, 'sender');
+				await emailService.sendShipmentNotification(updatedShipment, 'recipient');
+			} catch (error) {
+				console.error(`Failed to send notifications for activated shipment ${updatedShipment.trackingNumber}:`, error);
+			}
+		});
+
+		res.json(updatedShipment);
+	} catch (error) {
+		console.log("Error in activateDraftShipment controller", error.message);
+		res.status(500).json({ message: "Server error", error: error.message });
+	}
+};
+
+// Process scheduled shipments (to be called by a scheduler)
+export const processScheduledShipments = async (req, res) => {
+	try {
+		const now = new Date();
+		
+		const scheduledShipments = await Shipment.find({
+			status: 'scheduled',
+			scheduledDate: { $lte: now }
+		});
+
+		const processed = [];
+		const emailService = new EmailService();
+
+		for (const shipment of scheduledShipments) {
+			try {
+				shipment.status = 'pending';
+				shipment.currentLocation = 'Origin facility';
+				shipment.trackingHistory.push({
+					status: 'pending',
+					location: 'Origin facility',
+					timestamp: new Date(),
+					notes: 'Shipment activated from schedule'
+				});
+
+				await shipment.save();
+
+				// Send email notifications
+				setImmediate(async () => {
+					try {
+						await emailService.sendShipmentNotification(shipment, 'sender');
+						await emailService.sendShipmentNotification(shipment, 'recipient');
+					} catch (error) {
+						console.error(`Failed to send notifications for scheduled shipment ${shipment.trackingNumber}:`, error);
+					}
+				});
+
+				processed.push(shipment.trackingNumber);
+			} catch (error) {
+				console.error(`Failed to process scheduled shipment ${shipment.trackingNumber}:`, error);
+			}
+		}
+
+		res.json({ 
+			message: `Processed ${processed.length} scheduled shipments`,
+			processedShipments: processed
+		});
+	} catch (error) {
+		console.log("Error in processScheduledShipments controller", error.message);
 		res.status(500).json({ message: "Server error", error: error.message });
 	}
 };
