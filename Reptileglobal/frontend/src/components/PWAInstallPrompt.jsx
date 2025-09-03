@@ -1,53 +1,69 @@
 
-import React from 'react';
-import { Download, X } from 'lucide-react';
-import { usePWA } from '../hooks/usePWA';
+import { useState, useEffect } from 'react';
+import { X, Download } from 'lucide-react';
 
 const PWAInstallPrompt = () => {
-  const { isInstallable, installApp, isInstalled } = usePWA();
-  const [showPrompt, setShowPrompt] = React.useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
-  React.useEffect(() => {
-    if (isInstallable && !isInstalled) {
-      const timer = setTimeout(() => {
-        setShowPrompt(true);
-      }, 5000); // Show after 5 seconds
+  useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowInstallPrompt(true);
+    };
 
-      return () => clearTimeout(timer);
+    window.addEventListener('beforeinstallprompt', handler);
+
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+      setShowInstallPrompt(false);
     }
-  }, [isInstallable, isInstalled]);
+  };
 
-  if (!showPrompt || !isInstallable || isInstalled) {
-    return null;
-  }
+  const handleDismiss = () => {
+    setShowInstallPrompt(false);
+    setDeferredPrompt(null);
+  };
+
+  if (!showInstallPrompt) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 bg-emerald-600 text-white p-4 rounded-lg shadow-lg z-50 md:left-auto md:right-4 md:w-80">
+    <div className="fixed bottom-4 left-4 right-4 z-50 bg-emerald-600 text-white p-4 rounded-lg shadow-lg md:left-auto md:right-4 md:max-w-sm">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Download className="w-6 h-6" />
+        <div className="flex items-center space-x-3">
+          <Download className="h-6 w-6" />
           <div>
-            <h3 className="font-semibold">Install Reptile Global</h3>
-            <p className="text-sm opacity-90">Install our app for a better experience</p>
+            <h3 className="font-semibold">Install App</h3>
+            <p className="text-sm opacity-90">Install this app for a better experience</p>
           </div>
         </div>
         <button
-          onClick={() => setShowPrompt(false)}
-          className="text-white hover:text-gray-300"
+          onClick={handleDismiss}
+          className="ml-4 p-1 hover:bg-emerald-700 rounded"
         >
-          <X className="w-5 h-5" />
+          <X className="h-5 w-5" />
         </button>
       </div>
-      <div className="flex gap-2 mt-3">
+      <div className="mt-3 flex space-x-2">
         <button
-          onClick={installApp}
-          className="bg-white text-emerald-600 px-4 py-2 rounded font-medium hover:bg-gray-100 transition-colors"
+          onClick={handleInstall}
+          className="flex-1 bg-white text-emerald-600 px-4 py-2 rounded font-medium hover:bg-gray-100 transition-colors"
         >
           Install
         </button>
         <button
-          onClick={() => setShowPrompt(false)}
-          className="text-white px-4 py-2 rounded hover:bg-emerald-700 transition-colors"
+          onClick={handleDismiss}
+          className="px-4 py-2 text-emerald-100 hover:text-white transition-colors"
         >
           Not now
         </button>
