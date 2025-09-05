@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
-import AdminPage from "./pages/AdminPage";
+
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import TeamPage from "./pages/TeamPage";
@@ -44,7 +44,7 @@ function App() {
 					<Route path='/' element={<HomePage />} />
 					<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/' />} />
 					<Route path='/login' element={!user ? <LoginPage /> : <Navigate to='/' />} />
-					<Route path='/admin-dashboard' element={<AdminPage />} />
+					
 					<Route path='/about' element={<AboutPage />} />
 					<Route path='/contact' element={<ContactPage />} />
 					<Route path='/team' element={<TeamPage />} />

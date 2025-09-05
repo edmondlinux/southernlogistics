@@ -1,5 +1,4 @@
-
-import { Package, UserPlus, LogIn, LogOut, Truck, Menu, X } from "lucide-react";
+import { Package, UserPlus, LogIn, LogOut, Truck, Menu, X, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useUserStore } from "../stores/useUserStore";
 import { useState } from "react";
@@ -45,18 +44,10 @@ const Navbar = () => {
 					{/* Desktop Actions */}
 					<div className='hidden md:flex items-center space-x-4'>
 						<LanguageSwitcher />
-						
+
 						{user ? (
 							<div className='flex items-center space-x-4'>
-								{user.role === 'admin' && (
-									<Link
-										to='/admin-dashboard'
-										className='bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md font-medium transition duration-300 ease-in-out flex items-center'
-									>
-										<Lock className='mr-2 h-4 w-4' />
-										{t('nav.dashboard')}
-									</Link>
-								)}
+								
 								<Link
 									to='/shipments'
 									className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out flex items-center'
@@ -153,16 +144,7 @@ const Navbar = () => {
 
 							{user ? (
 								<div className='border-t border-gray-700 pt-4 mt-4'>
-									{user.role === 'admin' && (
-										<Link
-											to='/admin-dashboard'
-											className='block px-3 py-2 text-emerald-400 hover:text-emerald-300 transition duration-300 ease-in-out'
-											onClick={() => setIsOpen(false)}
-										>
-											<Lock className='inline mr-2 h-4 w-4' />
-											{t('nav.dashboard')}
-										</Link>
-									)}
+									
 									<Link
 										to='/shipments'
 										className='block px-3 py-2 text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'

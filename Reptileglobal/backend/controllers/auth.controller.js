@@ -9,12 +9,10 @@ export const signup = async (req, res) => {
 			return res.status(400).json({ message: "User already exists" });
 		}
 
-		// Create user with customer role by default
 		const user = await User.create({ 
 			name, 
 			email, 
-			password, 
-			role: "customer" 
+			password 
 		});
 
 		// Set simple session cookie
@@ -29,7 +27,6 @@ export const signup = async (req, res) => {
 			_id: user._id,
 			name: user.name,
 			email: user.email,
-			role: user.role,
 		});
 	} catch (error) {
 		console.log("Error in signup controller", error.message);
@@ -55,7 +52,6 @@ export const login = async (req, res) => {
 				_id: user._id,
 				name: user.name,
 				email: user.email,
-				role: user.role,
 			});
 		} else {
 			res.status(400).json({ message: "Invalid email or password" });
