@@ -7,7 +7,7 @@ import {
   verifyKYC,
   getAllKYCSubmissions
 } from "../controllers/kyc.controller.js";
-import { protectRoute, adminRoute } from "../middleware/auth.middleware.js";
+import { protectRoute } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
