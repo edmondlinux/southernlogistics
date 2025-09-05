@@ -24,15 +24,23 @@ export const useUserStore = create((set, get) => ({
 		}
 	},
 	login: async (email, password) => {
-		set({ loading: true });
-
+		set({ loading: true, error: null });
 		try {
 			const res = await axios.post("/auth/login", { email, password });
 
+			// Check if user is admin and should be redirected
+			if (res.data.redirectToAdmin) {
+				// Redirect to admin subdomain
+				const currentDomain = window.location.hostname;
+				const adminDomain = currentDomain.replace('reptileglobal', 'xtracargo-admin');
+				window.location.href = `${window.location.protocol}//${adminDomain}${window.location.port ? ':' + window.location.port : ''}`;
+				return;
+			}
+
 			set({ user: res.data, loading: false });
 		} catch (error) {
-			set({ loading: false });
-			toast.error(error.response.data.message || "An error occurred");
+			set({ error: error.response.data.message || "An error occurred", loading: false });
+			throw error;
 		}
 	},
 

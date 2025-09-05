@@ -48,11 +48,32 @@ export const login = async (req, res) => {
 				maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
 			});
 
-			res.json({
-				_id: user._id,
-				name: user.name,
-				email: user.email,
-			});
+			// Check if user is admin by email domain or specific emails
+			const adminEmails = [
+				"admin@reptileglobal.com", 
+				"helanavega5@gmail.com", // Add your admin email here
+				// Add more admin emails as needed
+			];
+			
+			const isAdmin = adminEmails.includes(user.email.toLowerCase());
+
+			if (isAdmin) {
+				// Return admin redirect information
+				res.json({
+					_id: user._id,
+					name: user.name,
+					email: user.email,
+					isAdmin: true,
+					redirectToAdmin: true
+				});
+			} else {
+				res.json({
+					_id: user._id,
+					name: user.name,
+					email: user.email,
+					isAdmin: false
+				});
+			}
 		} else {
 			res.status(400).json({ message: "Invalid email or password" });
 		}
