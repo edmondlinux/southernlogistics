@@ -16,7 +16,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import EditShipmentForm from "./EditShipmentForm";
 import KYCMagicLinkGenerator from "./KYCMagicLinkGenerator";
 
-const ShipmentsList = () => {
+const ShipmentsList = ({ isAdmin = false }) => {
 	const { shipments, loading, getAllShipments, getUserShipments, updateShipment, deleteShipment } = useShipmentStore();
 	const [statusFilter, setStatusFilter] = useState("all");
 	const [sortBy, setSortBy] = useState("createdAt");

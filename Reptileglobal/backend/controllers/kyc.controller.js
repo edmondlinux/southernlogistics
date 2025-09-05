@@ -35,9 +35,7 @@ const kycSubmissionSchema = new mongoose.Schema({
 const KYCSubmission = mongoose.model("KYCSubmission", kycSubmissionSchema);
 
 // Generate magic link (admin only)
-// Removed generateMagicLink - admin only function
-
-// export const generateMagicLink = async (req, res) => {
+export const generateMagicLink = async (req, res) => {
   try {
     const { shipmentId, userEmail, userName } = req.body;
 
@@ -165,9 +163,7 @@ export const submitKYC = async (req, res) => {
 };
 
 // Verify KYC submission (admin only)
-// Removed verifyKYC - admin only function
-
-// export const verifyKYC = async (req, res) => {
+export const verifyKYC = async (req, res) => {
   try {
     const { submissionId } = req.params;
     const { isVerified, notes } = req.body;
@@ -195,9 +191,7 @@ export const submitKYC = async (req, res) => {
 };
 
 // Get all KYC submissions (admin only)
-// Removed getAllKYCSubmissions - admin only function
-
-// export const getAllKYCSubmissions = async (req, res) => {
+export const getAllKYCSubmissions = async (req, res) => {
   try {
     const { page = 1, limit = 20, status } = req.query;
 

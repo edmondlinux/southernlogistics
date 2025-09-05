@@ -3,9 +3,7 @@ import Shipment from "../models/shipment.model.js";
 import EmailService from "../lib/emailService.js";
 
 // Generate a new tracking number
-// Removed generateTrackingNumber - admin only function
-
-// export const generateTrackingNumber = async (req, res) => {
+export const generateTrackingNumber = async (req, res) => {
 	try {
 		const trackingNumber = 'GL' + Date.now().toString() + Math.random().toString(36).substr(2, 5).toUpperCase();
 		res.json({ trackingNumber });
@@ -127,9 +125,7 @@ export const createShipment = async (req, res) => {
 };
 
 // Update shipment status (admin only)
-// Removed updateShipmentStatus - admin only function
-
-// export const updateShipmentStatus = async (req, res) => {
+export const updateShipmentStatus = async (req, res) => {
 	try {
 		const { shipmentId } = req.params;
 		const { status, location } = req.body;
@@ -160,9 +156,7 @@ export const createShipment = async (req, res) => {
 };
 
 // Update entire shipment (admin only)
-// Removed updateShipment - admin only function
-
-// export const updateShipment = async (req, res) => {
+export const updateShipment = async (req, res) => {
 	try {
 		const { shipmentId } = req.params;
 		const updateData = req.body;
@@ -204,9 +198,7 @@ export const createShipment = async (req, res) => {
 };
 
 // Get all shipments (admin only)
-// Removed getAllShipments - admin only function
-
-// export const getAllShipments = async (req, res) => {
+export const getAllShipments = async (req, res) => {
 	try {
 		const { page = 1, limit = 20, status, search } = req.query;
 		
@@ -247,9 +239,7 @@ export const createShipment = async (req, res) => {
 };
 
 // Delete shipment (admin only)
-// Removed deleteShipment - admin only function
-
-// export const deleteShipment = async (req, res) => {
+export const deleteShipment = async (req, res) => {
 	try {
 		const { shipmentId } = req.params;
 		
@@ -267,9 +257,7 @@ export const createShipment = async (req, res) => {
 };
 
 // Get shipment by ID (admin only)
-// Removed getShipmentById - admin only function
-
-// export const getShipmentById = async (req, res) => {
+export const getShipmentById = async (req, res) => {
 	try {
 		const { shipmentId } = req.params;
 		
