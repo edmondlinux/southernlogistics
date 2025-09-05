@@ -10,7 +10,7 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import TeamPage from "./pages/TeamPage";
 import TestimonialsPage from "./pages/TestimonialsPage";
-import CartPage from "./pages/CartPage";
+
 import TrackPage from "./pages/TrackPage";
 import ShipmentsPage from "./pages/ShipmentsPage";
 import KYCVerificationPage from "./pages/KYCVerificationPage";
@@ -49,7 +49,7 @@ function App() {
 					<Route path='/contact' element={<ContactPage />} />
 					<Route path='/team' element={<TeamPage />} />
 					<Route path='/testimonials' element={<TestimonialsPage />} />
-					<Route path='/cart' element={<CartPage />} />
+				
 					<Route path='/track' element={<TrackPage />} />
 					<Route path='/shipments' element={user ? <ShipmentsPage /> : <Navigate to='/login' />} />
 					<Route path='/kyc-verification/:token' element={<KYCVerificationPage />} />
