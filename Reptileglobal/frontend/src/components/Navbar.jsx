@@ -1,5 +1,5 @@
 
-import { Package, UserPlus, LogIn, LogOut, Lock, Truck, Menu, X } from "lucide-react";
+import { Package, UserPlus, LogIn, LogOut, Truck, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useUserStore } from "../stores/useUserStore";
 import { useState } from "react";
