@@ -1,4 +1,3 @@
-
 import express from "express";
 import {
   generateMagicLink,
@@ -18,8 +17,8 @@ router.post("/submit", submitKYC);
 router.post("/cloudinary-signature", getCloudinarySignature);
 
 // Admin only routes
-router.post("/generate-magic-link", protectRoute, adminRoute, generateMagicLink);
-router.get("/submissions", protectRoute, adminRoute, getAllKYCSubmissions);
-router.put("/submissions/:submissionId/verify", protectRoute, adminRoute, verifyKYC);
+// router.post("/generate-magic-link", protectRoute, adminRoute, generateMagicLink);
+// router.get("/submissions", protectRoute, adminRoute, getAllKYCSubmissions);
+// router.put("/submissions/:submissionId/verify", protectRoute, adminRoute, verifyKYC);
 
 export default router;
