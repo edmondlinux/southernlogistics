@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -89,8 +88,8 @@ const OpenStreetMap = ({
         markerRef.current.on('dragend', () => {
           const lngLat = markerRef.current.getLngLat();
           onCoordinatesChange({
-            latitude: lngLat.lat,
-            longitude: lngLat.lng,
+            latitude: parseFloat(lngLat.lat.toFixed(6)),
+            longitude: parseFloat(lngLat.lng.toFixed(6)),
           });
         });
       }
@@ -104,7 +103,7 @@ const OpenStreetMap = ({
       mapRef.current.on('click', (e) => {
         const currentTime = new Date().getTime();
         const tapLength = currentTime - lastTap;
-        
+
         // Clear any existing timeout
         if (clickTimeout) {
           clearTimeout(clickTimeout);
@@ -126,7 +125,7 @@ const OpenStreetMap = ({
         // Single tap - add marker after a short delay to distinguish from double tap
         clickTimeout = setTimeout(() => {
           const { lat, lng } = e.lngLat;
-          
+
           // Remove existing marker
           if (markerRef.current) {
             markerRef.current.remove();
@@ -141,17 +140,17 @@ const OpenStreetMap = ({
           markerRef.current.on('dragend', () => {
             const lngLat = markerRef.current.getLngLat();
             onCoordinatesChange({
-              latitude: lngLat.lat,
-              longitude: lngLat.lng,
+              latitude: parseFloat(lngLat.lat.toFixed(6)),
+              longitude: parseFloat(lngLat.lng.toFixed(6)),
             });
           });
 
           // Update coordinates
           onCoordinatesChange({
-            latitude: lat,
-            longitude: lng,
+            latitude: parseFloat(lat.toFixed(6)),
+            longitude: parseFloat(lng.toFixed(6)),
           });
-          
+
           clickTimeout = null;
         }, 250);
 
@@ -229,7 +228,7 @@ const OpenStreetMap = ({
 
     // If we're displaying a shipment route, show route markers
     if (shipmentRoute.length > 0 || currentLocation || originLocation || destinationLocation) {
-      
+
       // Add origin marker
       if (originLocation) {
         const originElement = document.createElement('div');
@@ -427,8 +426,8 @@ const OpenStreetMap = ({
         markerRef.current.on('dragend', () => {
           const lngLat = markerRef.current.getLngLat();
           onCoordinatesChange({
-            latitude: lngLat.lat,
-            longitude: lngLat.lng,
+            latitude: parseFloat(lngLat.lat.toFixed(6)),
+            longitude: parseFloat(lngLat.lng.toFixed(6)),
           });
         });
       }
@@ -449,7 +448,7 @@ const OpenStreetMap = ({
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${mapboxgl.accessToken}&types=place,locality,neighborhood,address,poi&limit=5`
       );
       const data = await response.json();
-      
+
       if (data.features) {
         setSearchResults(data.features.map(feature => ({
           id: feature.id,
@@ -469,19 +468,19 @@ const OpenStreetMap = ({
   // Handle search result selection
   const handleSearchResultSelect = (result) => {
     const [lng, lat] = result.center;
-    
+
     // Clear search
     setSearchQuery('');
     setSearchResults([]);
-    
+
     // Update coordinates
     if (onCoordinatesChange) {
       onCoordinatesChange({
-        latitude: lat,
-        longitude: lng,
+        latitude: parseFloat(lat.toFixed(6)),
+        longitude: parseFloat(lng.toFixed(6)),
       });
     }
-    
+
     // Center map and add marker
     if (mapRef.current) {
       mapRef.current.flyTo({
@@ -496,20 +495,20 @@ const OpenStreetMap = ({
   const handleManualCoordinates = () => {
     const lat = parseFloat(manualLat);
     const lng = parseFloat(manualLng);
-    
+
     if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
       alert('Please enter valid coordinates (Latitude: -90 to 90, Longitude: -180 to 180)');
       return;
     }
-    
+
     // Update coordinates
     if (onCoordinatesChange) {
       onCoordinatesChange({
-        latitude: lat,
-        longitude: lng,
+        latitude: parseFloat(lat.toFixed(6)),
+        longitude: parseFloat(lng.toFixed(6)),
       });
     }
-    
+
     // Center map
     if (mapRef.current) {
       mapRef.current.flyTo({
@@ -518,7 +517,7 @@ const OpenStreetMap = ({
         duration: 1500
       });
     }
-    
+
     // Clear inputs
     setManualLat('');
     setManualLng('');
@@ -527,7 +526,7 @@ const OpenStreetMap = ({
   // Handle country selection
   const handleCountrySelect = async (countryName) => {
     if (!countryName || !mapRef.current) return;
-    
+
     setLoading(true);
     setSelectedCountry(countryName);
 
@@ -555,20 +554,20 @@ const OpenStreetMap = ({
 
         // Get country ISO code for boundary lookup
         const countryISO = country.cca3 || country.cca2;
-        
+
         // Fetch country boundary data from REST Countries API
         try {
           // First try to get detailed country info with borders
           const detailResponse = await fetch(`https://restcountries.com/v3.1/alpha/${countryISO.toLowerCase()}`);
           const detailData = await detailResponse.json();
-          
+
           if (detailData && detailData.length > 0) {
             const countryDetail = detailData[0];
-            
+
             // Use Natural Earth data for better country boundaries
             const boundaryResponse = await fetch(`https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson`);
             const boundaryData = await boundaryResponse.json();
-            
+
             // Find the country in the GeoJSON data
             const countryFeature = boundaryData.features.find(feature => 
               feature.properties.NAME === countryName ||
@@ -576,20 +575,20 @@ const OpenStreetMap = ({
               feature.properties.ISO_A2 === country.cca2 ||
               feature.properties.ISO_A3 === country.cca3
             );
-            
+
             if (countryFeature) {
               // Create a GeoJSON source with just this country
               const countryGeoJSON = {
                 type: 'FeatureCollection',
                 features: [countryFeature]
               };
-              
+
               // Add the source
               mapRef.current.addSource('country-highlight', {
                 type: 'geojson',
                 data: countryGeoJSON
               });
-              
+
               // Add fill layer
               mapRef.current.addLayer({
                 id: 'country-highlight-fill',
@@ -600,7 +599,7 @@ const OpenStreetMap = ({
                   'fill-opacity': 0.3
                 }
               });
-              
+
               // Add outline layer
               mapRef.current.addLayer({
                 id: 'country-highlight-line',
@@ -611,11 +610,11 @@ const OpenStreetMap = ({
                   'line-width': 2
                 }
               });
-              
+
               // Fit the map to the country bounds
               const coordinates = countryFeature.geometry.coordinates;
               const bounds = new mapboxgl.LngLatBounds();
-              
+
               const addCoordinatesToBounds = (coords) => {
                 if (Array.isArray(coords[0])) {
                   coords.forEach(addCoordinatesToBounds);
@@ -623,9 +622,9 @@ const OpenStreetMap = ({
                   bounds.extend(coords);
                 }
               };
-              
+
               coordinates.forEach(addCoordinatesToBounds);
-              
+
               mapRef.current.fitBounds(bounds, {
                 padding: 50,
                 duration: 2000
@@ -690,7 +689,7 @@ const OpenStreetMap = ({
                 </div>
               )}
             </div>
-            
+
             {/* Search Results */}
             {searchResults.length > 0 && (
               <div className="mt-2 bg-gray-700 rounded-lg border border-gray-600 max-h-48 overflow-y-auto">
