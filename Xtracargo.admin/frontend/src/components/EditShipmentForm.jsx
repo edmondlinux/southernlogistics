@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useShipmentStore } from "../stores/useShipmentStore";
 import { Package, User, MapPin, Calendar, DollarSign, X } from "lucide-react";
@@ -6,7 +5,7 @@ import OpenStreetMap from "./OpenStreetMap";
 
 const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 	const { updateShipmentStatus, loading } = useShipmentStore();
-	
+
 	// Helper function to safely serialize coordinates
 	const serializeCoordinates = (coords) => {
 		if (!coords || !coords.latitude || !coords.longitude) return null;
@@ -124,7 +123,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		
+
 		const updatedShipmentData = {
 			sender: {
 				name: formData.senderName,
@@ -170,7 +169,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 			if (coordinates) {
 				updatedShipmentData.coordinates = serializeCoordinates(coordinates);
 			}
-			
+
 			await onUpdate(shipment._id, updatedShipmentData);
 			onClose();
 		} catch (error) {
@@ -192,7 +191,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 	const containerClass = isInline 
 		? "bg-gray-800 rounded-lg p-6 w-full" 
 		: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto";
-	
+
 	const formClass = isInline 
 		? "space-y-8" 
 		: "bg-gray-900 rounded-lg p-6 w-full max-w-6xl max-h-[95vh] overflow-y-auto";
@@ -491,7 +490,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 							<OpenStreetMap 
 								height="400px" 
 								defaultZoom={2} 
-								onCoordinatesChange={setCoordinates}
+								onCoordinatesChange={handleCoordinatesChange}
 								selectedCoordinates={coordinates}
 								interactive={true}
 							/>
