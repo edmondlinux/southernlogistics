@@ -12,8 +12,8 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 	const { updateShipmentStatus, loading } = useShipmentStore();
 	const [coordinates, setCoordinates] = useState(
 		shipment.coordinates ? {
-			latitude: Number(shipment.coordinates.latitude),
-			longitude: Number(shipment.coordinates.longitude)
+			latitude: parseFloat(Number(shipment.coordinates.latitude).toFixed(6)),
+			longitude: parseFloat(Number(shipment.coordinates.longitude).toFixed(6))
 		} : null
 	);
 	const [formData, setFormData] = useState({
@@ -152,8 +152,8 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 			estimatedDelivery: formData.estimatedDeliveryDate ? new Date(formData.estimatedDeliveryDate) : null,
 			shippingCost: parseFloat(formData.shippingCost) || 0,
 			coordinates: coordinates ? {
-				latitude: Number(coordinates.latitude),
-				longitude: Number(coordinates.longitude)
+				latitude: parseFloat(Number(coordinates.latitude).toFixed(6)),
+				longitude: parseFloat(Number(coordinates.longitude).toFixed(6))
 			} : null,
 		};
 

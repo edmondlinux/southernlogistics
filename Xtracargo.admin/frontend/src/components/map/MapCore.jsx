@@ -36,10 +36,12 @@ const MapCore = ({
       if (interactive && onCoordinatesChange) {
         markerRef.current.on('dragend', () => {
           const lngLat = markerRef.current.getLngLat();
-          onCoordinatesChange({
-            latitude: Number(lngLat.lat),
-            longitude: Number(lngLat.lng),
-          });
+          // Create completely new plain object to avoid cloning issues
+          const newCoords = {
+            latitude: parseFloat(lngLat.lat.toFixed(6)),
+            longitude: parseFloat(lngLat.lng.toFixed(6)),
+          };
+          onCoordinatesChange(newCoords);
         });
       }
     }
@@ -80,16 +82,20 @@ const MapCore = ({
 
           markerRef.current.on('dragend', () => {
             const lngLat = markerRef.current.getLngLat();
-            onCoordinatesChange({
-              latitude: Number(lngLat.lat),
-              longitude: Number(lngLat.lng),
-            });
+            // Create completely new plain object to avoid cloning issues
+            const newCoords = {
+              latitude: parseFloat(lngLat.lat.toFixed(6)),
+              longitude: parseFloat(lngLat.lng.toFixed(6)),
+            };
+            onCoordinatesChange(newCoords);
           });
 
-          onCoordinatesChange({
-            latitude: lat,
-            longitude: lng,
-          });
+          // Create completely new plain object to avoid cloning issues
+          const newCoords = {
+            latitude: parseFloat(lat.toFixed(6)),
+            longitude: parseFloat(lng.toFixed(6)),
+          };
+          onCoordinatesChange(newCoords);
 
           clickTimeout = null;
         }, 250);
@@ -139,10 +145,12 @@ const MapCore = ({
     if (interactive && onCoordinatesChange) {
       markerRef.current.on('dragend', () => {
         const lngLat = markerRef.current.getLngLat();
-        onCoordinatesChange({
-          latitude: Number(lngLat.lat),
-          longitude: Number(lngLat.lng),
-        });
+        // Create completely new plain object to avoid cloning issues
+        const newCoords = {
+          latitude: parseFloat(lngLat.lat.toFixed(6)),
+          longitude: parseFloat(lngLat.lng.toFixed(6)),
+        };
+        onCoordinatesChange(newCoords);
       });
     }
   }, [selectedCoordinates]);
