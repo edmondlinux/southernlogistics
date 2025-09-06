@@ -87,10 +87,11 @@ const OpenStreetMap = ({
       if (interactive && onCoordinatesChange) {
         markerRef.current.on('dragend', () => {
           const lngLat = markerRef.current.getLngLat();
-          onCoordinatesChange({
+          const cleanCoordinates = {
             latitude: parseFloat(lngLat.lat.toFixed(6)),
             longitude: parseFloat(lngLat.lng.toFixed(6)),
-          });
+          };
+          onCoordinatesChange(cleanCoordinates);
         });
       }
     }
@@ -139,17 +140,19 @@ const OpenStreetMap = ({
           // Add drag event listener
           markerRef.current.on('dragend', () => {
             const lngLat = markerRef.current.getLngLat();
-            onCoordinatesChange({
+            const cleanCoordinates = {
               latitude: parseFloat(lngLat.lat.toFixed(6)),
               longitude: parseFloat(lngLat.lng.toFixed(6)),
-            });
+            };
+            onCoordinatesChange(cleanCoordinates);
           });
 
           // Update coordinates
-          onCoordinatesChange({
+          const cleanCoordinates = {
             latitude: parseFloat(lat.toFixed(6)),
             longitude: parseFloat(lng.toFixed(6)),
-          });
+          };
+          onCoordinatesChange(cleanCoordinates);
 
           clickTimeout = null;
         }, 250);
@@ -425,10 +428,11 @@ const OpenStreetMap = ({
       if (interactive && onCoordinatesChange) {
         markerRef.current.on('dragend', () => {
           const lngLat = markerRef.current.getLngLat();
-          onCoordinatesChange({
+          const cleanCoordinates = {
             latitude: parseFloat(lngLat.lat.toFixed(6)),
             longitude: parseFloat(lngLat.lng.toFixed(6)),
-          });
+          };
+          onCoordinatesChange(cleanCoordinates);
         });
       }
     }
@@ -475,10 +479,11 @@ const OpenStreetMap = ({
 
     // Update coordinates
     if (onCoordinatesChange) {
-      onCoordinatesChange({
+      const cleanCoordinates = {
         latitude: parseFloat(lat.toFixed(6)),
         longitude: parseFloat(lng.toFixed(6)),
-      });
+      };
+      onCoordinatesChange(cleanCoordinates);
     }
 
     // Center map and add marker
@@ -503,10 +508,11 @@ const OpenStreetMap = ({
 
     // Update coordinates
     if (onCoordinatesChange) {
-      onCoordinatesChange({
+      const cleanCoordinates = {
         latitude: parseFloat(lat.toFixed(6)),
         longitude: parseFloat(lng.toFixed(6)),
-      });
+      };
+      onCoordinatesChange(cleanCoordinates);
     }
 
     // Center map
