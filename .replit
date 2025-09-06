@@ -45,3 +45,16 @@ args = "cd Reptileglobal/backend && node server.js"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd Reptileglobal/frontend && npm run dev"
+
+[[workflows.workflow]]
+name = "Admin"
+mode = "parallel"
+author = 40507951
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd Xtracargo.admin/backend && node server.js"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd Xtracargo.admin/frontend && npm run dev"
