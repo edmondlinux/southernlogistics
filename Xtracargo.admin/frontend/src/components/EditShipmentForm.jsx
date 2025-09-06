@@ -1,8 +1,12 @@
-
 import { useState, useEffect } from "react";
 import { useShipmentStore } from "../stores/useShipmentStore";
-import { Package, User, MapPin, Calendar, DollarSign, X } from "lucide-react";
-import OpenStreetMap from "./OpenStreetMap";
+import { User, MapPin, X } from "lucide-react";
+import StatusSection from "./forms/StatusSection";
+import PersonInfoSection from "./forms/PersonInfoSection";
+import PackageDetailsSection from "./forms/PackageDetailsSection";
+import LocationSection from "./forms/LocationSection";
+import ShippingOptionsSection from "./forms/ShippingOptionsSection";
+import FormButtons from "./forms/FormButtons";
 
 const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 	const { updateShipmentStatus, loading } = useShipmentStore();
@@ -112,7 +116,7 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		
+
 		const updatedShipmentData = {
 			sender: {
 				name: formData.senderName,
@@ -154,7 +158,6 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 		};
 
 		try {
-			// You'll need to create an updateShipment function in your store
 			await onUpdate(shipment._id, updatedShipmentData);
 			onClose();
 		} catch (error) {
@@ -162,21 +165,12 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 		}
 	};
 
-	const statusOptions = [
-		{ value: 'pending', label: 'Pending' },
-		{ value: 'picked_up', label: 'Picked Up' },
-		{ value: 'in_transit', label: 'In Transit' },
-		{ value: 'out_for_delivery', label: 'Out for Delivery' },
-		{ value: 'delivered', label: 'Delivered' },
-		{ value: 'exception', label: 'Exception' }
-	];
-
 	const { isInline = false } = props;
 
 	const containerClass = isInline 
 		? "bg-gray-800 rounded-lg p-6 w-full" 
 		: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto";
-	
+
 	const formClass = isInline 
 		? "space-y-8" 
 		: "bg-gray-900 rounded-lg p-6 w-full max-w-6xl max-h-[95vh] overflow-y-auto";
@@ -197,419 +191,51 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 				)}
 			</div>
 
-				<form onSubmit={handleSubmit} className="space-y-8">
-					{/* Status Section */}
-					<div className="bg-gray-800 rounded-lg p-1">
-						<div className="flex items-center mb-4">
-							<Package className="w-6 h-6 text-emerald-400 mr-2" />
-							<h3 className="text-xl font-semibold text-emerald-400">
-								Shipment Status
-							</h3>
-						</div>
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-							<div>
-								<label className="block text-sm font-medium text-gray-300 mb-2">Status</label>
-								<select
-									name="status"
-									value={formData.status}
-									onChange={handleInputChange}
-									className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-								>
-									{statusOptions.map(option => (
-										<option key={option.value} value={option.value}>{option.label}</option>
-									))}
-								</select>
-							</div>
-							<div>
-								<label className="block text-sm font-medium text-gray-300 mb-2">Current Location</label>
-								<input
-									type="text"
-									name="currentLocation"
-									value={formData.currentLocation}
-									onChange={handleInputChange}
-									placeholder="Current location"
-									className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-								/>
-							</div>
-						</div>
-					</div>
+			<form onSubmit={handleSubmit} className="space-y-8">
+				<StatusSection 
+					formData={formData} 
+					handleInputChange={handleInputChange} 
+				/>
 
-					{/* Sender Information */}
-					<div className="bg-gray-800 rounded-lg p-1">
-						<div className="flex items-center mb-4">
-							<User className="w-6 h-6 text-emerald-400 mr-2" />
-							<h3 className="text-xl font-semibold text-emerald-400">
-								Sender Information
-							</h3>
-						</div>
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-							<input
-								type="text"
-								name="senderName"
-								value={formData.senderName}
-								onChange={handleInputChange}
-								placeholder="Full Name"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="email"
-								name="senderEmail"
-								value={formData.senderEmail}
-								onChange={handleInputChange}
-								placeholder="Email Address"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="tel"
-								name="senderPhone"
-								value={formData.senderPhone}
-								onChange={handleInputChange}
-								placeholder="Phone Number"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="text"
-								name="senderAddress"
-								value={formData.senderAddress}
-								onChange={handleInputChange}
-								placeholder="Street Address"
-								className="md:col-span-2 bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="text"
-								name="senderCity"
-								value={formData.senderCity}
-								onChange={handleInputChange}
-								placeholder="City"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="text"
-								name="senderState"
-								value={formData.senderState}
-								onChange={handleInputChange}
-								placeholder="State/Province"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="text"
-								name="senderZip"
-								value={formData.senderZip}
-								onChange={handleInputChange}
-								placeholder="ZIP/Postal Code"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="text"
-								name="senderCountry"
-								value={formData.senderCountry}
-								onChange={handleInputChange}
-								placeholder="Country"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-						</div>
-					</div>
+				<PersonInfoSection
+					title="Sender Information"
+					icon={User}
+					formData={formData}
+					handleInputChange={handleInputChange}
+					fieldPrefix="sender"
+				/>
 
-					{/* Recipient Information */}
-					<div className="bg-gray-800 rounded-lg p-1">
-						<div className="flex items-center mb-4">
-							<MapPin className="w-6 h-6 text-emerald-400 mr-2" />
-							<h3 className="text-xl font-semibold text-emerald-400">
-								Recipient Information
-							</h3>
-						</div>
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-							<input
-								type="text"
-								name="recipientName"
-								value={formData.recipientName}
-								onChange={handleInputChange}
-								placeholder="Full Name"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="email"
-								name="recipientEmail"
-								value={formData.recipientEmail}
-								onChange={handleInputChange}
-								placeholder="Email Address"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="tel"
-								name="recipientPhone"
-								value={formData.recipientPhone}
-								onChange={handleInputChange}
-								placeholder="Phone Number"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="text"
-								name="recipientAddress"
-								value={formData.recipientAddress}
-								onChange={handleInputChange}
-								placeholder="Street Address"
-								className="md:col-span-2 bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="text"
-								name="recipientCity"
-								value={formData.recipientCity}
-								onChange={handleInputChange}
-								placeholder="City"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="text"
-								name="recipientState"
-								value={formData.recipientState}
-								onChange={handleInputChange}
-								placeholder="State/Province"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="text"
-								name="recipientZip"
-								value={formData.recipientZip}
-								onChange={handleInputChange}
-								placeholder="ZIP/Postal Code"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="text"
-								name="recipientCountry"
-								value={formData.recipientCountry}
-								onChange={handleInputChange}
-								placeholder="Country"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-						</div>
-					</div>
+				<PersonInfoSection
+					title="Recipient Information"
+					icon={MapPin}
+					formData={formData}
+					handleInputChange={handleInputChange}
+					fieldPrefix="recipient"
+				/>
 
-					{/* Package Details */}
-					<div className="bg-gray-800 rounded-lg p-1">
-						<div className="flex items-center mb-4">
-							<Package className="w-6 h-6 text-emerald-400 mr-2" />
-							<h3 className="text-xl font-semibold text-emerald-400">
-								Package Details
-							</h3>
-						</div>
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-							<select
-								name="packageType"
-								value={formData.packageType}
-								onChange={handleInputChange}
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							>
-								<option value="box">Box</option>
-								<option value="envelope">Crate</option>
-								<option value="tube">Container</option>
-								<option value="pallet">Pallet</option>
-								<option value="other">Other</option>
-							</select>
-							<input
-								type="number"
-								name="weight"
-								value={formData.weight}
-								onChange={handleInputChange}
-								placeholder="Weight (lbs)"
-								step="0.1"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="number"
-								name="dimensions.length"
-								value={formData.dimensions.length}
-								onChange={handleInputChange}
-								placeholder="Length (in)"
-								step="0.1"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="number"
-								name="dimensions.width"
-								value={formData.dimensions.width}
-								onChange={handleInputChange}
-								placeholder="Width (in)"
-								step="0.1"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="number"
-								name="dimensions.height"
-								value={formData.dimensions.height}
-								onChange={handleInputChange}
-								placeholder="Height (in)"
-								step="0.1"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<input
-								type="number"
-								name="value"
-								value={formData.value}
-								onChange={handleInputChange}
-								placeholder="Declared Value ($)"
-								step="0.01"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<textarea
-								name="description"
-								value={formData.description}
-								onChange={handleInputChange}
-								placeholder="Package Description"
-								rows="3"
-								className="md:col-span-2 bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-						</div>
-					</div>
+				<PackageDetailsSection 
+					formData={formData} 
+					handleInputChange={handleInputChange} 
+				/>
 
-					{/* OpenStreetMap Component */}
-					<div className="mt-8">
-						<div className="bg-gray-800 rounded-lg p-1">
-							<div className="flex items-center mb-4">
-								<MapPin className="w-6 h-6 text-emerald-400 mr-2" />
-								<h3 className="text-xl font-semibold text-emerald-400">
-									Update Shipment Location
-								</h3>
-							</div>
-							<OpenStreetMap 
-								height="400px" 
-								defaultZoom={2} 
-								onCoordinatesChange={setCoordinates}
-								selectedCoordinates={coordinates}
-								interactive={true}
-							/>
-						</div>
-					</div>
+				<LocationSection 
+					coordinates={coordinates} 
+					setCoordinates={setCoordinates} 
+				/>
 
-					{/* Shipping Options */}
-					<div className="bg-gray-800 rounded-lg p-1">
-						<div className="flex items-center mb-4">
-							<DollarSign className="w-6 h-6 text-emerald-400 mr-2" />
-							<h3 className="text-xl font-semibold text-emerald-400">
-								Shipping Options
-							</h3>
-						</div>
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-							<select
-								name="serviceType"
-								value={formData.serviceType}
-								onChange={handleInputChange}
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							>
-								<option value="standard">Standard</option>
-								<option value="express">Express</option>
-								<option value="overnight">Overnight</option>
-								<option value="ground">Ground</option>
-								<option value="international">International</option>
-							</select>
-							<select
-								name="priority"
-								value={formData.priority}
-								onChange={handleInputChange}
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							>
-								<option value="low">Low</option>
-								<option value="normal">Normal</option>
-								<option value="high">High</option>
-								<option value="urgent">Urgent</option>
-							</select>
-							<input
-								type="number"
-								name="shippingCost"
-								value={formData.shippingCost}
-								onChange={handleInputChange}
-								placeholder="Shipping Cost ($)"
-								step="0.01"
-								className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-							<div className="space-y-2">
-								<label className="block text-sm text-gray-400">Shipping Date</label>
-								<input
-									type="date"
-									name="shippingDate"
-									value={formData.shippingDate}
-									onChange={handleInputChange}
-									className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-								/>
-							</div>
-							<div className="space-y-2">
-								<label className="block text-sm text-gray-400">Delivery Date</label>
-								<input
-									type="date"
-									name="estimatedDeliveryDate"
-									value={formData.estimatedDeliveryDate}
-									onChange={handleInputChange}
-									className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-								/>
-							</div>
-						</div>
-						<div className="mt-4 space-y-2">
-							<label className="flex items-center text-gray-300">
-								<input
-									type="checkbox"
-									name="insurance"
-									checked={formData.insurance}
-									onChange={handleInputChange}
-									className="mr-2 h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
-								/>
-								Insurance Coverage
-							</label>
-							<label className="flex items-center text-gray-300">
-								<input
-									type="checkbox"
-									name="signatureRequired"
-									checked={formData.signatureRequired}
-									onChange={handleInputChange}
-									className="mr-2 h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
-								/>
-								Signature Required
-							</label>
-						</div>
-						<div className="mt-4">
-							<textarea
-								name="specialInstructions"
-								value={formData.specialInstructions}
-								onChange={handleInputChange}
-								placeholder="Special Instructions / Notes"
-								rows="3"
-								className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-							/>
-						</div>
-					</div>
+				<ShippingOptionsSection 
+					formData={formData} 
+					handleInputChange={handleInputChange} 
+				/>
 
-					{/* Submit Buttons */}
-					<div className="flex justify-between">
-						{isInline && (
-							<button
-								type="button"
-								onClick={onClose}
-								className="bg-gray-500 hover:bg-gray-600 px-6 py-3 rounded-lg font-medium transition duration-300 flex items-center gap-2"
-							>
-								← Back to Search
-							</button>
-						)}
-						<div className="flex gap-4 ml-auto">
-							{!isInline && (
-								<button
-									type="button"
-									onClick={onClose}
-									className="bg-gray-600 hover:bg-gray-700 px-6 py-3 rounded-lg font-medium transition duration-300"
-								>
-									Cancel
-								</button>
-							)}
-							<button
-								type="submit"
-								disabled={loading}
-								className="bg-emerald-600 hover:bg-emerald-700 px-8 py-3 rounded-lg font-semibold transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-							>
-								{loading ? "Updating Shipment..." : "Update Shipment"}
-							</button>
-						</div>
-					</div>
-				</form>
-			</>
+				<FormButtons
+					loading={loading}
+					isInline={isInline}
+					onClose={onClose}
+					submitText="Update Shipment"
+				/>
+			</form>
+		</>
 	);
 
 	return isInline ? (
