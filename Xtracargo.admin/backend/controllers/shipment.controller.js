@@ -58,7 +58,10 @@ export const createShipment = async (req, res) => {
 			shippingDate,
 			estimatedDeliveryDate,
 			shippingCost,
-			coordinates
+			coordinates,
+			originLocation,
+			destinationLocation,
+			shipmentRoute
 		} = req.body;
 
 		// Use provided tracking number or generate one if not provided
@@ -79,6 +82,9 @@ export const createShipment = async (req, res) => {
 			estimatedDelivery: estimatedDeliveryDate,
 			shippingCost,
 			coordinates,
+			originLocation,
+			destinationLocation,
+			shipmentRoute: shipmentRoute || [],
 			currentLocation: "Origin facility",
 			trackingHistory: [{
 				status: 'pending',

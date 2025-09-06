@@ -80,9 +80,22 @@ const shipmentSchema = new mongoose.Schema({
   actualDelivery: Date,
   shippingCost: { type: Number, default: 0 },
   coordinates: {
-    latitude: Number,
-    longitude: Number
-  }
+		latitude: { type: Number },
+		longitude: { type: Number }
+	},
+	originLocation: {
+		latitude: { type: Number },
+		longitude: { type: Number }
+	},
+	destinationLocation: {
+		latitude: { type: Number },
+		longitude: { type: Number }
+	},
+	shipmentRoute: [{
+		latitude: { type: Number },
+		longitude: { type: Number },
+		timestamp: { type: Date, default: Date.now }
+	}],
 }, { 
   timestamps: true 
 });
