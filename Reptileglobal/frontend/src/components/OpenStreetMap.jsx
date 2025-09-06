@@ -11,19 +11,6 @@ const OpenStreetMap = ({
   originLocation = null, // Origin location
   destinationLocation = null, // Destination location
 }) => {
-  // Sanitize coordinates to prevent cloning issues
-  const sanitizeCoords = (coords) => {
-    if (!coords || typeof coords !== 'object') return null;
-    const lat = parseFloat(coords.latitude);
-    const lng = parseFloat(coords.longitude);
-    if (isNaN(lat) || isNaN(lng)) return null;
-    return { latitude: lat, longitude: lng };
-  };
-
-  const safeSelectedCoordinates = sanitizeCoords(selectedCoordinates);
-  const safeCurrentLocation = sanitizeCoords(currentLocation);
-  const safeOriginLocation = sanitizeCoords(originLocation);
-  const safeDestinationLocation = sanitizeCoords(destinationLocation);
   const mapContainerRef = useRef();
   const mapRef = useRef();
   const currentMarkerRef = useRef();
@@ -40,8 +27,8 @@ const OpenStreetMap = ({
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v12',
-      center: safeSelectedCoordinates ? [safeSelectedCoordinates.longitude, safeSelectedCoordinates.latitude] : [0, 20],
-      zoom: safeSelectedCoordinates ? 10 : defaultZoom,
+      center: selectedCoordinates ? [selectedCoordinates.longitude, selectedCoordinates.latitude] : [0, 20],
+      zoom: selectedCoordinates ? 10 : defaultZoom,
       // Make map read-only
       interactive: false,
       dragPan: false,
@@ -109,7 +96,7 @@ const OpenStreetMap = ({
     }
 
     // Add origin marker
-    if (safeOriginLocation) {
+    if (originLocation) {
       const originElement = document.createElement('div');
       originElement.innerHTML = `
         <div style="
@@ -129,7 +116,7 @@ const OpenStreetMap = ({
       `;
 
       originMarkerRef.current = new mapboxgl.Marker({ element: originElement })
-        .setLngLat([safeOriginLocation.longitude, safeOriginLocation.latitude])
+        .setLngLat([originLocation.longitude, originLocation.latitude])
         .addTo(mapRef.current);
 
       // Add popup for origin
@@ -137,8 +124,8 @@ const OpenStreetMap = ({
         .setHTML(`
           <div style="padding: 8px;">
             <strong>Origin</strong><br/>
-            Lat: ${safeOriginLocation.latitude.toFixed(6)}<br/>
-            Lng: ${safeOriginLocation.longitude.toFixed(6)}
+            Lat: ${originLocation.latitude.toFixed(6)}<br/>
+            Lng: ${originLocation.longitude.toFixed(6)}
           </div>
         `);
 
@@ -146,7 +133,7 @@ const OpenStreetMap = ({
     }
 
     // Add destination marker
-    if (safeDestinationLocation) {
+    if (destinationLocation) {
       const destinationElement = document.createElement('div');
       destinationElement.innerHTML = `
         <div style="
@@ -166,7 +153,7 @@ const OpenStreetMap = ({
       `;
 
       destinationMarkerRef.current = new mapboxgl.Marker({ element: destinationElement })
-        .setLngLat([safeDestinationLocation.longitude, safeDestinationLocation.latitude])
+        .setLngLat([destinationLocation.longitude, destinationLocation.latitude])
         .addTo(mapRef.current);
 
       // Add popup for destination
@@ -174,8 +161,8 @@ const OpenStreetMap = ({
         .setHTML(`
           <div style="padding: 8px;">
             <strong>Destination</strong><br/>
-            Lat: ${safeDestinationLocation.latitude.toFixed(6)}<br/>
-            Lng: ${safeDestinationLocation.longitude.toFixed(6)}
+            Lat: ${destinationLocation.latitude.toFixed(6)}<br/>
+            Lng: ${destinationLocation.longitude.toFixed(6)}
           </div>
         `);
 
@@ -183,8 +170,8 @@ const OpenStreetMap = ({
     }
 
     // Add current location marker (highlighted)
-    if (safeCurrentLocation || safeSelectedCoordinates) {
-      const coords = safeCurrentLocation || safeSelectedCoordinates;
+    if (currentLocation || selectedCoordinates) {
+      const coords = currentLocation || selectedCoordinates;
 
       const currentElement = document.createElement('div');
       currentElement.innerHTML = `
@@ -293,7 +280,7 @@ const OpenStreetMap = ({
       });
     }
 
-  }, [safeSelectedCoordinates, shipmentRoute, safeCurrentLocation, safeOriginLocation, safeDestinationLocation]);
+  }, [selectedCoordinates, shipmentRoute, currentLocation, originLocation, destinationLocation]);
 
   return (
     <div>
