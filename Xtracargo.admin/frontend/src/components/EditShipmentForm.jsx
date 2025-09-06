@@ -6,12 +6,24 @@ import OpenStreetMap from "./OpenStreetMap";
 
 const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 	const { updateShipmentStatus, loading } = useShipmentStore();
-	const [coordinates, setCoordinates] = useState(
-		shipment.coordinates ? {
-			latitude: shipment.coordinates.latitude,
-			longitude: shipment.coordinates.longitude
-		} : null
-	);
+	
+	// Helper function to safely serialize coordinates
+	const serializeCoordinates = (coords) => {
+		if (!coords || !coords.latitude || !coords.longitude) return null;
+		return {
+			latitude: parseFloat(coords.latitude),
+			longitude: parseFloat(coords.longitude)
+		};
+	};
+	const [coordinates, setCoordinates] = useState(() => {
+		if (shipment.coordinates && shipment.coordinates.latitude && shipment.coordinates.longitude) {
+			return {
+				latitude: parseFloat(shipment.coordinates.latitude),
+				longitude: parseFloat(shipment.coordinates.longitude)
+			};
+		}
+		return null;
+	});
 	const [formData, setFormData] = useState({
 		// Sender Information
 		senderName: shipment.sender.name || "",
@@ -154,7 +166,11 @@ const EditShipmentForm = ({ shipment, onClose, onUpdate, ...props }) => {
 		};
 
 		try {
-			// You'll need to create an updateShipment function in your store
+			// Ensure coordinates are properly serialized
+			if (coordinates) {
+				updatedShipmentData.coordinates = serializeCoordinates(coordinates);
+			}
+			
 			await onUpdate(shipment._id, updatedShipmentData);
 			onClose();
 		} catch (error) {
