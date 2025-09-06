@@ -167,6 +167,7 @@ const CreateShipmentForm = () => {
 				priority: "normal",
 				insurance: false,
 				signatureRequired: false,
+				shippingDate: "",
 				estimatedDeliveryDate: "",
 				shippingCost: "",
 			});
