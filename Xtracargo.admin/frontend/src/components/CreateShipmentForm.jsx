@@ -134,8 +134,8 @@ const CreateShipmentForm = () => {
 			estimatedDelivery: formData.estimatedDeliveryDate ? new Date(formData.estimatedDeliveryDate) : null,
 			shippingCost: parseFloat(formData.shippingCost) || 0,
 			coordinates: coordinates ? {
-				latitude: coordinates.latitude,
-				longitude: coordinates.longitude
+				latitude: Number(coordinates.latitude),
+				longitude: Number(coordinates.longitude)
 			} : null,
 		};
 

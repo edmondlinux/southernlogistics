@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -38,8 +37,8 @@ const MapCore = ({
         markerRef.current.on('dragend', () => {
           const lngLat = markerRef.current.getLngLat();
           onCoordinatesChange({
-            latitude: lngLat.lat,
-            longitude: lngLat.lng,
+            latitude: Number(lngLat.lat),
+            longitude: Number(lngLat.lng),
           });
         });
       }
@@ -52,7 +51,7 @@ const MapCore = ({
       mapRef.current.on('click', (e) => {
         const currentTime = new Date().getTime();
         const tapLength = currentTime - lastTap;
-        
+
         if (clickTimeout) {
           clearTimeout(clickTimeout);
           clickTimeout = null;
@@ -70,7 +69,7 @@ const MapCore = ({
 
         clickTimeout = setTimeout(() => {
           const { lat, lng } = e.lngLat;
-          
+
           if (markerRef.current) {
             markerRef.current.remove();
           }
@@ -82,8 +81,8 @@ const MapCore = ({
           markerRef.current.on('dragend', () => {
             const lngLat = markerRef.current.getLngLat();
             onCoordinatesChange({
-              latitude: lngLat.lat,
-              longitude: lngLat.lng,
+              latitude: Number(lngLat.lat),
+              longitude: Number(lngLat.lng),
             });
           });
 
@@ -91,7 +90,7 @@ const MapCore = ({
             latitude: lat,
             longitude: lng,
           });
-          
+
           clickTimeout = null;
         }, 250);
 
@@ -141,8 +140,8 @@ const MapCore = ({
       markerRef.current.on('dragend', () => {
         const lngLat = markerRef.current.getLngLat();
         onCoordinatesChange({
-          latitude: lngLat.lat,
-          longitude: lngLat.lng,
+          latitude: Number(lngLat.lat),
+          longitude: Number(lngLat.lng),
         });
       });
     }
