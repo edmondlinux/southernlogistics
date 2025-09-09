@@ -84,32 +84,32 @@ const ContactPage = () => {
     {
       city: "New Jersey, USA",
       address: t('contact.offices.newjersey'),
-      phone: "support@xtracargo.com",
-      email: "support@xtracargo.com"
+      phone: "support@xtracargo.space",
+      email: "support@xtracargo.space"
     },
     {
       city: "Amsterdam",
       address: t('contact.offices.amsterdam'),
-      phone: "support@xtracargo.com",
-      email: "support@xtracargo.com"
+      phone: "support@xtracargo.space",
+      email: "support@xtracargo.space"
     },
     {
       city: "Rome",
       address: t('contact.offices.rome'),
-      phone: "support@xtracargo.com",
-      email: "support@xtracargo.com"
+      phone: "support@xtracargo.space",
+      email: "support@xtracargo.space"
     },
     {
       city: "Singapore",
       address: t('contact.offices.singapore'),
-      phone: "support@xtracargo.com",
-      email: "support@xtracargo.com"
+      phone: "support@xtracargo.space",
+      email: "support@xtracargo.space"
     },
     {
       city: "Hong Kong",
       address: t('contact.offices.hongkong'),
-      phone: "support@xtracargo.com",
-      email: "support@xtracargo.com"
+      phone: "support@xtracargo.space",
+      email: "support@xtracargo.space"
     }
   ];
 

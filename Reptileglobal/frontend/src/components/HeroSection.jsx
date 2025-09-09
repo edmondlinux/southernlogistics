@@ -6,10 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 // Reptile and nature themed background images
 const backgroundImages = [
-	"https://img.joomcdn.net/36156a9978ca2e5baf7e9de46a6ba9388c0e918d_original.jpeg",
-	"https://cdn.mos.cms.futurecdn.net/LeLcqJPp6DtqwFddXH5X6A-1024-80.jpg.webp",
-	"https://www.anywhere.com/img-a/flora-fauna/reptile/iguana-verde/green-iguana2.jpg?q=95&w=650",
-	"https://live.staticflickr.com/916/28319597677_c9acaf5d4e_b.jpg",
+	"https://images.ctfassets.net/ksxncq3aj87t/19CvNWNUBH3PEDCkF7MU52/deba218e6692a31725cff31679826a9d/Shipping.jpg?w=1000&h=664&fl=progressive&q=50&fm=jpg",
+	"https://irp.cdn-website.com/66c1fa8b/dms3rep/multi/A+Spotlight+On........+%28600+-+400px%29+%284%29.png",
+	"https://imgproxy.divecdn.com/IWvtevQmxqa7TL1bmrVAk7pcGmlLSPp-Ksq7vAsFb88/g:ce/rs:fill:1200:675:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0xNDEwMTAwMzM5LmpwZw==.webp",
 ];
 
 const HeroSection = () => {
