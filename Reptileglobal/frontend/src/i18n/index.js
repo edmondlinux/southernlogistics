@@ -4,23 +4,10 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 import en from '../locales/en.json';
-import zh from '../locales/zh.json';
-import ms from '../locales/ms.json';
-import ko from '../locales/ko.json';
-import fr from '../locales/fr.json';
-import es from '../locales/es.json';
-import de from '../locales/de.json';
-import nl from '../locales/nl.json';
+
 
 const resources = {
-  en: { translation: en },
-  zh: { translation: zh },
-  ms: { translation: ms },
-  ko: { translation: ko },
-  fr: { translation: fr },
-  es: { translation: es },
-  de: { translation: de },
-  nl: { translation: nl }
+  en: { translation: en }
 };
 
 i18n
@@ -43,7 +30,7 @@ i18n
         const primaryLng = lng.split('-')[0].toLowerCase();
         
         // Check if we support this language
-        const supportedLanguages = ['en', 'zh', 'ms', 'ko', 'fr', 'es', 'de', 'nl'];
+        const supportedLanguages = ['en'];
         
         return supportedLanguages.includes(primaryLng) ? primaryLng : 'en';
       }
