@@ -176,8 +176,8 @@ class TrackingPDFGenerator {
 
         <!-- Footer -->
         <div class="footer">
-          <p>© ${new Date().getFullYear()} GlobalLogistics. All rights reserved.</p>
-          <p>Questions? Contact us at support@globallogistics.com</p>
+          <p>© ${new Date().getFullYear()} Southern Logistics AU. All rights reserved.</p>
+          <p>Questions? Contact us at support@southernlogistics.au</p>
         </div>
       </div>
     </body>

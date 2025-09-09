@@ -1,3 +1,4 @@
+
 {
   "nav": {
     "home": "Home",
@@ -61,9 +62,9 @@
     }
   },
   "hero": {
-    "title": "Xtracargo",
+    "title": "Southern Logistics AU",
     "subtitle": "",
-    "description": "We provide safe, reliable, and efficient global transport for all types of shipments — from live animals to heavy cargo. With worldwide logistics capabilities, we serve North America, Europe, Asia, and beyond. Our specialized transport ensures your goods travel securely and on time, anywhere in the world.",
+    "description": "We provide safe, reliable, and efficient freight transport across Australia. From Melbourne to Perth, Sydney to Darwin, our comprehensive logistics network serves all major Australian cities and regional areas. With specialized transport solutions, we ensure your cargo travels securely and on time throughout Australia.",
     "getQuote": "Get a Quote",
     "trackShipment": "Track Shipment",
     "enterTracking": "Enter tracking number...",
@@ -71,44 +72,44 @@
     "tracking": "Tracking your shipment..."
   },
   "partners": {
-    "title": "Trusted by Industry Leaders",
-    "description": "We partner with leading logistics companies worldwide to provide comprehensive transport solutions and global coverage.",
-    "morePartners": "And many more trusted partners across the globe"
+    "title": "Trusted by Australian Businesses",
+    "description": "We partner with leading Australian logistics companies to provide comprehensive transport solutions and nationwide coverage.",
+    "morePartners": "And many more trusted partners across Australia"
   },
   "services": {
     "title": "Our Services",
-    "description": "Comprehensive logistics solutions tailored to meet your shipping needs",
+    "description": "Comprehensive logistics solutions tailored to meet your Australian shipping needs",
     "climateTransport": {
       "title": "Climate-Controlled Transport",
-      "description": "Temperature and humidity-controlled vehicles ensuring optimal conditions for live animal and sensitive cargo transportation."
+      "description": "Temperature and humidity-controlled vehicles ensuring optimal conditions for sensitive cargo transportation across Australia."
     },
     "globalShipping": {
-      "title": "Global Shipping Network",
-      "description": "International shipping to North America, Europe, Asia, and beyond with full documentation and compliance."
+      "title": "Nationwide Shipping Network",
+      "description": "Australia-wide shipping from major cities to remote locations with full documentation and compliance."
     },
     "quarantine": {
       "title": "Secure Storage Facilities",
-      "description": "Certified storage and holding facilities meeting international safety and handling standards."
+      "description": "Certified storage and warehousing facilities meeting Australian safety and handling standards."
     },
     "doorToDoor": {
       "title": "Door-to-Door Service",
-      "description": "Complete pickup and delivery service from origin to destination with expert handling."
+      "description": "Complete pickup and delivery service from origin to destination with expert handling throughout Australia."
     },
     "breederNetwork": {
-      "title": "Specialized Partner Network",
-      "description": "Connecting businesses and individuals worldwide through our trusted global logistics network."
+      "title": "Australian Business Network",
+      "description": "Connecting Australian businesses nationwide through our trusted domestic logistics network."
     },
     "cites": {
       "title": "Documentation & Compliance",
-      "description": "Full permit handling and legal documentation for international trade and transport."
+      "description": "Full permit handling and legal documentation for Australian domestic and interstate transport."
     }
   },
   "features": {
     "title": "Why Choose Us",
-    "description": "Experience the difference with our industry-leading logistics solutions",
+    "description": "Experience the difference with our industry-leading Australian logistics solutions",
     "express": {
       "title": "Express Delivery",
-      "description": "Priority shipping with minimal transit times for time-sensitive shipments"
+      "description": "Priority shipping with minimal transit times for time-sensitive shipments across Australia"
     },
     "tracking": {
       "title": "Live Shipment Tracking",
@@ -116,19 +117,19 @@
     },
     "insurance": {
       "title": "Comprehensive Insurance",
-      "description": "Full coverage and secure handling protocols for all shipments"
+      "description": "Full coverage and secure handling protocols for all Australian shipments"
     },
     "network": {
-      "title": "Global Network",
-      "description": "Specialized routes covering North America, Europe, Asia, and emerging markets worldwide"
+      "title": "Australian Network",
+      "description": "Specialized routes covering all Australian states and territories from major cities to regional areas"
     }
   },
   "process": {
     "title": "How It Works",
-    "description": "Simple steps to get your shipment moving",
+    "description": "Simple steps to get your shipment moving across Australia",
     "consultation": {
       "title": "Consultation",
-      "description": "Contact us for logistics consultation and transport requirements"
+      "description": "Contact us for logistics consultation and Australian transport requirements"
     },
     "pickup": {
       "title": "Secure Pickup",
@@ -136,81 +137,81 @@
     },
     "transport": {
       "title": "Safe Transport",
-      "description": "Reliable transport through our global shipping network"
+      "description": "Reliable transport through our Australian shipping network"
     },
     "delivery": {
       "title": "On-Time Delivery",
-      "description": "Secure arrival with full documentation and support"
+      "description": "Secure arrival with full documentation and support anywhere in Australia"
     }
   },
   "testimonials": {
     "title": "What Our Clients Say",
-    "description": "Trusted by businesses and individuals worldwide",
+    "description": "Trusted by Australian businesses nationwide",
     "marco": {
-      "company": "Global Trade Partners",
-      "quote": "Xtracargo has transformed how we move goods internationally. Every shipment arrives safely and on schedule. Professional service all around."
+      "company": "Melbourne Trading Partners",
+      "quote": "Southern Logistics AU has transformed how we move goods across Australia. Every shipment arrives safely and on schedule. Professional service all around."
     },
     "lisa": {
-      "company": "Asia Logistics Group",
-      "quote": "Reliable shipping from North America to Asia with perfect documentation. Their transport systems are top-notch."
+      "company": "Sydney Freight Solutions",
+      "quote": "Reliable shipping from Perth to Brisbane with perfect documentation. Their transport systems are top-notch for Australian logistics."
     },
     "johan": {
-      "company": "American Freight Co.",
-      "quote": "Professional handling and fast delivery across continents. Xtracargo truly understands the needs of global logistics."
+      "company": "Queensland Cargo Co.",
+      "quote": "Professional handling and fast delivery across states. Southern Logistics AU truly understands the needs of Australian freight transport."
     },
     "sophie": {
-      "company": "European Distribution Hub",
-      "quote": "Excellent service to Asia and other markets. Full compliance support and reliable deliveries every time."
+      "company": "Adelaide Distribution Hub",
+      "quote": "Excellent service to Darwin and other remote areas. Full compliance support and reliable deliveries every time across Australia."
     }
   },
   "showcase": {
-    "title": "Our Logistics Operations",
-    "description": "Specialized facilities and expert handling for all types of shipments",
+    "title": "Our Australian Logistics Operations",
+    "description": "Specialized facilities and expert handling for all types of Australian shipments",
     "handlers": "Expert Cargo Handlers",
     "vehicles": "Modern Transport Vehicles",
-    "facilities": "Secure Facilities",
-    "distribution": "Global Distribution Network"
+    "facilities": "Secure Australian Facilities",
+    "distribution": "Australian Distribution Network"
   },
   "about": {
-    "title": "About Xtracargo",
-    "description": "With years of specialized experience in global transportation, we’ve become a trusted expert in safe, reliable, and legal shipping worldwide. Our network connects businesses and individuals to markets in North America, Europe, Asia, and beyond.",
-    "compliance": "We’re certified by international authorities and maintain the highest standards for transport safety and global compliance.",
+    "title": "About Southern Logistics AU",
+    "description": "With years of specialized experience in Australian transportation, we've become a trusted expert in safe, reliable, and legal shipping across Australia. Our network connects businesses from Perth to Sydney, Melbourne to Darwin, and everywhere in between.",
+    "compliance": "We're certified by Australian authorities and maintain the highest standards for transport safety and domestic compliance.",
     "experience": "Years Experience",
-    "countries": "Countries Served",
+    "countries": "Australian States Served",
     "shipped": "Shipments Delivered",
-    "certified": "Certified Compliance",
-    "certifiedDesc": "Official trade and transport permits",
+    "certified": "Australian Certified",
+    "certifiedDesc": "Official Australian transport permits",
     "climate": "Climate Controlled",
     "climateDesc": "Optimal conditions for sensitive cargo",
     "monitoring": "24/7 Monitoring",
     "monitoringDesc": "Live tracking and cargo care",
     "rates": "Competitive Rates",
-    "ratesDesc": "Best prices for global shipping"
+    "ratesDesc": "Best prices for Australian shipping"
   },
   "cta": {
-    "title": "Ready to Ship with Xtracargo?",
-    "description": "Connect with global markets through the world’s premier transport and logistics specialists.",
+    "title": "Ready to Ship with Southern Logistics AU?",
+    "description": "Connect with Australian markets through Australia's premier transport and logistics specialists.",
     "getQuote": "Get Shipping Quote",
-    "email": "email: support@xtracargo.space"
+    "email": "email: support@southernlogistics.au"
   },
   "contact": {
     "hero": {
       "title": "Contact",
-      "subtitle": "Xtracargo",
-      "description": "Get in touch with our logistics experts. We’re here to help move your shipments safely to global destinations."
+      "subtitle": "Southern Logistics AU",
+      "description": "Get in touch with our Australian logistics experts. We're here to help move your shipments safely across Australia."
     },
     "form": {
-      "title": "Get a Shipping Quote",
+      "title": "Get an Australian Shipping Quote",
       "name": "Full Name",
       "email": "Email Address",
       "phone": "Phone Number",
       "company": "Company/Organization",
       "subject": "Subject",
-      "message": "Tell us about your cargo, destination, and shipping requirements",
+      "message": "Tell us about your cargo, destination, and Australian shipping requirements",
       "serviceType": "Service Type",
-      "submit": "Get Shipping Quote",
+      "submit": "Get Australian Shipping Quote",
       "sending": "Sending...",
-      "success": "Message sent successfully! Our logistics experts will contact you within 24 hours.",
+      "success": "Message sent successfully! Our Australian logistics experts will contact you within 24 hours.",
       "error": "Failed to send message. Please try again or contact us directly.",
       "required": "*"
     },
@@ -223,56 +224,56 @@
       "partnership": "Partnership Inquiry"
     },
     "info": {
-      "title": "Global Logistics Experts",
-      "description": "Ready to move your goods worldwide? Our specialized team handles everything from cargo transport to compliance documentation for safe, legal international shipping.",
+      "title": "Australian Logistics Experts",
+      "description": "Ready to move your goods across Australia? Our specialized team handles everything from freight transport to compliance documentation for safe, legal Australian shipping.",
       "quickContact": "Quick Contact",
       "emergencyTitle": "Emergency Transport",
-      "emergencyDesc": "For urgent shipments or transport emergencies",
-      "servicesTitle": "Our Logistics Services",
+      "emergencyDesc": "For urgent shipments or transport emergencies across Australia",
+      "servicesTitle": "Our Australian Logistics Services",
       "climateTransport": "Climate-Controlled Transport",
       "citesDoc": "Documentation & Compliance",
-      "globalShipping": "Global Shipping",
+      "globalShipping": "Australia-wide Shipping",
       "animalWelfare": "Cargo Safety Priority"
     },
     "offices": {
-      "title": "Our Global Transport Network",
-      "description": "Strategic hubs worldwide for seamless shipping",
-      "newjersey": "100 Corporate Blvd, South Plainfield, NJ 07080, USA",
-      "amsterdam": "European Hub, Netherlands",
-      "rome": "Central Operations",
-      "singapore": "Asian Operations Center",
-      "hongkong": "China Gateway Office"
+      "title": "Our Australian Transport Network",
+      "description": "Strategic hubs across Australia for seamless shipping",
+      "newjersey": "Level 10, 123 Collins Street, Melbourne, VIC 3000, Australia",
+      "amsterdam": "Sydney Hub, NSW",
+      "rome": "Perth Operations, WA",
+      "singapore": "Brisbane Operations Center, QLD",
+      "hongkong": "Adelaide Distribution Office, SA"
     },
     "map": {
-      "title": " Headquarters",
-      "description": "Visit our main logistics facility in New Jersey",
-      "placeholder": "Transport Hub Map",
-      "coming": "Interactive shipping route map coming soon"
+      "title": "Australian Headquarters",
+      "description": "Visit our main logistics facility in Melbourne",
+      "placeholder": "Australian Transport Hub Map",
+      "coming": "Interactive Australian shipping route map coming soon"
     }
   },
   "gallery": {
     "title": "Our Work in Action",
-    "description": "Explore our gallery showcasing transportation, specialized equipment, and successful deliveries across the globe",
+    "description": "Explore our gallery showcasing transportation, specialized equipment, and successful deliveries across Australia",
     "categories": {
       "all": "All",
-      "reptiles": "Live Animals",
+      "reptiles": "Freight",
       "equipment": "Equipment",
       "process": "Process"
     },
     "images": {
-      "beardedTransport": "Specialized live animal transportation with climate control",
-      "insulatedBox": "Well insulated box for safe shipping",
-      "climateContainers": "Advanced shipping containers with temperature monitoring",
-      "transportSetup": "Custom packaging for large and fragile cargo",
-      "documentation": "Complete documentation and compliance certificates",
-      "packaging": "Professional packaging ensuring safety during transport",
-      "lizardCollection": "Example live animal shipment prepared for transport",
-      "monitoring": "Real-time monitoring and tracking throughout the journey"
+      "beardedTransport": "Specialized freight transportation with climate control across Australia",
+      "insulatedBox": "Well insulated containers for safe Australian shipping",
+      "climateContainers": "Advanced shipping containers with temperature monitoring for Australian conditions",
+      "transportSetup": "Custom packaging for large and fragile cargo across Australia",
+      "documentation": "Complete documentation and Australian compliance certificates",
+      "packaging": "Professional packaging ensuring safety during Australian transport",
+      "lizardCollection": "Example freight shipment prepared for Australian transport",
+      "monitoring": "Real-time monitoring and tracking throughout the Australian journey"
     }
   },
   "contactForm": {
     "title": "Get In Touch",
-    "description": "Ready to ship? Contact us for a personalized quote",
+    "description": "Ready to ship across Australia? Contact us for a personalized quote",
     "name": "Name",
     "email": "Email",
     "subject": "Subject",
@@ -294,6 +295,8 @@
     "history": "Tracking History",
     "notFound": "No shipment found",
     "checkNumber": "Please check your tracking number and try again",
+    "company": "Southern Logistics AU",
+    "description": "Your trusted partner for freight shipping and logistics across Australia",
     "readyToTrack": "Ready to track",
     "enterNumber": "Enter a tracking number above to get started",
     "trackingNumber": "Tracking Number",
@@ -324,62 +327,62 @@
   "team": {
     "hero": {
       "title": "Meet Our",
-      "titleHighlight": "Logistics Experts",
-      "description": "Passionate professionals dedicated to safe and efficient global transportation, connecting businesses and individuals worldwide."
+      "titleHighlight": "Australian Logistics Experts",
+      "description": "Passionate professionals dedicated to safe and efficient Australian transportation, connecting businesses across the continent."
     },
     "stats": {
       "teamMembers": "Team Members",
-      "countriesServed": "Countries Served",
+      "countriesServed": "Australian States Served",
       "averageExperience": "Years Average Experience",
-      "animalWelfareTrained": "Specialized Cargo Handling Trained"
+      "animalWelfareTrained": "Professional Cargo Handling Trained"
     },
     "leadership": {
       "title": "Leadership Team",
-      "description": "Expert leaders with deep knowledge in logistics, compliance, and international trade"
+      "description": "Expert leaders with deep knowledge in Australian logistics, compliance, and domestic trade"
     },
     "departments": {
-      "title": "Our Specialized Teams",
-      "description": "Expert departments working together to ensure safe and efficient transportation",
+      "title": "Our Specialized Australian Teams",
+      "description": "Expert departments working together to ensure safe and efficient transportation across Australia",
       "animalCare": {
-        "title": "Live Animal Transport Team",
-        "description": "Specialized handlers and veterinary technicians ensuring welfare of live animals"
+        "title": "Freight Transport Team",
+        "description": "Specialized handlers and logistics technicians ensuring safe cargo transport"
       },
       "logistics": {
-        "title": "Logistics & Transport",
-        "description": "Cargo transport specialists and global route coordinators"
+        "title": "Australian Logistics & Transport",
+        "description": "Freight transport specialists and Australian route coordinators"
       },
       "climate": {
         "title": "Climate Technology",
-        "description": "Environmental monitoring and temperature control systems specialists"
+        "description": "Environmental monitoring and temperature control systems specialists for Australian conditions"
       }
     },
     "positions": {
       "ceo": "Chief Executive Officer",
-      "operationsDirector": "Operations Director",
-      "asianMarketsDirector": "Asian Markets Director",
-      "complianceOfficer": "Compliance & Documentation Officer",
-      "leadVeterinarian": "Lead Veterinarian (Live Animal Transport)",
-      "seniorReptileHandler": "Senior Live Animal Handler",
-      "quarantineSupervisor": "Storage & Quarantine Supervisor",
-      "animalWelfareSpecialist": "Animal Welfare Specialist",
-      "transportManager": "Transport Manager",
-      "routeCoordinator": "Route Coordinator - MENA",
+      "operationsDirector": "Australian Operations Director",
+      "asianMarketsDirector": "Interstate Markets Director",
+      "complianceOfficer": "Australian Compliance & Documentation Officer",
+      "leadVeterinarian": "Lead Logistics Coordinator",
+      "seniorReptileHandler": "Senior Freight Handler",
+      "quarantineSupervisor": "Storage & Warehouse Supervisor",
+      "animalWelfareSpecialist": "Cargo Safety Specialist",
+      "transportManager": "Australian Transport Manager",
+      "routeCoordinator": "Route Coordinator - Interstate",
       "airFreightSpecialist": "Air Freight Specialist",
-      "vehicleFleetManager": "Vehicle Fleet Manager",
+      "vehicleFleetManager": "Australian Vehicle Fleet Manager",
       "climateSystemsEngineer": "Climate Systems Engineer",
       "environmentalMonitoring": "Environmental Monitoring Specialist",
       "qualityControlTechnician": "Quality Control Technician",
       "systemsMaintenanceEngineer": "Systems Maintenance Engineer"
     },
     "bios": {
-      "elena": "With 20+ years in logistics and veterinary care, Elena ensures the highest standards in animal and cargo welfare.",
-      "marcus": "Former freight transport specialist with expertise in international shipping regulations and logistics.",
-      "liWei": "Based in Singapore, Li Wei manages our Asian operations and maintains relationships with partners across 12 countries.",
-      "sarah": "Documentation specialist ensuring all shipments meet international trade regulations and compliance requirements."
+      "elena": "With 20+ years in Australian logistics and cargo safety, Elena ensures the highest standards in freight welfare and transport.",
+      "marcus": "Former Australian freight transport specialist with expertise in interstate shipping regulations and logistics.",
+      "liWei": "Based in Sydney, Li Wei manages our interstate operations and maintains relationships with partners across 8 Australian states.",
+      "sarah": "Documentation specialist ensuring all Australian shipments meet interstate trade regulations and compliance requirements."
     },
     "joinTeam": {
-      "title": "Join Our Logistics Team",
-      "description": "Passionate about logistics and global trade? Join our specialized team and help us continue leading the global transportation industry.",
+      "title": "Join Our Australian Logistics Team",
+      "description": "Passionate about logistics and Australian trade? Join our specialized team and help us continue leading the Australian transportation industry.",
       "viewCareers": "View Careers",
       "sendCV": "Send Your CV"
     }
