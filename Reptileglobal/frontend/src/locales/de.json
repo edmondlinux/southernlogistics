@@ -1,0 +1,388 @@
+
+{
+  "nav": {
+    "home": "Home",
+    "about": "Over Ons",
+    "team": "Team",
+    "testimonials": "Getuigenissen",
+    "contact": "Contact",
+    "track": "Volgen",
+    "myShipments": "Mijn Zendingen",
+    "dashboard": "Dashboard",
+    "logOut": "Uitloggen",
+    "signUp": "Registreren",
+    "login": "Inloggen",
+    "language": "Taal"
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文",
+    "ms": "Bahasa Malaysia",
+    "ko": "한국어",
+    "fr": "Français",
+    "es": "Español",
+    "de": "Deutsch",
+    "nl": "Nederlands"
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Fout",
+    "success": "Succes",
+    "cancel": "Annuleren",
+    "save": "Opslaan",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "submit": "Verzenden",
+    "close": "Sluiten"
+  },
+  "auth": {
+    "login": {
+      "title": "Log in op uw account",
+      "emailLabel": "E-mailadres",
+      "emailPlaceholder": "jij@voorbeeld.com",
+      "passwordLabel": "Wachtwoord",
+      "passwordPlaceholder": "••••••••",
+      "loginButton": "Inloggen",
+      "notMember": "Nog geen lid?",
+      "signUpNow": "Nu registreren"
+    },
+    "signup": {
+      "title": "Maak uw account aan",
+      "nameLabel": "Volledige naam",
+      "namePlaceholder": "Jan Jansen",
+      "emailLabel": "E-mailadres",
+      "emailPlaceholder": "jij@voorbeeld.com",
+      "passwordLabel": "Wachtwoord",
+      "passwordPlaceholder": "••••••••",
+      "confirmPasswordLabel": "Bevestig Wachtwoord",
+      "confirmPasswordPlaceholder": "••••••••",
+      "signUpButton": "Registreren",
+      "alreadyMember": "Al een account?",
+      "loginHere": "Log hier in"
+    }
+  },
+  "hero": {
+    "title": "Xtracargo",
+    "subtitle": "",
+    "description": "Wij bieden veilig, betrouwbaar en efficiënt wereldwijd transport voor alle soorten zendingen — van levende dieren tot zware vracht. Met wereldwijde logistieke capaciteiten bedienen wij Noord-Amerika, Europa, Azië en daarbuiten. Ons gespecialiseerde transport zorgt ervoor dat uw goederen veilig en op tijd reizen, overal ter wereld.",
+    "getQuote": "Offerte Aanvragen",
+    "trackShipment": "Zending Volgen",
+    "enterTracking": "Voer trackingnummer in...",
+    "trackNow": "Nu Volgen",
+    "tracking": "Uw zending wordt gevolgd..."
+  },
+  "partners": {
+    "title": "Vertrouwd door Industrieleiders",
+    "description": "Wij werken samen met toonaangevende wereldwijde logistieke bedrijven om uitgebreide transportoplossingen en mondiale dekking te bieden.",
+    "morePartners": "En vele andere vertrouwde partners wereldwijd"
+  },
+  "services": {
+    "title": "Onze Diensten",
+    "description": "Uitgebreide logistieke oplossingen op maat voor uw verzendbehoeften",
+    "climateTransport": {
+      "title": "Klimaatgecontroleerd Transport",
+      "description": "Temperatuur- en vochtigheidsgecontroleerde voertuigen die optimale omstandigheden garanderen voor het transport van levende dieren en gevoelige vracht."
+    },
+    "globalShipping": {
+      "title": "Wereldwijd Verzendnetwerk",
+      "description": "Internationale verzending naar Noord-Amerika, Europa, Azië en daarbuiten met volledige documentatie en compliance."
+    },
+    "quarantine": {
+      "title": "Veilige Opslagfaciliteiten",
+      "description": "Gecertificeerde opslag- en quarantainefaciliteiten die voldoen aan internationale veiligheids- en behandelingsnormen."
+    },
+    "doorToDoor": {
+      "title": "Deur-tot-Deur Service",
+      "description": "Volledige ophaal- en bezorgservice van oorsprong tot bestemming met deskundige behandeling."
+    },
+    "breederNetwork": {
+      "title": "Gespecialiseerd Partnernetwerk",
+      "description": "Bedrijven en particulieren wereldwijd verbinden via ons vertrouwde mondiale logistieke netwerk."
+    },
+    "cites": {
+      "title": "Documentatie & Compliance",
+      "description": "Volledige vergunningafhandeling en juridische documentatie voor internationale handel en transport."
+    }
+  },
+  "features": {
+    "title": "Waarom Voor Ons Kiezen",
+    "description": "Ervaar het verschil met onze toonaangevende logistieke oplossingen",
+    "express": {
+      "title": "Express Bezorging",
+      "description": "Prioriteitsverzending met minimale transittijden voor tijdgevoelige zendingen"
+    },
+    "tracking": {
+      "title": "Live Zendingvolging",
+      "description": "Realtime monitoring van locatie, temperatuur en omstandigheden"
+    },
+    "insurance": {
+      "title": "Uitgebreide Verzekering",
+      "description": "Volledige dekking en veilige behandelingsprotocollen voor alle zendingen"
+    },
+    "network": {
+      "title": "Wereldwijd Netwerk",
+      "description": "Gespecialiseerde routes die Noord-Amerika, Europa, Azië en opkomende markten wereldwijd bestrijken"
+    }
+  },
+  "process": {
+    "title": "Hoe Het Werkt",
+    "description": "Eenvoudige stappen om uw zending in beweging te krijgen",
+    "consultation": {
+      "title": "Consultatie",
+      "description": "Neem contact met ons op voor logistieke consultatie en transportvereisten"
+    },
+    "pickup": {
+      "title": "Veilige Ophaling",
+      "description": "Professionele inzameling met juiste containers en voorbereiding"
+    },
+    "transport": {
+      "title": "Veilig Transport",
+      "description": "Betrouwbaar transport via ons wereldwijde verzendnetwerk"
+    },
+    "delivery": {
+      "title": "Tijdige Bezorging",
+      "description": "Veilige aankomst met volledige documentatie en ondersteuning"
+    }
+  },
+  "testimonials": {
+    "title": "Wat Onze Klanten Zeggen",
+    "description": "Vertrouwd door bedrijven en particulieren wereldwijd",
+    "marco": {
+      "company": "Global Trade Partners",
+      "quote": "Xtracargo heeft de manier waarop wij goederen internationaal verplaatsen getransformeerd. Elke zending arriveert veilig en op tijd. Professionele service door en door."
+    },
+    "lisa": {
+      "company": "Asia Logistics Group",
+      "quote": "Betrouwbare verzending van Noord-Amerika naar Azië met perfecte documentatie. Hun transportsystemen zijn eersteklas."
+    },
+    "johan": {
+      "company": "American Freight Co.",
+      "quote": "Professionele behandeling en snelle bezorging over continenten. Xtracargo begrijpt echt de behoeften van mondiale logistiek."
+    },
+    "sophie": {
+      "company": "European Distribution Hub",
+      "quote": "Uitstekende service naar Azië en andere markten. Volledige compliance-ondersteuning en betrouwbare leveringen elke keer."
+    }
+  },
+  "showcase": {
+    "title": "Onze Logistieke Operaties",
+    "description": "Gespecialiseerde faciliteiten en deskundige behandeling voor alle soorten zendingen",
+    "handlers": "Deskundige Vrachtbehandelaars",
+    "vehicles": "Moderne Transportvoertuigen",
+    "facilities": "Veilige Faciliteiten",
+    "distribution": "Wereldwijd Distributienetwerk"
+  },
+  "about": {
+    "title": "Over Xtracargo",
+    "description": "Met jaren van gespecialiseerde ervaring in wereldwijd transport zijn wij een vertrouwde expert geworden in veilige, betrouwbare en legale verzending wereldwijd. Ons netwerk verbindt bedrijven en particulieren met markten in Noord-Amerika, Europa, Azië en daarbuiten.",
+    "compliance": "Wij zijn gecertificeerd door internationale autoriteiten en handhaven de hoogste normen voor transportsicherheid en mondiale compliance.",
+    "experience": "Jaar Ervaring",
+    "countries": "Landen Bediend",
+    "shipped": "Zendingen Bezorgd",
+    "certified": "Gecertificeerde Compliance",
+    "certifiedDesc": "Officiële handel- en transportvergunningen",
+    "climate": "Klimaatgecontroleerd",
+    "climateDesc": "Optimale omstandigheden voor gevoelige vracht",
+    "monitoring": "24/7 Monitoring",
+    "monitoringDesc": "Live tracking en vrachtzorg",
+    "rates": "Concurrerende Tarieven",
+    "ratesDesc": "Beste prijzen voor wereldwijde verzending"
+  },
+  "cta": {
+    "title": "Klaar om te Verzenden met Xtracargo?",
+    "description": "Verbind met mondiale markten via 's werelds toonaangevende transport- en logistiekspecialisten.",
+    "getQuote": "Verzendofferte Aanvragen",
+    "email": "e-mail: support@xtracargo.site"
+  },
+  "contact": {
+    "hero": {
+      "title": "Contact",
+      "subtitle": "Xtracargo",
+      "description": "Neem contact op met onze logistieke experts. Wij zijn hier om uw zendingen veilig naar mondiale bestemmingen te verplaatsen."
+    },
+    "form": {
+      "title": "Verzendofferte Aanvragen",
+      "name": "Volledige Naam",
+      "email": "E-mailadres",
+      "phone": "Telefoonnummer",
+      "company": "Bedrijf/Organisatie",
+      "subject": "Onderwerp",
+      "message": "Vertel ons over uw vracht, bestemming en verzendvereisten",
+      "serviceType": "Service Type",
+      "submit": "Verzendofferte Aanvragen",
+      "sending": "Verzenden...",
+      "success": "Bericht succesvol verzonden! Onze logistieke experts nemen binnen 24 uur contact met u op.",
+      "error": "Fout bij verzenden bericht. Probeer opnieuw of neem direct contact met ons op.",
+      "required": "*"
+    },
+    "serviceTypes": {
+      "general": "Algemene Vraag",
+      "shipping": "Verzendofferte",
+      "tracking": "Mijn Zending Volgen",
+      "documentation": "Documentatie & Compliance",
+      "emergency": "Noodtransport",
+      "partnership": "Partnerschapsvraag"
+    },
+    "info": {
+      "title": "Mondiale Logistieke Experts",
+      "description": "Klaar om uw goederen wereldwijd te verplaatsen? Ons gespecialiseerde team behandelt alles van vrachttransport tot compliance-documentatie voor veilige en legale internationale verzending.",
+      "quickContact": "Snel Contact",
+      "emergencyTitle": "Noodtransport",
+      "emergencyDesc": "Voor urgente zendingen of transportnoodgevallen",
+      "servicesTitle": "Onze Logistieke Diensten",
+      "climateTransport": "Klimaatgecontroleerd Transport",
+      "citesDoc": "Documentatie & Compliance",
+      "globalShipping": "Wereldwijde Verzending",
+      "animalWelfare": "Vrachtveiligheid Prioriteit"
+    },
+    "offices": {
+      "title": "Ons Wereldwijde Transportnetwerk",
+      "description": "Strategische hubs wereldwijd voor naadloze verzending",
+      "newjersey": "100 Corporate Blvd, South Plainfield, NJ 07080, USA",
+      "amsterdam": "Europese Hub, Nederland",
+      "rome": "Centrale Operaties",
+      "singapore": "Aziatisch Operatiecentrum",
+      "hongkong": "China Gateway Kantoor"
+    },
+    "map": {
+      "title": "Hoofdkantoor",
+      "description": "Bezoek onze hoofdlogistiekfaciliteit in New Jersey",
+      "placeholder": "Transporthub Kaart",
+      "coming": "Interactieve verzendroute kaart binnenkort beschikbaar"
+    }
+  },
+  "gallery": {
+    "title": "Ons Werk in Actie",
+    "description": "Verken onze galerij met transport, gespecialiseerde apparatuur en succesvolle leveringen wereldwijd",
+    "categories": {
+      "all": "Alles",
+      "reptiles": "Levende Dieren",
+      "equipment": "Apparatuur",
+      "process": "Proces"
+    },
+    "images": {
+      "beardedTransport": "Gespecialiseerd levende dieren transport met klimaatbeheersing",
+      "insulatedBox": "Goed geïsoleerde doos voor veilige verzending",
+      "climateContainers": "Geavanceerde verzendcontainers met temperatuurmonitoring",
+      "transportSetup": "Aangepaste verpakking voor grote en fragiele vracht",
+      "documentation": "Volledige documentatie en compliance-certificaten",
+      "packaging": "Professionele verpakking die veiligheid tijdens transport garandeert",
+      "lizardCollection": "Voorbeeld van levende dieren zending voorbereid voor transport",
+      "monitoring": "Realtime monitoring en tracking gedurende de hele reis"
+    }
+  },
+  "contactForm": {
+    "title": "Contact Opnemen",
+    "description": "Klaar om te verzenden? Neem contact met ons op voor een persoonlijke offerte",
+    "name": "Naam",
+    "email": "E-mail",
+    "subject": "Onderwerp",
+    "message": "Bericht",
+    "send": "Bericht Verzenden",
+    "sending": "Verzenden...",
+    "success": "Bericht succesvol verzonden! We nemen binnenkort contact met u op.",
+    "error": "Fout bij verzenden bericht. Probeer opnieuw.",
+    "contactInfo": "Contactinformatie",
+    "phone": "Telefoon",
+    "address": "Adres",
+    "googleMap": "Google Maps"
+  },
+  "tracking": {
+    "title": "Volg Uw Zending",
+    "subtitle": "Voer uw trackingnummer in voor realtime updates",
+    "currentLocation": "Huidige Locatie",
+    "estimatedDelivery": "Geschatte Bezorging",
+    "history": "Trackinggeschiedenis",
+    "notFound": "Geen zending gevonden",
+    "checkNumber": "Controleer uw trackingnummer en probeer opnieuw",
+    "readyToTrack": "Klaar om te volgen",
+    "enterNumber": "Voer hierboven een trackingnummer in om te beginnen",
+    "trackingNumber": "Trackingnummer",
+    "clearResults": "← Resultaten Wissen",
+    "downloadPDF": "PDF Downloaden",
+    "from": "Van",
+    "to": "Naar",
+    "packageDetails": "Pakketdetails",
+    "serviceDetails": "Servicedetails"
+  },
+  "shipping": {
+    "from": "Van",
+    "to": "Naar",
+    "packageDetails": "Pakketdetails",
+    "serviceDetails": "Servicedetails",
+    "description": "Beschrijving",
+    "category": "Categorie",
+    "weight": "Gewicht",
+    "value": "Waarde",
+    "dimensions": "Afmetingen",
+    "fragile": "Breekbaar",
+    "priority": "Prioriteit",
+    "cost": "Verzendkosten",
+    "date": "Verzenddatum",
+    "signatureRequired": "Handtekening Vereist",
+    "specialInstructions": "Speciale Instructies"
+  },
+  "team": {
+    "hero": {
+      "title": "Ontmoet Onze",
+      "titleHighlight": "Logistieke Experts",
+      "description": "Gepassioneerde professionals toegewijd aan veilig en efficiënt wereldwijd transport, die bedrijven en particulieren wereldwijd verbinden."
+    },
+    "stats": {
+      "teamMembers": "Teamleden",
+      "countriesServed": "Landen Bediend",
+      "averageExperience": "Jaar Gemiddelde Ervaring",
+      "animalWelfareTrained": "Getraind in Gespecialiseerde Vrachtbehandeling"
+    },
+    "leadership": {
+      "title": "Leiderschapsteam",
+      "description": "Deskundige leiders met diepgaande kennis van logistiek, compliance en internationale handel"
+    },
+    "departments": {
+      "title": "Onze Gespecialiseerde Teams",
+      "description": "Deskundige afdelingen die samenwerken om veilig en efficiënt transport te garanderen",
+      "animalCare": {
+        "title": "Levende Dieren Transport Team",
+        "description": "Gespecialiseerde behandelaars en veterinaire technici die het welzijn van levende dieren garanderen"
+      },
+      "logistics": {
+        "title": "Logistiek & Transport",
+        "description": "Vrachttransportspecialisten en mondiale routecoördinatoren"
+      },
+      "climate": {
+        "title": "Klimaattechnologie",
+        "description": "Specialisten in omgevingsmonitoring en temperatuurcontrolesystemen"
+      }
+    },
+    "positions": {
+      "ceo": "Chief Executive Officer",
+      "operationsDirector": "Operationeel Directeur",
+      "asianMarketsDirector": "Directeur Aziatische Markten",
+      "complianceOfficer": "Compliance & Documentatie Functionaris",
+      "leadVeterinarian": "Hoofddierenarts (Levende Dieren Transport)",
+      "seniorReptileHandler": "Senior Levende Dieren Behandelaar",
+      "quarantineSupervisor": "Opslag & Quarantaine Supervisor",
+      "animalWelfareSpecialist": "Dierenwelzijn Specialist",
+      "transportManager": "Transport Manager",
+      "routeCoordinator": "Route Coördinator - MENA",
+      "airFreightSpecialist": "Luchtvracht Specialist",
+      "vehicleFleetManager": "Voertuigpark Manager",
+      "climateSystemsEngineer": "Klimaatsystemen Ingenieur",
+      "environmentalMonitoring": "Omgevingsmonitoring Specialist",
+      "qualityControlTechnician": "Kwaliteitscontrole Technicus",
+      "systemsMaintenanceEngineer": "Systeemonderhoud Ingenieur"
+    },
+    "bios": {
+      "elena": "Met 20+ jaar ervaring in logistiek en veterinaire zorg zorgt Elena voor de hoogste normen in dieren- en vrachtwelzijn.",
+      "marcus": "Voormalig vrachttransportspecialist met expertise in internationale verzendregulaties en logistiek.",
+      "liWei": "Gevestigd in Singapore, Li Wei beheert onze Aziatische operaties en onderhoudt relaties met partners in 12 landen.",
+      "sarah": "Documentatiespecialist die ervoor zorgt dat alle zendingen voldoen aan internationale handelsregulaties en compliance-vereisten."
+    },
+    "joinTeam": {
+      "title": "Word Lid van Ons Logistieke Team",
+      "description": "Gepassioneerd over logistiek en mondiale handel? Word lid van ons gespecialiseerde team en help ons de mondiale transportindustrie te blijven leiden.",
+      "viewCareers": "Bekijk Carrières",
+      "sendCV": "Stuur Uw CV"
+    }
+  }
+}
