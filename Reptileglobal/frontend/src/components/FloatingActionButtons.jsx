@@ -10,7 +10,7 @@ const FloatingActionButtons = () => {
 
   const handleEmailSupport = () => {
     // Open default email client with pre-filled email
-    window.location.href = 'mailto:support@reptileglobal.site?subject=Support Request&body=Hello Reptile Global Support Team,%0D%0A%0D%0AI need assistance with...';
+    window.location.href = 'mailto:support@southernlogistics.site?subject=Support Request&body=Hello Support Team,%0D%0A%0D%0AI need assistance with...';
   };
 
   return (
