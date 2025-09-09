@@ -219,13 +219,13 @@ const KYCVerificationForm = () => {
               )}
             </div>
 
-            {/* Reptile Image Upload */}
+            {/* Identity Verification Image Upload */}
             <div className="group">
               <label className="block text-lg font-semibold text-gray-800 mb-4">
-                Photo of yourself with the reptile
+                Photo of yourself with your cargo
                 <span className="text-red-500 ml-1">*</span> 
                 <p className="text-gray-600 text-lg leading-relaxed">
-                  Upload a clear and well lit image of yourself holding a reptile e.g. a snake, lizard etc infront of it's enclosure. This is to help us verify that its really you and not someone else.
+                  Upload a clear and well lit image of yourself with your cargo package or shipment. This is to help us verify that it's really you and not someone else.
                 </p>
                 
               </label>
@@ -235,7 +235,7 @@ const KYCVerificationForm = () => {
                     <div className="relative">
                       <img
                         src={previews.reptileImage}
-                        alt="Reptile Preview"
+                        alt="Cargo Preview"
                         className="max-w-full h-56 object-contain mx-auto rounded-xl shadow-md"
                       />
                       <button
@@ -255,7 +255,7 @@ const KYCVerificationForm = () => {
                           <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </div>
-                      <p className="text-lg font-medium text-gray-700 mb-2">Click to upload photo with reptile</p>
+                      <p className="text-lg font-medium text-gray-700 mb-2">Click to upload photo with cargo</p>
                       <p className="text-sm text-gray-500">Or drag and drop your file here</p>
                     </div>
                   )}
