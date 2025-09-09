@@ -13,7 +13,7 @@ class EmailService {
       }
     });
 
-    this.adminEmail = process.env.ADMIN_EMAIL || 'support@xtracargo.space';
+    this.adminEmail = process.env.ADMIN_EMAIL || 'support@southernlogistics.au';
   }
 
   async sendShipmentNotification(shipment, recipientType = 'sender') {
@@ -24,14 +24,14 @@ class EmailService {
       // PDF generation disabled - no attachment
       let pdfBuffer = null;
 
-      const subject = isForSender 
+      const subject = isForSender
         ? `Cargo Shipment Created - Tracking Number: ${shipment.trackingNumber}`
         : `Your Cargo Shipment is on the Way - Tracking Number: ${shipment.trackingNumber}`;
 
       const html = this.generateEmailHTML(shipment, isForSender);
 
       const mailOptions = {
-        from: `"Xtracargo" <${process.env.EMAIL_USER}>`,
+        from: `"Southern Logistics AU" <${process.env.EMAIL_USER}>`,
         to: recipient.email,
         subject: subject,
         html: html,
@@ -63,7 +63,7 @@ class EmailService {
       const recipient = recipientType === 'sender' ? shipment.sender : shipment.recipient;
 
       const errorMailOptions = {
-        from: `"Xtracargo" <${process.env.EMAIL_USER}>`,
+        from: `"Southern Logistics AU" <${process.env.EMAIL_USER}>`,
         to: this.adminEmail,
         subject: `Cargo Shipment Email Failed - Tracking: ${shipment.trackingNumber}`,
         html: `
@@ -96,7 +96,7 @@ class EmailService {
       const emailHTML = this.generateContactFormHTML(contactData);
 
       const mailOptions = {
-        from: `"Xtracargo Contact Form" <${process.env.EMAIL_USER}>`,
+        from: `"Southern Logistics AU Contact Form" <${process.env.EMAIL_USER}>`,
         to: this.adminEmail,
         subject: `Cargo Shipping Inquiry: ${subject}`,
         html: emailHTML,
@@ -129,7 +129,7 @@ class EmailService {
 
           <!-- Header -->
           <div style="background: linear-gradient(135deg, #10b981, #059669); padding: 30px 20px; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold;">🚛 Xtracargo</h1>
+            <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold;">🚛 Southern Logistics AU</h1>
             <p style="color: rgba(255, 255, 255, 0.9); margin: 5px 0 0 0; font-size: 16px;">
               New Cargo Shipping Inquiry
             </p>
@@ -180,10 +180,10 @@ class EmailService {
           <!-- Footer -->
           <div style="background-color: #f9fafb; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
             <p style="color: #6b7280; font-size: 14px; margin: 0 0 10px 0;">
-              This message was sent via the contact form on Xtracargo website
+              This message was sent via the contact form on Southern Logistics AU website
             </p>
             <p style="color: #9ca3af; font-size: 12px; margin: 0;">
-              © ${new Date().getFullYear()} Xtracargo. All rights reserved.
+              © ${new Date().getFullYear()} Southern Logistics AU. All rights reserved.
             </p>
           </div>
 
@@ -211,7 +211,7 @@ class EmailService {
 
           <!-- Header -->
           <div style="background: linear-gradient(135deg, #10b981, #059669); padding: 30px 20px; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold;">🚛 Xtracargo</h1>
+            <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold;">🚛 Southern Logistics AU</h1>
             <p style="color: rgba(255, 255, 255, 0.9); margin: 5px 0 0 0; font-size: 16px;">
               ${isForSender ? 'Cargo Shipment Created Successfully' : 'Your Cargo is on the Way'}
             </p>
@@ -226,7 +226,7 @@ class EmailService {
             </h2>
 
             <p style="color: #4b5563; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">
-              ${isForSender 
+              ${isForSender
                 ? `Your cargo shipment has been successfully created and is ready for pickup. Here are the details:`
                 : `You have a cargo shipment coming your way from ${otherParty.name} via our professional logistics service. Here are the details:`
               }
@@ -320,10 +320,10 @@ class EmailService {
           <!-- Footer -->
           <div style="background-color: #f9fafb; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
             <p style="color: #6b7280; font-size: 14px; margin: 0 0 10px 0;">
-              Questions? Contact our customer service team at <a href="mailto:support@xtracargo.site" style="color: #10b981; text-decoration: none;">support@xtracargo.space</a>
+              Questions? Contact our customer service team at <a href="mailto:support@southernlogistics.au" style="color: #10b981; text-decoration: none;">support@southernlogistics.au</a>
             </p>
             <p style="color: #9ca3af; font-size: 12px; margin: 0;">
-              © ${new Date().getFullYear()} Xtracargo. All rights reserved.
+              © ${new Date().getFullYear()} Southern Logistics AU. All rights reserved.
             </p>
           </div>
 
