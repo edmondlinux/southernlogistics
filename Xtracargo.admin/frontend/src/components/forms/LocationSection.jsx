@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { MapPin } from 'lucide-react';
-import MapboxMap from "../MapboxMap";
+import OpenStreetMap from "../OpenStreetMap";
 
 const LocationSection = ({ coordinates, setCoordinates }) => {
   return (
@@ -12,7 +13,7 @@ const LocationSection = ({ coordinates, setCoordinates }) => {
             Update Shipment Location
           </h3>
         </div>
-        <MapboxMap
+        <OpenStreetMap
           height="400px"
           selectedCoordinates={coordinates}
           onCoordinatesChange={setCoordinates}
