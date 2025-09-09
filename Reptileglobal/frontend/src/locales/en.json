@@ -1,3 +1,4 @@
+
 {
   "nav": {
     "home": "Home",
@@ -61,9 +62,9 @@
     }
   },
   "hero": {
-    "title": "Reptile Global",
+    "title": "Xtracargo",
     "subtitle": "",
-    "description": "We're all about getting your reptiles where they need to go safely and comfortably. With worldwide shipping capabilities, we serve North America, Europe, Asia, and beyond. Our climate-controlled transport ensures your reptiles travel stress-free to destinations across the globe.",
+    "description": "We're all about getting your cargo where it needs to go safely and efficiently. With worldwide shipping capabilities, we serve North America, Europe, Asia, and beyond. Our advanced logistics solutions ensure your packages travel securely to destinations across the globe.",
     "getQuote": "Get a Quote",
     "trackShipment": "Track Shipment",
     "enterTracking": "Enter tracking number...",
@@ -80,43 +81,43 @@
     "description": "Comprehensive logistics solutions tailored to meet your business needs",
     "climateTransport": {
       "title": "Climate-Controlled Transport",
-      "description": "Temperature and humidity controlled vehicles ensuring optimal conditions for reptile transportation worldwide."
+      "description": "Temperature and humidity controlled vehicles ensuring optimal conditions for sensitive cargo transportation worldwide."
     },
     "globalShipping": {
       "title": "Global Shipping Network",
       "description": "Specialized international shipping to North America, Europe, Asia, and other regions with full documentation and compliance."
     },
-    "quarantine": {
-      "title": "Quarantine Facilities",
-      "description": "Certified quarantine and holding facilities meeting international standards for reptile health and safety."
+    "warehousing": {
+      "title": "Warehousing Solutions",
+      "description": "Secure storage and distribution facilities meeting international standards for cargo safety and security."
     },
     "doorToDoor": {
       "title": "Door-to-Door Service",
-      "description": "Complete pickup and delivery service from breeder to destination with expert reptile handling."
+      "description": "Complete pickup and delivery service from origin to destination with expert cargo handling."
     },
-    "breederNetwork": {
-      "title": "Global Breeder Network",
-      "description": "Connecting reptile breeders worldwide with international markets through our trusted global network."
+    "freightNetwork": {
+      "title": "Global Freight Network",
+      "description": "Connecting businesses worldwide with international markets through our trusted global network."
     },
-    "cites": {
-      "title": "CITES Documentation",
-      "description": "Full CITES permit handling and wildlife documentation for legal international reptile trade."
+    "documentation": {
+      "title": "Customs Documentation",
+      "description": "Full customs clearance and documentation handling for legal international trade."
     }
   },
   "features": {
     "title": "Why Choose Us",
     "description": "Experience the difference with our industry-leading capabilities",
     "express": {
-      "title": "Express Reptile Delivery",
-      "description": "Priority shipping with minimal transit times for reptile welfare"
+      "title": "Express Delivery",
+      "description": "Priority shipping with minimal transit times for urgent cargo"
     },
     "tracking": {
-      "title": "Live Animal Tracking",
-      "description": "Real-time monitoring of temperature, humidity, and location"
+      "title": "Real-Time Tracking",
+      "description": "Live monitoring of temperature, humidity, and location"
     },
     "insurance": {
-      "title": "Reptile Insurance",
-      "description": "Comprehensive coverage and expert reptile handling protocols"
+      "title": "Cargo Insurance",
+      "description": "Comprehensive coverage and expert cargo handling protocols"
     },
     "network": {
       "title": "Global Network",
@@ -128,115 +129,115 @@
     "description": "Simple steps to get your shipment moving",
     "consultation": {
       "title": "Consultation",
-      "description": "Contact us for reptile shipping consultation and CITES requirements"
+      "description": "Contact us for cargo shipping consultation and documentation requirements"
     },
     "pickup": {
       "title": "Secure Pickup",
-      "description": "Expert collection with proper containers and climate preparation"
+      "description": "Expert collection with proper packaging and preparation"
     },
     "transport": {
-      "title": "Climate Transport",
-      "description": "Temperature-controlled transport through our global shipping network"
+      "title": "Safe Transport",
+      "description": "Secure transport through our global shipping network"
     },
     "delivery": {
       "title": "Safe Delivery",
-      "description": "Healthy arrival with full documentation and health certificates"
+      "description": "Timely arrival with full documentation and delivery confirmation"
     }
   },
   "testimonials": {
     "title": "What Our Clients Say",
     "description": "Trusted by businesses worldwide",
     "marco": {
-      "company": "Global Reptile Breeders",
-      "quote": "Reptile Global has revolutionized how we ship worldwide. Every animal arrives healthy and stress-free. Truly professional service."
+      "company": "Global Manufacturing Co.",
+      "quote": "Xtracargo has revolutionized how we ship worldwide. Every package arrives safely and on time. Truly professional service."
     },
     "lisa": {
-      "company": "Asia Exotic Imports",
-      "quote": "Reliable shipping from North America to China with perfect documentation. Their climate control systems are top-notch."
+      "company": "Asia Trade Imports",
+      "quote": "Reliable shipping from North America to China with perfect documentation. Their tracking systems are top-notch."
     },
     "johan": {
-      "company": "American Reptiles Co.",
-      "quote": "Professional handling and fast delivery to Malaysia from the US. Reptile Global understands the needs of live animal transport."
+      "company": "European Exports Ltd.",
+      "quote": "Professional handling and fast delivery to Malaysia from the US. Xtracargo understands the needs of international shipping."
     },
     "sophie": {
-      "company": "International Gecko Farm",
-      "quote": "Excellent service to Korea and other global markets. Full CITES support and healthy arrivals every time."
+      "company": "International Goods Co.",
+      "quote": "Excellent service to Korea and other global markets. Full customs support and secure deliveries every time."
     }
   },
   "showcase": {
-    "title": "Our Reptile Operations",
-    "description": "Specialized facilities and expert handling for live reptile transport",
-    "handlers": "Expert Reptile Handlers",
+    "title": "Our Cargo Operations",
+    "description": "Specialized facilities and expert handling for international cargo transport",
+    "handlers": "Expert Cargo Handlers",
     "vehicles": "Climate-Controlled Vehicles",
-    "facilities": "Quarantine Facilities",
+    "facilities": "Secure Warehouses",
     "distribution": "Global Distribution Network"
   },
   "about": {
-    "title": "About Reptile Global",
-    "description": "With over 5 years of specialized experience in reptile transportation, we've become a leading expert in safe, legal reptile shipping across the globe. Our network connects breeders worldwide with markets in North America, Europe, Asia, and emerging regions.",
-    "compliance": "We're certified by CITES authorities and maintain the highest standards for live animal welfare and international compliance.",
+    "title": "About Xtracargo",
+    "description": "With over 5 years of specialized experience in cargo transportation, we've become a leading expert in safe, efficient shipping across the globe. Our network connects businesses worldwide with markets in North America, Europe, Asia, and emerging regions.",
+    "compliance": "We're certified by international authorities and maintain the highest standards for cargo safety and international compliance.",
     "experience": "Years Experience",
-    "countries": "Asian Countries",
-    "shipped": "Reptiles Shipped",
-    "certified": "CITES Certified",
-    "certifiedDesc": "Official wildlife trade permits",
+    "countries": "Countries Served",
+    "shipped": "Packages Shipped",
+    "certified": "Customs Certified",
+    "certifiedDesc": "Official trade permits and documentation",
     "climate": "Climate Controlled",
     "climateDesc": "Optimal temperature & humidity",
     "monitoring": "24/7 Monitoring",
-    "monitoringDesc": "Live animal tracking & care",
+    "monitoringDesc": "Real-time cargo tracking & care",
     "rates": "Competitive Rates",
-    "ratesDesc": "Best prices for reptile shipping"
+    "ratesDesc": "Best prices for international shipping"
   },
   "cta": {
-    "title": "Ready to Ship Your Reptiles?",
-    "description": "Connect with global markets through the world's premier reptile transportation specialists.",
+    "title": "Ready to Ship Your Cargo?",
+    "description": "Connect with global markets through the world's premier cargo transportation specialists.",
     "getQuote": "Get Shipping Quote",
-    "email": "email: support@reptileglobal.site"
+    "email": "email: support@xtracargo.com"
   },
   "contact": {
     "hero": {
       "title": "Contact",
-      "subtitle": "Reptile Global",
-      "description": "Get in touch with our reptile transportation experts. We're here to help ship your reptiles safely to global markets worldwide."
+      "subtitle": "Xtracargo",
+      "description": "Get in touch with our cargo transportation experts. We're here to help ship your goods safely to global markets worldwide."
     },
     "form": {
-      "title": "Get a Reptile Shipping Quote",
+      "title": "Get a Cargo Shipping Quote",
       "name": "Full Name",
       "email": "Email Address",
       "phone": "Phone Number",
-      "company": "Breeding Company/Farm",
+      "company": "Company/Business",
       "subject": "Subject",
-      "message": "Tell us about your reptiles, destination, and shipping requirements",
+      "message": "Tell us about your cargo, destination, and shipping requirements",
       "serviceType": "Service Type",
-      "submit": "Get Reptile Shipping Quote",
+      "submit": "Get Cargo Shipping Quote",
       "sending": "Sending...",
-      "success": "Message sent successfully! Our reptile experts will contact you within 24 hours.",
+      "success": "Message sent successfully! Our cargo experts will contact you within 24 hours.",
       "error": "Failed to send message. Please try again or contact us directly.",
       "required": "*"
     },
     "serviceTypes": {
       "general": "General Inquiry",
-      "shipping": "Reptile Shipping Quote",
+      "shipping": "Cargo Shipping Quote",
       "tracking": "Track My Shipment",
-      "documentation": "CITES Documentation",
+      "documentation": "Customs Documentation",
       "emergency": "Emergency Transport",
-      "partnership": "Breeder Partnership"
+      "partnership": "Business Partnership"
     },
     "info": {
-      "title": "Reptile Shipping Experts",
-      "description": "Ready to ship your reptiles globally? Our specialized team handles everything from climate-controlled transport to CITES documentation for safe, legal international shipping.",
+      "title": "Cargo Shipping Experts",
+      "description": "Ready to ship your cargo globally? Our specialized team handles everything from climate-controlled transport to customs documentation for safe, legal international shipping.",
       "quickContact": "Quick Contact",
-      "emergencyTitle": "Emergency Reptile Transport",
-      "emergencyDesc": "For urgent reptile shipments or transport emergencies",
-      "servicesTitle": "Our Reptile Services",
+      "emergencyTitle": "Emergency Cargo Transport",
+      "emergencyDesc": "For urgent cargo shipments or transport emergencies",
+      "servicesTitle": "Our Cargo Services",
       "climateTransport": "Climate-Controlled Transport",
-      "citesDoc": "CITES Documentation",
+      "customsDoc": "Customs Documentation",
       "globalShipping": "Global Shipping",
-      "animalWelfare": "Animal Welfare Priority"
+      "cargoSafety": "Cargo Safety Priority"
     },
     "offices": {
       "title": "Our Global Transport Network",
-      "description": "Strategic locations worldwide for seamless reptile shipping",
+      "description": "Strategic locations worldwide for seamless cargo shipping",
       "newjersey": "100 Corporate Blvd, South Plainfield, NJ 07080, USA",
       "amsterdam": "European Hub, Netherlands",
       "rome": "Central Operations",
@@ -244,29 +245,29 @@
       "hongkong": "China Gateway Office"
     },
     "map": {
-      "title": " Headquarters",
-      "description": "Visit our main reptile facility in New Jersey",
-      "placeholder": "Reptile Transport Hub Map",
+      "title": "Headquarters",
+      "description": "Visit our main cargo facility in New Jersey",
+      "placeholder": "Cargo Transport Hub Map",
       "coming": "Interactive shipping route map coming soon"
     }
   },
   "gallery": {
     "title": "Our Work in Action",
-    "description": "Explore our gallery showcasing reptile transportation, specialized equipment, and successful deliveries across Europe and Asia",
+    "description": "Explore our gallery showcasing cargo transportation, specialized equipment, and successful deliveries across Europe and Asia",
     "categories": {
       "all": "All",
-      "reptiles": "Reptiles",
+      "cargo": "Cargo",
       "equipment": "Equipment",
       "process": "Process"
     },
     "images": {
-      "beardedTransport": "Professional bearded dragon transportation with climate control",
-      "insulatedBox": "Well insulated box for safe reptile transportation",
-      "climateContainers": "State-of-the-art shipping containers with temperature monitoring",
-      "transportSetup": "Specialized boxes for large snake transportation",
-      "documentation": "Complete CITES documentation and health certificates",
-      "packaging": "Professional packaging ensuring animal safety during transport",
-      "lizardCollection": "Various lizard species prepared for international shipping",
+      "cargoTransport": "Professional cargo transportation with climate control",
+      "securePacking": "Secure packaging for safe cargo transportation",
+      "climateContainers": "State-of-the-art shipping containers with monitoring systems",
+      "transportSetup": "Specialized containers for large cargo transportation",
+      "documentation": "Complete customs documentation and shipping certificates",
+      "packaging": "Professional packaging ensuring cargo safety during transport",
+      "cargoCollection": "Various cargo types prepared for international shipping",
       "monitoring": "Real-time monitoring and tracking throughout the journey"
     }
   },
@@ -324,63 +325,63 @@
   "team": {
     "hero": {
       "title": "Meet Our",
-      "titleHighlight": "Reptile Experts",
-      "description": "Passionate professionals dedicated to safe reptile transportation and connecting breeders worldwide with global markets."
+      "titleHighlight": "Logistics Experts",
+      "description": "Passionate professionals dedicated to safe cargo transportation and connecting businesses worldwide with global markets."
     },
     "stats": {
       "teamMembers": "Team Members",
       "countriesServed": "Countries Served",
       "averageExperience": "Years Average Experience",
-      "animalWelfareTrained": "Animal Welfare Trained"
+      "logisticsTrained": "Logistics Trained"
     },
     "leadership": {
       "title": "Leadership Team",
-      "description": "Expert leaders with deep knowledge in reptile care, logistics, and international trade"
+      "description": "Expert leaders with deep knowledge in cargo logistics and international trade"
     },
     "departments": {
       "title": "Our Specialized Teams",
-      "description": "Expert departments working together to ensure safe global reptile transportation",
-      "animalCare": {
-        "title": "Animal Care Team",
-        "description": "Specialized reptile handlers and veterinary technicians ensuring animal welfare"
-      },
+      "description": "Expert departments working together to ensure safe global cargo transportation",
       "logistics": {
-        "title": "Logistics & Transport",
+        "title": "Logistics Team",
+        "description": "Specialized cargo handlers and logistics coordinators ensuring efficient operations"
+      },
+      "transport": {
+        "title": "Transport & Operations",
         "description": "Climate-controlled transport specialists and route coordinators"
       },
-      "climate": {
-        "title": "Climate Technology",
-        "description": "Environmental monitoring and temperature control systems specialists"
+      "technology": {
+        "title": "Technology Systems",
+        "description": "Tracking systems and logistics technology specialists"
       }
     },
     "positions": {
-      "ceo": "Chief Executive Officer & Veterinarian",
+      "ceo": "Chief Executive Officer",
       "operationsDirector": "Operations Director",
-      "asianMarketsDirector": "Asian Markets Director",
+      "globalMarketsDirector": "Global Markets Director",
       "complianceOfficer": "Compliance & Documentation Officer",
-      "leadVeterinarian": "Lead Veterinarian",
-      "seniorReptileHandler": "Senior Reptile Handler",
-      "quarantineSupervisor": "Quarantine Supervisor",
-      "animalWelfareSpecialist": "Animal Welfare Specialist",
+      "logisticsManager": "Logistics Manager",
+      "seniorCargoHandler": "Senior Cargo Handler",
+      "warehouseSupervisor": "Warehouse Supervisor",
+      "qualitySpecialist": "Quality Assurance Specialist",
       "transportManager": "Transport Manager",
-      "routeCoordinator": "Route Coordinator - MENA",
-      "airFreightSpecialist": "Air Freight Specialist",
-      "vehicleFleetManager": "Vehicle Fleet Manager",
-      "climateSystemsEngineer": "Climate Systems Engineer",
-      "environmentalMonitoring": "Environmental Monitoring Specialist",
+      "routeCoordinator": "Route Coordinator",
+      "freightSpecialist": "Freight Specialist",
+      "fleetManager": "Fleet Manager",
+      "systemsEngineer": "Systems Engineer",
+      "trackingSpecialist": "Tracking Specialist",
       "qualityControlTechnician": "Quality Control Technician",
-      "systemsMaintenanceEngineer": "Systems Maintenance Engineer"
+      "maintenanceEngineer": "Maintenance Engineer"
     },
     "bios": {
-      "elena": "With 20+ years in veterinary medicine and reptile care, Elena ensures the highest standards in animal welfare.",
-      "marcus": "Former wildlife transport specialist with expertise in international reptile shipping regulations and logistics.",
-      "liWei": "Based in Singapore, Li Wei manages our Asian operations and maintains relationships with importers across 12 countries.",
-      "sarah": "CITES specialist ensuring all shipments meet international wildlife trade regulations and documentation requirements."
+      "elena": "With 20+ years in logistics and cargo management, Elena ensures the highest standards in cargo safety and efficiency.",
+      "marcus": "Former international shipping specialist with expertise in global cargo regulations and logistics.",
+      "liWei": "Based in Singapore, Li Wei manages our Asian operations and maintains relationships with partners across 12 countries.",
+      "sarah": "Customs specialist ensuring all shipments meet international trade regulations and documentation requirements."
     },
     "joinTeam": {
-      "title": "Join Our Reptile Team",
-      "description": "Passionate about reptiles and logistics? Join our specialized team and help us continue leading the global reptile transportation industry worldwide.",
-      "viewCareers": "View Reptile Careers",
+      "title": "Join Our Logistics Team",
+      "description": "Passionate about logistics and global trade? Join our specialized team and help us continue leading the cargo transportation industry worldwide.",
+      "viewCareers": "View Careers",
       "sendCV": "Send Your CV"
     }
   }
