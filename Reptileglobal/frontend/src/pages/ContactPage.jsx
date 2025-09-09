@@ -82,31 +82,31 @@ const ContactPage = () => {
 
   const offices = [
     {
-      city: "New Jersey, USA",
+      city: "",
       address: t('contact.offices.newjersey'),
       phone: "support@xtracargo.space",
       email: "support@xtracargo.space"
     },
     {
-      city: "Amsterdam",
+      city: "",
       address: t('contact.offices.amsterdam'),
       phone: "support@xtracargo.space",
       email: "support@xtracargo.space"
     },
     {
-      city: "Rome",
+      city: "",
       address: t('contact.offices.rome'),
       phone: "support@xtracargo.space",
       email: "support@xtracargo.space"
     },
     {
-      city: "Singapore",
+      city: "",
       address: t('contact.offices.singapore'),
       phone: "support@xtracargo.space",
       email: "support@xtracargo.space"
     },
     {
-      city: "Hong Kong",
+      city: "",
       address: t('contact.offices.hongkong'),
       phone: "support@xtracargo.space",
       email: "support@xtracargo.space"
