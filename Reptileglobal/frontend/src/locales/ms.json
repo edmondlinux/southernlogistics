@@ -1,0 +1,388 @@
+
+{
+  "nav": {
+    "home": "Laman Utama",
+    "about": "Tentang Kami",
+    "team": "Pasukan",
+    "testimonials": "Testimoni",
+    "contact": "Hubungi",
+    "track": "Jejaki",
+    "myShipments": "Penghantaran Saya",
+    "dashboard": "Papan Pemuka",
+    "logOut": "Log Keluar",
+    "signUp": "Daftar",
+    "login": "Log Masuk",
+    "language": "Bahasa"
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文",
+    "ms": "Bahasa Malaysia",
+    "ko": "한국어",
+    "fr": "Français",
+    "es": "Español",
+    "de": "Deutsch",
+    "nl": "Nederlands"
+  },
+  "common": {
+    "loading": "Memuatkan...",
+    "error": "Ralat",
+    "success": "Berjaya",
+    "cancel": "Batal",
+    "save": "Simpan",
+    "delete": "Padam",
+    "edit": "Edit",
+    "submit": "Hantar",
+    "close": "Tutup"
+  },
+  "auth": {
+    "login": {
+      "title": "Log masuk ke akaun anda",
+      "emailLabel": "Alamat emel",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Kata laluan",
+      "passwordPlaceholder": "••••••••",
+      "loginButton": "Log Masuk",
+      "notMember": "Bukan ahli?",
+      "signUpNow": "Daftar sekarang"
+    },
+    "signup": {
+      "title": "Cipta akaun anda",
+      "nameLabel": "Nama penuh",
+      "namePlaceholder": "Ahmad Ali",
+      "emailLabel": "Alamat emel",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Kata laluan",
+      "passwordPlaceholder": "••••••••",
+      "confirmPasswordLabel": "Sahkan Kata Laluan",
+      "confirmPasswordPlaceholder": "••••••••",
+      "signUpButton": "Daftar",
+      "alreadyMember": "Sudah mempunyai akaun?",
+      "loginHere": "Log masuk di sini"
+    }
+  },
+  "hero": {
+    "title": "Xtracargo",
+    "subtitle": "",
+    "description": "Kami menyediakan pengangkutan global yang selamat, boleh dipercayai, dan cekap untuk semua jenis penghantaran — daripada haiwan hidup hingga kargo berat. Dengan kemampuan logistik seluruh dunia, kami berkhidmat di Amerika Utara, Eropah, Asia, dan seterusnya. Pengangkutan khusus kami memastikan barang anda bergerak dengan selamat dan tepat pada masanya, ke mana-mana sahaja di dunia.",
+    "getQuote": "Dapatkan Sebut Harga",
+    "trackShipment": "Jejaki Penghantaran",
+    "enterTracking": "Masukkan nombor jejak...",
+    "trackNow": "Jejak Sekarang",
+    "tracking": "Menjejaki penghantaran anda..."
+  },
+  "partners": {
+    "title": "Dipercayai oleh Pemimpin Industri",
+    "description": "Kami bekerjasama dengan syarikat logistik terkemuka di seluruh dunia untuk menyediakan penyelesaian pengangkutan yang komprehensif dan liputan global.",
+    "morePartners": "Dan banyak lagi rakan kongsi yang dipercayai di seluruh dunia"
+  },
+  "services": {
+    "title": "Perkhidmatan Kami",
+    "description": "Penyelesaian logistik komprehensif yang disesuaikan untuk memenuhi keperluan penghantaran anda",
+    "climateTransport": {
+      "title": "Pengangkutan Kawalan Iklim",
+      "description": "Kenderaan kawalan suhu dan kelembapan memastikan keadaan optimum untuk pengangkutan haiwan hidup dan kargo sensitif."
+    },
+    "globalShipping": {
+      "title": "Rangkaian Penghantaran Global",
+      "description": "Penghantaran antarabangsa ke Amerika Utara, Eropah, Asia, dan seterusnya dengan dokumentasi penuh dan pematuhan."
+    },
+    "quarantine": {
+      "title": "Kemudahan Penyimpanan Selamat",
+      "description": "Kemudahan penyimpanan dan penahanan yang diperakui memenuhi standard keselamatan dan pengendalian antarabangsa."
+    },
+    "doorToDoor": {
+      "title": "Perkhidmatan Pintu ke Pintu",
+      "description": "Perkhidmatan pengambilan dan penghantaran lengkap dari asal ke destinasi dengan pengendalian pakar."
+    },
+    "breederNetwork": {
+      "title": "Rangkaian Rakan Kongsi Khusus",
+      "description": "Menghubungkan perniagaan dan individu di seluruh dunia melalui rangkaian logistik global yang dipercayai."
+    },
+    "cites": {
+      "title": "Dokumentasi & Pematuhan",
+      "description": "Pengendalian permit penuh dan dokumentasi undang-undang untuk perdagangan dan pengangkutan antarabangsa."
+    }
+  },
+  "features": {
+    "title": "Mengapa Pilih Kami",
+    "description": "Rasai perbezaan dengan penyelesaian logistik terdepan industri kami",
+    "express": {
+      "title": "Penghantaran Ekspres",
+      "description": "Penghantaran keutamaan dengan masa transit minimum untuk penghantaran sensitif masa"
+    },
+    "tracking": {
+      "title": "Jejakan Penghantaran Langsung",
+      "description": "Pemantauan masa nyata lokasi, suhu, dan keadaan"
+    },
+    "insurance": {
+      "title": "Insurans Komprehensif",
+      "description": "Perlindungan penuh dan protokol pengendalian selamat untuk semua penghantaran"
+    },
+    "network": {
+      "title": "Rangkaian Global",
+      "description": "Laluan khusus meliputi Amerika Utara, Eropah, Asia, dan pasaran baru muncul di seluruh dunia"
+    }
+  },
+  "process": {
+    "title": "Bagaimana Ia Berfungsi",
+    "description": "Langkah mudah untuk memulakan penghantaran anda",
+    "consultation": {
+      "title": "Perundingan",
+      "description": "Hubungi kami untuk perundingan logistik dan keperluan pengangkutan"
+    },
+    "pickup": {
+      "title": "Pengambilan Selamat",
+      "description": "Pengumpulan profesional dengan bekas yang sesuai dan penyediaan"
+    },
+    "transport": {
+      "title": "Pengangkutan Selamat",
+      "description": "Pengangkutan yang boleh dipercayai melalui rangkaian penghantaran global kami"
+    },
+    "delivery": {
+      "title": "Penghantaran Tepat Masa",
+      "description": "Ketibaan selamat dengan dokumentasi penuh dan sokongan"
+    }
+  },
+  "testimonials": {
+    "title": "Apa Yang Pelanggan Kami Katakan",
+    "description": "Dipercayai oleh perniagaan dan individu di seluruh dunia",
+    "marco": {
+      "company": "Global Trade Partners",
+      "quote": "Xtracargo telah mengubah cara kami memindahkan barang secara antarabangsa. Setiap penghantaran tiba dengan selamat dan tepat pada jadual. Perkhidmatan profesional menyeluruh."
+    },
+    "lisa": {
+      "company": "Asia Logistics Group",
+      "quote": "Penghantaran yang boleh dipercayai dari Amerika Utara ke Asia dengan dokumentasi yang sempurna. Sistem pengangkutan mereka adalah terbaik."
+    },
+    "johan": {
+      "company": "American Freight Co.",
+      "quote": "Pengendalian profesional dan penghantaran pantas merentasi benua. Xtracargo benar-benar memahami keperluan logistik global."
+    },
+    "sophie": {
+      "company": "European Distribution Hub",
+      "quote": "Perkhidmatan cemerlang ke Asia dan pasaran lain. Sokongan pematuhan penuh dan penghantaran yang boleh dipercayai setiap kali."
+    }
+  },
+  "showcase": {
+    "title": "Operasi Logistik Kami",
+    "description": "Kemudahan khusus dan pengendalian pakar untuk semua jenis penghantaran",
+    "handlers": "Pengendali Kargo Pakar",
+    "vehicles": "Kenderaan Pengangkutan Moden",
+    "facilities": "Kemudahan Selamat",
+    "distribution": "Rangkaian Pengedaran Global"
+  },
+  "about": {
+    "title": "Tentang Xtracargo",
+    "description": "Dengan pengalaman khusus bertahun-tahun dalam pengangkutan global, kami telah menjadi pakar yang dipercayai dalam penghantaran yang selamat, boleh dipercayai, dan sah di seluruh dunia. Rangkaian kami menghubungkan perniagaan dan individu ke pasaran di Amerika Utara, Eropah, Asia, dan seterusnya.",
+    "compliance": "Kami diperakui oleh pihak berkuasa antarabangsa dan mengekalkan standard tertinggi untuk keselamatan pengangkutan dan pematuhan global.",
+    "experience": "Tahun Pengalaman",
+    "countries": "Negara Dilayani",
+    "shipped": "Penghantaran Dihantar",
+    "certified": "Pematuhan Diperakui",
+    "certifiedDesc": "Permit perdagangan dan pengangkutan rasmi",
+    "climate": "Kawalan Iklim",
+    "climateDesc": "Keadaan optimum untuk kargo sensitif",
+    "monitoring": "Pemantauan 24/7",
+    "monitoringDesc": "Jejakan langsung dan penjagaan kargo",
+    "rates": "Kadar Kompetitif",
+    "ratesDesc": "Harga terbaik untuk penghantaran global"
+  },
+  "cta": {
+    "title": "Bersedia untuk Menghantar dengan Xtracargo?",
+    "description": "Berhubung dengan pasaran global melalui pakar pengangkutan dan logistik terkemuka dunia.",
+    "getQuote": "Dapatkan Sebut Harga Penghantaran",
+    "email": "emel: support@xtracargo.site"
+  },
+  "contact": {
+    "hero": {
+      "title": "Hubungi",
+      "subtitle": "Xtracargo",
+      "description": "Berhubung dengan pakar logistik kami. Kami di sini untuk membantu memindahkan penghantaran anda dengan selamat ke destinasi global."
+    },
+    "form": {
+      "title": "Dapatkan Sebut Harga Penghantaran",
+      "name": "Nama Penuh",
+      "email": "Alamat Emel",
+      "phone": "Nombor Telefon",
+      "company": "Syarikat/Organisasi",
+      "subject": "Subjek",
+      "message": "Beritahu kami tentang kargo, destinasi, dan keperluan penghantaran anda",
+      "serviceType": "Jenis Perkhidmatan",
+      "submit": "Dapatkan Sebut Harga Penghantaran",
+      "sending": "Menghantar...",
+      "success": "Mesej berjaya dihantar! Pakar logistik kami akan menghubungi anda dalam masa 24 jam.",
+      "error": "Gagal menghantar mesej. Sila cuba lagi atau hubungi kami secara langsung.",
+      "required": "*"
+    },
+    "serviceTypes": {
+      "general": "Pertanyaan Am",
+      "shipping": "Sebut Harga Penghantaran",
+      "tracking": "Jejaki Penghantaran Saya",
+      "documentation": "Dokumentasi & Pematuhan",
+      "emergency": "Pengangkutan Kecemasan",
+      "partnership": "Pertanyaan Perkongsian"
+    },
+    "info": {
+      "title": "Pakar Logistik Global",
+      "description": "Bersedia untuk memindahkan barang anda ke seluruh dunia? Pasukan khusus kami mengendalikan segala-galanya dari pengangkutan kargo hingga dokumentasi pematuhan untuk penghantaran antarabangsa yang selamat dan sah.",
+      "quickContact": "Hubungan Pantas",
+      "emergencyTitle": "Pengangkutan Kecemasan",
+      "emergencyDesc": "Untuk penghantaran mendesak atau kecemasan pengangkutan",
+      "servicesTitle": "Perkhidmatan Logistik Kami",
+      "climateTransport": "Pengangkutan Kawalan Iklim",
+      "citesDoc": "Dokumentasi & Pematuhan",
+      "globalShipping": "Penghantaran Global",
+      "animalWelfare": "Keutamaan Keselamatan Kargo"
+    },
+    "offices": {
+      "title": "Rangkaian Pengangkutan Global Kami",
+      "description": "Hab strategik di seluruh dunia untuk penghantaran yang lancar",
+      "newjersey": "100 Corporate Blvd, South Plainfield, NJ 07080, USA",
+      "amsterdam": "Hab Eropah, Belanda",
+      "rome": "Operasi Pusat",
+      "singapore": "Pusat Operasi Asia",
+      "hongkong": "Pejabat Pintu Masuk China"
+    },
+    "map": {
+      "title": "Ibu Pejabat",
+      "description": "Lawati kemudahan logistik utama kami di New Jersey",
+      "placeholder": "Peta Hab Pengangkutan",
+      "coming": "Peta laluan penghantaran interaktif akan datang tidak lama lagi"
+    }
+  },
+  "gallery": {
+    "title": "Kerja Kami dalam Tindakan",
+    "description": "Terokai galeri kami yang mempamerkan pengangkutan, peralatan khusus, dan penghantaran berjaya di seluruh dunia",
+    "categories": {
+      "all": "Semua",
+      "reptiles": "Haiwan Hidup",
+      "equipment": "Peralatan",
+      "process": "Proses"
+    },
+    "images": {
+      "beardedTransport": "Pengangkutan haiwan hidup khusus dengan kawalan iklim",
+      "insulatedBox": "Kotak terlindung dengan baik untuk penghantaran selamat",
+      "climateContainers": "Bekas penghantaran canggih dengan pemantauan suhu",
+      "transportSetup": "Pembungkusan khas untuk kargo besar dan mudah pecah",
+      "documentation": "Dokumentasi lengkap dan sijil pematuhan",
+      "packaging": "Pembungkusan profesional memastikan keselamatan semasa pengangkutan",
+      "lizardCollection": "Contoh penghantaran haiwan hidup yang disediakan untuk pengangkutan",
+      "monitoring": "Pemantauan dan jejakan masa nyata sepanjang perjalanan"
+    }
+  },
+  "contactForm": {
+    "title": "Berhubung",
+    "description": "Bersedia untuk menghantar? Hubungi kami untuk sebut harga peribadi",
+    "name": "Nama",
+    "email": "Emel",
+    "subject": "Subjek",
+    "message": "Mesej",
+    "send": "Hantar Mesej",
+    "sending": "Menghantar...",
+    "success": "Mesej berjaya dihantar! Kami akan membalas anda tidak lama lagi.",
+    "error": "Gagal menghantar mesej. Sila cuba lagi.",
+    "contactInfo": "Maklumat Hubungan",
+    "phone": "Telefon",
+    "address": "Alamat",
+    "googleMap": "Peta Google"
+  },
+  "tracking": {
+    "title": "Jejaki Penghantaran Anda",
+    "subtitle": "Masukkan nombor jejak anda untuk mendapat kemas kini masa nyata",
+    "currentLocation": "Lokasi Semasa",
+    "estimatedDelivery": "Anggaran Penghantaran",
+    "history": "Sejarah Jejakan",
+    "notFound": "Tiada penghantaran ditemui",
+    "checkNumber": "Sila semak nombor jejak anda dan cuba lagi",
+    "readyToTrack": "Bersedia untuk jejak",
+    "enterNumber": "Masukkan nombor jejak di atas untuk mula",
+    "trackingNumber": "Nombor Jejakan",
+    "clearResults": "← Kosongkan Hasil",
+    "downloadPDF": "Muat Turun PDF",
+    "from": "Dari",
+    "to": "Ke",
+    "packageDetails": "Butiran Pakej",
+    "serviceDetails": "Butiran Perkhidmatan"
+  },
+  "shipping": {
+    "from": "Dari",
+    "to": "Ke",
+    "packageDetails": "Butiran Pakej",
+    "serviceDetails": "Butiran Perkhidmatan",
+    "description": "Penerangan",
+    "category": "Kategori",
+    "weight": "Berat",
+    "value": "Nilai",
+    "dimensions": "Dimensi",
+    "fragile": "Mudah Pecah",
+    "priority": "Keutamaan",
+    "cost": "Kos Penghantaran",
+    "date": "Tarikh Penghantaran",
+    "signatureRequired": "Tandatangan Diperlukan",
+    "specialInstructions": "Arahan Khas"
+  },
+  "team": {
+    "hero": {
+      "title": "Temui Kami",
+      "titleHighlight": "Pakar Logistik",
+      "description": "Profesional berdedikasi untuk pengangkutan global yang selamat dan cekap, menghubungkan perniagaan dan individu di seluruh dunia."
+    },
+    "stats": {
+      "teamMembers": "Ahli Pasukan",
+      "countriesServed": "Negara Dilayani",
+      "averageExperience": "Tahun Purata Pengalaman",
+      "animalWelfareTrained": "Dilatih Pengendalian Kargo Khusus"
+    },
+    "leadership": {
+      "title": "Pasukan Kepimpinan",
+      "description": "Pemimpin pakar dengan pengetahuan mendalam dalam logistik, pematuhan, dan perdagangan antarabangsa"
+    },
+    "departments": {
+      "title": "Pasukan Khusus Kami",
+      "description": "Jabatan pakar bekerjasama untuk memastikan pengangkutan yang selamat dan cekap",
+      "animalCare": {
+        "title": "Pasukan Pengangkutan Haiwan Hidup",
+        "description": "Pengendali khusus dan juruteknik veterinar memastikan kebajikan haiwan hidup"
+      },
+      "logistics": {
+        "title": "Logistik & Pengangkutan",
+        "description": "Pakar pengangkutan kargo dan penyelaras laluan global"
+      },
+      "climate": {
+        "title": "Teknologi Iklim",
+        "description": "Pakar sistem pemantauan persekitaran dan kawalan suhu"
+      }
+    },
+    "positions": {
+      "ceo": "Ketua Pegawai Eksekutif",
+      "operationsDirector": "Pengarah Operasi",
+      "asianMarketsDirector": "Pengarah Pasaran Asia",
+      "complianceOfficer": "Pegawai Pematuhan & Dokumentasi",
+      "leadVeterinarian": "Veterinar Utama (Pengangkutan Haiwan Hidup)",
+      "seniorReptileHandler": "Pengendali Haiwan Hidup Kanan",
+      "quarantineSupervisor": "Penyelia Penyimpanan & Kuarantin",
+      "animalWelfareSpecialist": "Pakar Kebajikan Haiwan",
+      "transportManager": "Pengurus Pengangkutan",
+      "routeCoordinator": "Penyelaras Laluan - MENA",
+      "airFreightSpecialist": "Pakar Kargo Udara",
+      "vehicleFleetManager": "Pengurus Armada Kenderaan",
+      "climateSystemsEngineer": "Jurutera Sistem Iklim",
+      "environmentalMonitoring": "Pakar Pemantauan Persekitaran",
+      "qualityControlTechnician": "Juruteknik Kawalan Kualiti",
+      "systemsMaintenanceEngineer": "Jurutera Penyelenggaraan Sistem"
+    },
+    "bios": {
+      "elena": "Dengan pengalaman 20+ tahun dalam logistik dan penjagaan veterinar, Elena memastikan standard tertinggi dalam kebajikan haiwan dan kargo.",
+      "marcus": "Bekas pakar pengangkutan kargo dengan kepakaran dalam peraturan penghantaran antarabangsa dan logistik.",
+      "liWei": "Berpangkalan di Singapura, Li Wei menguruskan operasi Asia kami dan mengekalkan hubungan dengan rakan kongsi di 12 negara.",
+      "sarah": "Pakar dokumentasi memastikan semua penghantaran memenuhi peraturan perdagangan antarabangsa dan keperluan pematuhan."
+    },
+    "joinTeam": {
+      "title": "Sertai Pasukan Logistik Kami",
+      "description": "Berminat dengan logistik dan perdagangan global? Sertai pasukan khusus kami dan bantu kami terus memimpin industri pengangkutan global.",
+      "viewCareers": "Lihat Kerjaya",
+      "sendCV": "Hantar Resume Anda"
+    }
+  }
+}

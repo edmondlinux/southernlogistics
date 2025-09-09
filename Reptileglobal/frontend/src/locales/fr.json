@@ -1,0 +1,388 @@
+
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "team": "Équipe",
+    "testimonials": "Témoignages",
+    "contact": "Contact",
+    "track": "Suivi",
+    "myShipments": "Mes Expéditions",
+    "dashboard": "Tableau de bord",
+    "logOut": "Déconnexion",
+    "signUp": "S'inscrire",
+    "login": "Connexion",
+    "language": "Langue"
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文",
+    "ms": "Bahasa Malaysia",
+    "ko": "한국어",
+    "fr": "Français",
+    "es": "Español",
+    "de": "Deutsch",
+    "nl": "Nederlands"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "submit": "Soumettre",
+    "close": "Fermer"
+  },
+  "auth": {
+    "login": {
+      "title": "Se connecter à votre compte",
+      "emailLabel": "Adresse e-mail",
+      "emailPlaceholder": "vous@exemple.com",
+      "passwordLabel": "Mot de passe",
+      "passwordPlaceholder": "••••••••",
+      "loginButton": "Connexion",
+      "notMember": "Pas encore membre ?",
+      "signUpNow": "S'inscrire maintenant"
+    },
+    "signup": {
+      "title": "Créer votre compte",
+      "nameLabel": "Nom complet",
+      "namePlaceholder": "Jean Dupont",
+      "emailLabel": "Adresse e-mail",
+      "emailPlaceholder": "vous@exemple.com",
+      "passwordLabel": "Mot de passe",
+      "passwordPlaceholder": "••••••••",
+      "confirmPasswordLabel": "Confirmer le mot de passe",
+      "confirmPasswordPlaceholder": "••••••••",
+      "signUpButton": "S'inscrire",
+      "alreadyMember": "Déjà un compte ?",
+      "loginHere": "Se connecter ici"
+    }
+  },
+  "hero": {
+    "title": "Xtracargo",
+    "subtitle": "",
+    "description": "Nous offrons un transport mondial sûr, fiable et efficace pour tous types d'expéditions — des animaux vivants aux cargaisons lourdes. Avec des capacités logistiques mondiales, nous desservons l'Amérique du Nord, l'Europe, l'Asie et au-delà. Notre transport spécialisé garantit que vos marchandises voyagent en toute sécurité et à temps, partout dans le monde.",
+    "getQuote": "Obtenir un devis",
+    "trackShipment": "Suivre l'expédition",
+    "enterTracking": "Entrez le numéro de suivi...",
+    "trackNow": "Suivre maintenant",
+    "tracking": "Suivi de votre expédition..."
+  },
+  "partners": {
+    "title": "Approuvé par les leaders de l'industrie",
+    "description": "Nous nous associons avec les principales entreprises logistiques mondiales pour offrir des solutions de transport complètes et une couverture mondiale.",
+    "morePartners": "Et beaucoup d'autres partenaires de confiance à travers le monde"
+  },
+  "services": {
+    "title": "Nos Services",
+    "description": "Solutions logistiques complètes adaptées pour répondre à vos besoins d'expédition",
+    "climateTransport": {
+      "title": "Transport Climatisé",
+      "description": "Véhicules à température et humidité contrôlées garantissant des conditions optimales pour le transport d'animaux vivants et de cargaisons sensibles."
+    },
+    "globalShipping": {
+      "title": "Réseau d'Expédition Mondial",
+      "description": "Expédition internationale vers l'Amérique du Nord, l'Europe, l'Asie et au-delà avec documentation complète et conformité."
+    },
+    "quarantine": {
+      "title": "Installations de Stockage Sécurisées",
+      "description": "Installations de stockage et de détention certifiées répondant aux normes internationales de sécurité et de manipulation."
+    },
+    "doorToDoor": {
+      "title": "Service Porte-à-Porte",
+      "description": "Service complet de collecte et livraison de l'origine à la destination avec manipulation experte."
+    },
+    "breederNetwork": {
+      "title": "Réseau de Partenaires Spécialisés",
+      "description": "Connecter les entreprises et les particuliers dans le monde entier grâce à notre réseau logistique mondial de confiance."
+    },
+    "cites": {
+      "title": "Documentation et Conformité",
+      "description": "Gestion complète des permis et documentation légale pour le commerce et transport internationaux."
+    }
+  },
+  "features": {
+    "title": "Pourquoi nous choisir",
+    "description": "Découvrez la différence avec nos solutions logistiques leaders de l'industrie",
+    "express": {
+      "title": "Livraison Express",
+      "description": "Expédition prioritaire avec des temps de transit minimaux pour les expéditions urgentes"
+    },
+    "tracking": {
+      "title": "Suivi d'Expédition en Direct",
+      "description": "Surveillance en temps réel de l'emplacement, température et conditions"
+    },
+    "insurance": {
+      "title": "Assurance Complète",
+      "description": "Couverture complète et protocoles de manipulation sécurisée pour toutes les expéditions"
+    },
+    "network": {
+      "title": "Réseau Mondial",
+      "description": "Routes spécialisées couvrant l'Amérique du Nord, l'Europe, l'Asie et les marchés émergents mondiaux"
+    }
+  },
+  "process": {
+    "title": "Comment ça fonctionne",
+    "description": "Étapes simples pour faire bouger votre expédition",
+    "consultation": {
+      "title": "Consultation",
+      "description": "Contactez-nous pour une consultation logistique et les exigences de transport"
+    },
+    "pickup": {
+      "title": "Collecte Sécurisée",
+      "description": "Collecte professionnelle avec conteneurs appropriés et préparation"
+    },
+    "transport": {
+      "title": "Transport Sûr",
+      "description": "Transport fiable à travers notre réseau d'expédition mondial"
+    },
+    "delivery": {
+      "title": "Livraison Ponctuelle",
+      "description": "Arrivée sécurisée avec documentation complète et support"
+    }
+  },
+  "testimonials": {
+    "title": "Ce que disent nos clients",
+    "description": "Approuvé par les entreprises et particuliers du monde entier",
+    "marco": {
+      "company": "Global Trade Partners",
+      "quote": "Xtracargo a transformé la façon dont nous déplaçons les marchandises internationalement. Chaque expédition arrive en sécurité et à l'heure. Service professionnel partout."
+    },
+    "lisa": {
+      "company": "Asia Logistics Group",
+      "quote": "Expédition fiable de l'Amérique du Nord vers l'Asie avec documentation parfaite. Leurs systèmes de transport sont de premier ordre."
+    },
+    "johan": {
+      "company": "American Freight Co.",
+      "quote": "Manipulation professionnelle et livraison rapide à travers les continents. Xtracargo comprend vraiment les besoins de la logistique mondiale."
+    },
+    "sophie": {
+      "company": "European Distribution Hub",
+      "quote": "Excellent service vers l'Asie et autres marchés. Support de conformité complet et livraisons fiables à chaque fois."
+    }
+  },
+  "showcase": {
+    "title": "Nos Opérations Logistiques",
+    "description": "Installations spécialisées et manipulation experte pour tous types d'expéditions",
+    "handlers": "Manutentionnaires de Fret Experts",
+    "vehicles": "Véhicules de Transport Modernes",
+    "facilities": "Installations Sécurisées",
+    "distribution": "Réseau de Distribution Mondial"
+  },
+  "about": {
+    "title": "À propos d'Xtracargo",
+    "description": "Avec des années d'expérience spécialisée dans le transport mondial, nous sommes devenus un expert de confiance en expédition sûre, fiable et légale dans le monde entier. Notre réseau connecte les entreprises et particuliers aux marchés en Amérique du Nord, Europe, Asie et au-delà.",
+    "compliance": "Nous sommes certifiés par les autorités internationales et maintenons les plus hauts standards pour la sécurité du transport et la conformité mondiale.",
+    "experience": "Années d'Expérience",
+    "countries": "Pays Desservis",
+    "shipped": "Expéditions Livrées",
+    "certified": "Conformité Certifiée",
+    "certifiedDesc": "Permis officiels de commerce et transport",
+    "climate": "Climatisé",
+    "climateDesc": "Conditions optimales pour cargaisons sensibles",
+    "monitoring": "Surveillance 24/7",
+    "monitoringDesc": "Suivi en direct et soins du fret",
+    "rates": "Tarifs Compétitifs",
+    "ratesDesc": "Meilleurs prix pour l'expédition mondiale"
+  },
+  "cta": {
+    "title": "Prêt à expédier avec Xtracargo ?",
+    "description": "Connectez-vous aux marchés mondiaux grâce aux spécialistes du transport et de la logistique de premier plan mondial.",
+    "getQuote": "Obtenir un Devis d'Expédition",
+    "email": "e-mail : support@xtracargo.site"
+  },
+  "contact": {
+    "hero": {
+      "title": "Contact",
+      "subtitle": "Xtracargo",
+      "description": "Prenez contact avec nos experts en logistique. Nous sommes là pour aider à déplacer vos expéditions en toute sécurité vers des destinations mondiales."
+    },
+    "form": {
+      "title": "Obtenir un Devis d'Expédition",
+      "name": "Nom Complet",
+      "email": "Adresse E-mail",
+      "phone": "Numéro de Téléphone",
+      "company": "Entreprise/Organisation",
+      "subject": "Sujet",
+      "message": "Parlez-nous de votre cargaison, destination et exigences d'expédition",
+      "serviceType": "Type de Service",
+      "submit": "Obtenir un Devis d'Expédition",
+      "sending": "Envoi...",
+      "success": "Message envoyé avec succès ! Nos experts en logistique vous contacteront dans les 24 heures.",
+      "error": "Échec de l'envoi du message. Veuillez réessayer ou nous contacter directement.",
+      "required": "*"
+    },
+    "serviceTypes": {
+      "general": "Demande Générale",
+      "shipping": "Devis d'Expédition",
+      "tracking": "Suivre Mon Expédition",
+      "documentation": "Documentation et Conformité",
+      "emergency": "Transport d'Urgence",
+      "partnership": "Demande de Partenariat"
+    },
+    "info": {
+      "title": "Experts en Logistique Mondiale",
+      "description": "Prêt à déplacer vos marchandises dans le monde entier ? Notre équipe spécialisée gère tout depuis le transport de fret jusqu'à la documentation de conformité pour une expédition internationale sûre et légale.",
+      "quickContact": "Contact Rapide",
+      "emergencyTitle": "Transport d'Urgence",
+      "emergencyDesc": "Pour les expéditions urgentes ou urgences de transport",
+      "servicesTitle": "Nos Services Logistiques",
+      "climateTransport": "Transport Climatisé",
+      "citesDoc": "Documentation et Conformité",
+      "globalShipping": "Expédition Mondiale",
+      "animalWelfare": "Priorité Sécurité du Fret"
+    },
+    "offices": {
+      "title": "Notre Réseau de Transport Mondial",
+      "description": "Hubs stratégiques dans le monde entier pour une expédition fluide",
+      "newjersey": "100 Corporate Blvd, South Plainfield, NJ 07080, USA",
+      "amsterdam": "Hub Européen, Pays-Bas",
+      "rome": "Opérations Centrales",
+      "singapore": "Centre d'Opérations Asiatiques",
+      "hongkong": "Bureau Passerelle Chine"
+    },
+    "map": {
+      "title": "Siège Social",
+      "description": "Visitez notre principale installation logistique au New Jersey",
+      "placeholder": "Carte du Hub de Transport",
+      "coming": "Carte interactive des routes d'expédition bientôt disponible"
+    }
+  },
+  "gallery": {
+    "title": "Notre Travail en Action",
+    "description": "Explorez notre galerie présentant le transport, équipements spécialisés et livraisons réussies à travers le monde",
+    "categories": {
+      "all": "Tout",
+      "reptiles": "Animaux Vivants",
+      "equipment": "Équipement",
+      "process": "Processus"
+    },
+    "images": {
+      "beardedTransport": "Transport d'animaux vivants spécialisé avec contrôle climatique",
+      "insulatedBox": "Boîte bien isolée pour expédition sécurisée",
+      "climateContainers": "Conteneurs d'expédition avancés avec surveillance de température",
+      "transportSetup": "Emballage personnalisé pour fret volumineux et fragile",
+      "documentation": "Documentation complète et certificats de conformité",
+      "packaging": "Emballage professionnel garantissant la sécurité pendant le transport",
+      "lizardCollection": "Exemple d'expédition d'animaux vivants préparée pour transport",
+      "monitoring": "Surveillance et suivi en temps réel tout au long du voyage"
+    }
+  },
+  "contactForm": {
+    "title": "Prendre Contact",
+    "description": "Prêt à expédier ? Contactez-nous pour un devis personnalisé",
+    "name": "Nom",
+    "email": "E-mail",
+    "subject": "Sujet",
+    "message": "Message",
+    "send": "Envoyer le Message",
+    "sending": "Envoi...",
+    "success": "Message envoyé avec succès ! Nous vous recontacterons bientôt.",
+    "error": "Échec de l'envoi du message. Veuillez réessayer.",
+    "contactInfo": "Informations de Contact",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "googleMap": "Carte Google"
+  },
+  "tracking": {
+    "title": "Suivre Votre Expédition",
+    "subtitle": "Entrez votre numéro de suivi pour obtenir des mises à jour en temps réel",
+    "currentLocation": "Emplacement Actuel",
+    "estimatedDelivery": "Livraison Estimée",
+    "history": "Historique de Suivi",
+    "notFound": "Aucune expédition trouvée",
+    "checkNumber": "Veuillez vérifier votre numéro de suivi et réessayer",
+    "readyToTrack": "Prêt à suivre",
+    "enterNumber": "Entrez un numéro de suivi ci-dessus pour commencer",
+    "trackingNumber": "Numéro de Suivi",
+    "clearResults": "← Effacer les Résultats",
+    "downloadPDF": "Télécharger PDF",
+    "from": "De",
+    "to": "Vers",
+    "packageDetails": "Détails du Colis",
+    "serviceDetails": "Détails du Service"
+  },
+  "shipping": {
+    "from": "De",
+    "to": "Vers",
+    "packageDetails": "Détails du Colis",
+    "serviceDetails": "Détails du Service",
+    "description": "Description",
+    "category": "Catégorie",
+    "weight": "Poids",
+    "value": "Valeur",
+    "dimensions": "Dimensions",
+    "fragile": "Fragile",
+    "priority": "Priorité",
+    "cost": "Coût d'Expédition",
+    "date": "Date d'Expédition",
+    "signatureRequired": "Signature Requise",
+    "specialInstructions": "Instructions Spéciales"
+  },
+  "team": {
+    "hero": {
+      "title": "Rencontrez Nos",
+      "titleHighlight": "Experts en Logistique",
+      "description": "Professionnels passionnés dédiés au transport mondial sûr et efficace, connectant entreprises et particuliers dans le monde entier."
+    },
+    "stats": {
+      "teamMembers": "Membres de l'Équipe",
+      "countriesServed": "Pays Desservis",
+      "averageExperience": "Années d'Expérience Moyenne",
+      "animalWelfareTrained": "Formés à la Manipulation Spécialisée du Fret"
+    },
+    "leadership": {
+      "title": "Équipe Dirigeante",
+      "description": "Leaders experts avec une connaissance approfondie en logistique, conformité et commerce international"
+    },
+    "departments": {
+      "title": "Nos Équipes Spécialisées",
+      "description": "Départements experts travaillant ensemble pour assurer un transport sûr et efficace",
+      "animalCare": {
+        "title": "Équipe de Transport d'Animaux Vivants",
+        "description": "Manipulateurs spécialisés et techniciens vétérinaires assurant le bien-être des animaux vivants"
+      },
+      "logistics": {
+        "title": "Logistique et Transport",
+        "description": "Spécialistes du transport de fret et coordinateurs de routes mondiales"
+      },
+      "climate": {
+        "title": "Technologie Climatique",
+        "description": "Spécialistes des systèmes de surveillance environnementale et de contrôle de température"
+      }
+    },
+    "positions": {
+      "ceo": "Directeur Général",
+      "operationsDirector": "Directeur des Opérations",
+      "asianMarketsDirector": "Directeur des Marchés Asiatiques",
+      "complianceOfficer": "Responsable Conformité et Documentation",
+      "leadVeterinarian": "Vétérinaire Principal (Transport d'Animaux Vivants)",
+      "seniorReptileHandler": "Manipulateur d'Animaux Vivants Senior",
+      "quarantineSupervisor": "Superviseur Stockage et Quarantaine",
+      "animalWelfareSpecialist": "Spécialiste du Bien-être Animal",
+      "transportManager": "Gestionnaire de Transport",
+      "routeCoordinator": "Coordinateur de Route - MENA",
+      "airFreightSpecialist": "Spécialiste du Fret Aérien",
+      "vehicleFleetManager": "Gestionnaire de Parc de Véhicules",
+      "climateSystemsEngineer": "Ingénieur Systèmes Climatiques",
+      "environmentalMonitoring": "Spécialiste Surveillance Environnementale",
+      "qualityControlTechnician": "Technicien Contrôle Qualité",
+      "systemsMaintenanceEngineer": "Ingénieur Maintenance Systèmes"
+    },
+    "bios": {
+      "elena": "Avec plus de 20 ans en logistique et soins vétérinaires, Elena assure les plus hauts standards dans le bien-être animal et du fret.",
+      "marcus": "Ancien spécialiste du transport de fret avec expertise en réglementations d'expédition internationale et logistique.",
+      "liWei": "Basé à Singapour, Li Wei gère nos opérations asiatiques et maintient les relations avec les partenaires dans 12 pays.",
+      "sarah": "Spécialiste en documentation s'assurant que toutes les expéditions respectent les réglementations commerciales internationales et exigences de conformité."
+    },
+    "joinTeam": {
+      "title": "Rejoignez Notre Équipe Logistique",
+      "description": "Passionné par la logistique et le commerce mondial ? Rejoignez notre équipe spécialisée et aidez-nous à continuer de diriger l'industrie du transport mondial.",
+      "viewCareers": "Voir les Carrières",
+      "sendCV": "Envoyer Votre CV"
+    }
+  }
+}
