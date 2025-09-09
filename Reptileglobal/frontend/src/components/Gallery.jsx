@@ -11,42 +11,42 @@ const Gallery = () => {
 	const galleryImages = [
 		{
 			id: 1,
-			url: "https://cdn.reptile.guide/wp-content/uploads/2019/01/Bearded-Dragon-Buckled-Up-In-Car.jpg",
-			title: "Bearded Dragon Transport",
+			url: "https://cdn-jpkmj.nitrocdn.com/aiGbikfmRGiXAaynUTAnHzVVlmYLrkCm/assets/images/optimized/rev-73fd52b/citizenshipper.com/blog/wp-content/uploads/2023/03/49440632_dog-sitting-next-to-an-open-plastic-carrier-768x511.jpg",
+			title: "Live animal transport",
 			category: t('gallery.categories.reptiles'),
 			description: t('gallery.images.beardedTransport')
 		},
 		{
 			id: 2,
-			url: "https://shipyourreptiles.com/products/213/213_2023_05_24_04_22_10.png",
-			title: "Insulated Box",
+			url: "https://www.fedex.com/content/dam/fedex/us-united-states/freight/images/2021/POD-Crates-Types-Pallets-727x463.jpg",
+			title: "Insulated shipping crate",
 			category: t('gallery.categories.reptiles'),
 			description: t('gallery.images.insulatedBox')
 		},
 		{
 			id: 3,
-			url: "https://cdn.machineseeker.com/data/listing/img/vga/ms/30/41/16095703-01.jpg?v=1714742205",
+			url: "https://cdn.machineseeker.com/data/listing/img/vga/ms/30/41/16095703-01.jpg",
 			title: "Climate-Controlled Containers",
 			category: t('gallery.categories.equipment'),
 			description: t('gallery.images.climateContainers')
 		},
 		{
 			id: 4,
-			url: "https://64.media.tumblr.com/3eac0b6bef44e51769fabcc610dcd1e5/tumblr_inline_pflhkk6jbS1qml5jd_1280.jpg",
-			title: "Transport Setup",
-			category: t('gallery.categories.reptiles'),
+			url: "https://www.thecooperativelogisticsnetwork.com/blog/wp-content/uploads/2022/06/aerial-view-container-cargo-ship-sea_335224-735.webp",
+			title: "Sea Transport Setup",
+			category: t('gallery.categories.equipment'),
 			description: t('gallery.images.transportSetup')
 		},
 		{
 			id: 5,
-			url: "https://preview.redd.it/bough-a-small-coral-is-it-safe-to-travel-with-it-more-in-v0-kfknhcesn3cb1.png?auto=webp&s=348d38ea7757ef3b1d2e7ba39d233a51d7e8863b",
+			url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQeCQlgJS-cqcJtNUrObrziohtCfoYW0voeg&s",
 			title: "Shipping Documentation",
 			category: t('gallery.categories.process'),
 			description: t('gallery.images.documentation')
 		},
 		{
 			id: 6,
-			url: "https://eu-exoticreptiles.com/wp-content/uploads/2024/10/b36381_90fb4389f3144a95b7dd4fff8352063fmv2.jpg",
+			url: "https://www.shipbob.com/au/wp-content/uploads/sites/33/2025/04/e10b4cbd869a4f0676f2ca74527a76cf.png?w=1080?w=332px",
 			title: "Secure Packaging",
 			category: t('gallery.categories.equipment'),
 			description: t('gallery.images.packaging')

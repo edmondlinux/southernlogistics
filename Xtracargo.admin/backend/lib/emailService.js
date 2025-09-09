@@ -13,7 +13,7 @@ class EmailService {
       }
     });
 
-    this.adminEmail = process.env.ADMIN_EMAIL || 'support@xtracargo.site';
+    this.adminEmail = process.env.ADMIN_EMAIL || 'support@xtracargo.space';
   }
 
   async sendShipmentNotification(shipment, recipientType = 'sender') {
@@ -320,7 +320,7 @@ class EmailService {
           <!-- Footer -->
           <div style="background-color: #f9fafb; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
             <p style="color: #6b7280; font-size: 14px; margin: 0 0 10px 0;">
-              Questions? Contact our customer service team at <a href="mailto:support@xtracargo.site" style="color: #10b981; text-decoration: none;">support@xtracargo.site</a>
+              Questions? Contact our customer service team at <a href="mailto:support@xtracargo.site" style="color: #10b981; text-decoration: none;">support@xtracargo.space</a>
             </p>
             <p style="color: #9ca3af; font-size: 12px; margin: 0;">
               © ${new Date().getFullYear()} Xtracargo. All rights reserved.
