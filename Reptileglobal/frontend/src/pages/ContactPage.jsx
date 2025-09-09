@@ -84,32 +84,32 @@ const ContactPage = () => {
     {
       city: "New Jersey, USA",
       address: t('contact.offices.newjersey'),
-      phone: "support@reptileglobal.site",
-      email: "support@reptileglobal.site"
+      phone: "support@xtracargo.com",
+      email: "support@xtracargo.com"
     },
     {
       city: "Amsterdam",
       address: t('contact.offices.amsterdam'),
-      phone: "support@reptileglobal.site",
-      email: "support@reptileglobal.site"
+      phone: "support@xtracargo.com",
+      email: "support@xtracargo.com"
     },
     {
       city: "Rome",
       address: t('contact.offices.rome'),
-      phone: "support@reptileglobal.site",
-      email: "support@reptileglobal.site"
+      phone: "support@xtracargo.com",
+      email: "support@xtracargo.com"
     },
     {
       city: "Singapore",
       address: t('contact.offices.singapore'),
-      phone: "support@reptileglobal.site",
-      email: "support@reptileglobal.site"
+      phone: "support@xtracargo.com",
+      email: "support@xtracargo.com"
     },
     {
       city: "Hong Kong",
       address: t('contact.offices.hongkong'),
-      phone: "support@reptileglobal.site",
-      email: "support@reptileglobal.site"
+      phone: "support@xtracargo.com",
+      email: "support@xtracargo.com"
     }
   ];
 
@@ -284,7 +284,7 @@ const ContactPage = () => {
                 <div className="space-y-4">
                   <div className="flex items-center">
                     <Mail className="w-5 h-5 text-emerald-600 mr-3" />
-                    <span className="text-gray-700">support@reptileglobal.site</span>
+                    <span className="text-gray-700">support@xtracargo.com</span>
                   </div>
                   <div className="flex items-center">
                     <Clock className="w-5 h-5 text-emerald-600 mr-3" />
@@ -305,7 +305,7 @@ const ContactPage = () => {
                 </p>
                 <div className="flex items-center">
                   <Phone className="w-5 h-5 text-red-600 mr-3" />
-                  <span className="text-gray-700">support@reptileglobal.site</span>
+                  <span className="text-gray-700">support@xtracargo.com</span>
                 </div>
               </div>
 
