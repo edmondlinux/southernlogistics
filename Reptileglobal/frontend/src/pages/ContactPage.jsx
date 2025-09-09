@@ -84,32 +84,32 @@ const ContactPage = () => {
     {
       city: "",
       address: t('contact.offices.newjersey'),
-      phone: "support@xtracargo.space",
-      email: "support@xtracargo.space"
+      phone: "support@southernlogistics.site",
+      email: "support@southernlogistics.site"
     },
     {
       city: "",
       address: t('contact.offices.amsterdam'),
-      phone: "support@xtracargo.space",
-      email: "support@xtracargo.space"
+      phone: "support@southernlogistics.site",
+      email: "support@southernlogistics.site"
     },
     {
       city: "",
       address: t('contact.offices.rome'),
-      phone: "support@xtracargo.space",
-      email: "support@xtracargo.space"
+      phone: "support@southernlogistics.site",
+      email: "support@southernlogistics.site"
     },
     {
       city: "",
       address: t('contact.offices.singapore'),
-      phone: "support@xtracargo.space",
-      email: "support@xtracargo.space"
+      phone: "support@southernlogistics.site",
+      email: "support@southernlogistics.site"
     },
     {
       city: "",
       address: t('contact.offices.hongkong'),
-      phone: "support@xtracargo.space",
-      email: "support@xtracargo.space"
+      phone: "support@southernlogistics.site",
+      email: "support@southernlogistics.site"
     }
   ];
 
@@ -284,7 +284,7 @@ const ContactPage = () => {
                 <div className="space-y-4">
                   <div className="flex items-center">
                     <Mail className="w-5 h-5 text-emerald-600 mr-3" />
-                    <span className="text-gray-700">support@xtracargo.com</span>
+                    <span className="text-gray-700">support@southernlogistics.site</span>
                   </div>
                   <div className="flex items-center">
                     <Clock className="w-5 h-5 text-emerald-600 mr-3" />
@@ -305,7 +305,7 @@ const ContactPage = () => {
                 </p>
                 <div className="flex items-center">
                   <Phone className="w-5 h-5 text-red-600 mr-3" />
-                  <span className="text-gray-700">support@xtracargo.com</span>
+                  <span className="text-gray-700">support@southernlogistics.site</span>
                 </div>
               </div>
 
