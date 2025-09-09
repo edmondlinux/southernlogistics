@@ -27,7 +27,7 @@ const PWAInstallPrompt = () => {
         <div className="flex items-center gap-3">
           <Download className="w-6 h-6" />
           <div>
-            <h3 className="font-semibold">Install Reptile Global</h3>
+            <h3 className="font-semibold">Install Xtracargo</h3>
             <p className="text-sm opacity-90">Install our app for a better experience</p>
           </div>
         </div>
